@@ -1,0 +1,344 @@
+{
+  "common": {
+    "agencyName": "VisaPlus Berkane",
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "contact": "Contact",
+    "login": "Login",
+    "portal": "Client Portal",
+    "applyNow": "Apply Now",
+    "dashboard": "Dashboard",
+    "readMore": "Read More",
+    "viewRequirements": "View Requirements",
+    "backToHome": "Back to Home",
+    "schengenVisas": "Schengen Visas",
+    "canadaVisas": "Canada Visas",
+    "admin": "Admin",
+    "blog": "Blog"
+  },
+  "home": {
+    "heroTag": "Global Visa & Immigration Experts",
+    "heroTitle": "Your Gateway to the World",
+    "heroSubtitle": "Seamless visa assistance for Schengen, North America, UK, and the Gulf. Book your consultation now and receive instant WhatsApp confirmation.",
+    "bookConsultation": "Book Free Consultation",
+    "exploreVisas": "Explore Visa Types",
+    "stats": {
+      "approved": "Visas Approved",
+      "successRate": "Success Rate",
+      "countries": "Countries Served",
+      "support": "Client Support"
+    },
+    "destinations": {
+      "title": "Popular Destinations",
+      "subtitle": "Specialized expertise in Schengen and North American immigration procedures."
+    },
+    "process": {
+      "title": "How It Works",
+      "subtitle": "A streamlined, transparent 5-step process to secure your visa.",
+      "step1": {
+        "title": "Consultation",
+        "desc": "Expert assessment of your profile"
+      },
+      "step2": {
+        "title": "Document Collection",
+        "desc": "Gathering & translating requirements"
+      },
+      "step3": {
+        "title": "Application Filing",
+        "desc": "Meticulous form preparation"
+      },
+      "step4": {
+        "title": "Embassy Tracking",
+        "desc": "Real-time status updates"
+      },
+      "step5": {
+        "title": "Visa Delivery",
+        "desc": "Passport returned securely"
+      }
+    },
+    "testimonials": {
+      "badge": "Trusted by Thousands",
+      "title": "Client Success Stories",
+      "subtitle": "Don't just take our word for it. Read what our clients have to say about their experience with VisaPlus Berkane."
+    }
+  },
+  "footer": {
+    "description": "Your trusted partner for Schengen and North American visas, based in Berkane, Morocco. We turn complex immigration procedures into a seamless journey.",
+    "quickLinks": "Quick Links",
+    "topDestinations": "Top Destinations",
+    "contactInfo": "Contact Info",
+    "rights": "VisaPlus Berkane. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
+  },
+  "about": {
+    "tag": "Our Story",
+    "title": "About VisaPlus Berkane",
+    "subtitle": "The leading visa assistance agency in the Oriental region, dedicated to making your international travel dreams a reality.",
+    "whoWeAre": "Who We Are",
+    "p1": "Founded in Berkane, VisaPlus has grown to become the most trusted immigration and visa consultancy in Eastern Morocco. We specialize in Schengen and Canadian visa applications, offering tailored solutions for tourists, students, and professionals.",
+    "p2": "Navigating embassy requirements can be daunting. Our mission is to provide transparent, accurate, and professional guidance to ensure the highest possible success rate for our clients.",
+    "stats": {
+      "years": "Years Experience",
+      "clients": "Happy Clients",
+      "countries": "Countries Covered",
+      "success": "Success Rate"
+    }
+  },
+  "contact": {
+    "title": "Get in Touch",
+    "subtitle": "Our experts are ready to assist you with your visa application. Visit our office in Berkane or contact us online.",
+    "formTitle": "Send us a message",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "visaType": "Visa Type / Destination",
+    "selectOption": "Select an option",
+    "message": "Message",
+    "placeholderMessage": "Tell us about your case...",
+    "send": "Send Message",
+    "callUs": "Call Us",
+    "emailUs": "Email Us",
+    "whatsapp": "WhatsApp",
+    "workingHours": "Working Hours"
+  },
+  "apply": {
+    "title": "Book Your Consultation",
+    "subtitle": "Select a date and time that works for you, and tell us a bit about your visa needs. Our experts are ready to assist you.",
+    "selectDate": "Select Date",
+    "selectTime": "Select Time",
+    "yourDetails": "Your Details",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "visaType": "Visa Type",
+    "serviceType": "Service Needed",
+    "selectService": "Select a service...",
+    "notes": "Additional Notes (Optional)",
+    "confirmBtn": "Confirm Appointment",
+    "selectFirst": "Select Date & Time First",
+    "successTitle": "Appointment Confirmed!",
+    "successDesc": "Thank you. Your consultation is scheduled.",
+    "returnHome": "Return to Home"
+  },
+  "portal": {
+    "welcome": "Welcome back",
+    "manageApps": "Manage your visa applications and documents.",
+    "newApplication": "New Application",
+    "myApplications": "My Applications",
+    "status": "Status"
+  },
+  "auth": {
+    "loginTitle": "Welcome Back",
+    "loginSubtitle": "Sign in to access your client portal and track your applications.",
+    "registerTitle": "Create an Account",
+    "registerSubtitle": "Join VisaPlus to start your visa application journey today.",
+    "email": "Email Address",
+    "password": "Password",
+    "name": "Full Name",
+    "phone": "Phone Number",
+    "signIn": "Sign In",
+    "signUp": "Create Account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?"
+  },
+  "chatbot": {
+    "title": "VisaPlus Assistant",
+    "online": "Online",
+    "greeting": "Hi! I'm your VisaPlus virtual assistant. How can I help you today?",
+    "placeholder": "Type your message...",
+    "error": "I'm having trouble connecting right now. Please try again later."
+  },
+  "countryData": {
+    "france": {
+      "name": "France",
+      "type": "Schengen (Type C & D)",
+      "processingTime": "15 - 30 Days",
+      "fee": "€90 + TLScontact fee",
+      "description": "The most requested Schengen destination from Morocco. Ideal for tourism, business, and study (Campus France).",
+      "requirements": [
+        "Valid Passport (6 months validity)",
+        "2 recent biometric photos",
+        "Travel Medical Insurance (€30,000 coverage)",
+        "Proof of accommodation (Hotel or Attestation d'accueil)",
+        "Round-trip flight reservation",
+        "Proof of financial means (3 months bank statements)",
+        "Employment/Business documents"
+      ]
+    },
+    "spain": {
+      "name": "Spain",
+      "type": "Schengen (Type C & D)",
+      "processingTime": "15 - 45 Days",
+      "fee": "€90 + BLS fee",
+      "description": "A top choice for summer holidays and family visits. Processed via BLS International.",
+      "requirements": [
+        "Valid Passport",
+        "Visa application form",
+        "Travel Insurance",
+        "Hotel reservation or Invitation letter (Carta de Invitación)",
+        "Flight itinerary",
+        "Financial proof (Bank statements)",
+        "Work certificate & CNSS history"
+      ]
+    },
+    "italy": {
+      "name": "Italy",
+      "type": "Schengen (Type C & D)",
+      "processingTime": "15 - 30 Days",
+      "fee": "€90 + TLScontact fee",
+      "description": "Famous for its rich history and business opportunities (Decreto Flussi).",
+      "requirements": [
+        "Valid Passport",
+        "2 biometric photos",
+        "Travel Insurance",
+        "Accommodation proof",
+        "Flight itinerary",
+        "Proof of financial means",
+        "Work/Business registration documents"
+      ]
+    },
+    "belgium": {
+      "name": "Belgium",
+      "type": "Schengen (Type C & D)",
+      "processingTime": "15 - 45 Days",
+      "fee": "€90 + VFS fee",
+      "description": "Heart of the EU, highly requested for family visits and university studies.",
+      "requirements": [
+        "Valid Passport",
+        "Visa application form",
+        "Annex 3bis (Formal obligation for family visit)",
+        "Travel Medical Insurance",
+        "Financial proof",
+        "Proof of civil status (Family book)"
+      ]
+    },
+    "canada": {
+      "name": "Canada",
+      "type": "Visitor, Study & Work Permits",
+      "processingTime": "30 - 90 Days",
+      "fee": "$100 CAD + $85 Biometrics",
+      "description": "Whether you want to study, work, or visit, we help you navigate the complex IRCC portal.",
+      "requirements": [
+        "Valid Passport",
+        "Digital photo",
+        "Proof of funds (Bank statements, sponsor letters)",
+        "Letter of explanation / Study plan",
+        "Acceptance letter (for students)",
+        "Ties to home country proof"
+      ]
+    },
+    "usa": {
+      "name": "United States",
+      "type": "B1/B2 Tourist, F1 Student",
+      "processingTime": "Depends on interview slot",
+      "fee": "$185 USD",
+      "description": "Expert assistance with the DS-160 form and rigorous mock interview preparation for the US Embassy.",
+      "requirements": [
+        "Valid Passport",
+        "DS-160 Confirmation Page",
+        "Appointment Confirmation",
+        "US Visa Photo (2x2 inches)",
+        "Proof of ties to Morocco",
+        "Bank statements & Employment proof"
+      ]
+    },
+    "uk": {
+      "name": "United Kingdom",
+      "type": "Standard Visitor, Student",
+      "processingTime": "15 - 21 Days",
+      "fee": "£115 GBP",
+      "description": "Seamless application processing via TLScontact for tourism, business, and study in the UK.",
+      "requirements": [
+        "Valid Passport",
+        "Online Application Form",
+        "Financial evidence (Bank statements)",
+        "Proof of employment or studies",
+        "Accommodation details",
+        "Travel itinerary"
+      ]
+    },
+    "gulf": {
+      "name": "Gulf Countries (UAE, KSA, Qatar)",
+      "type": "E-Visa, Umrah, Work",
+      "processingTime": "2 - 5 Days",
+      "fee": "Varies by country",
+      "description": "Fast-track processing for Dubai tourist e-visas, Saudi Umrah packages, and Qatar business visas.",
+      "requirements": [
+        "Passport Copy (High resolution)",
+        "Personal Photo with white background",
+        "Flight ticket copy (for UAE)",
+        "National ID card copy"
+      ]
+    }
+  },
+  "servicesPage": {
+    "title": "Our Services | VisaPlus",
+    "description": "Comprehensive visa and immigration services in Morocco.",
+    "heroSubtitle": "From profile assessment to final visa delivery, we offer a comprehensive suite of services designed to maximize your approval chances."
+  },
+  "servicesData": {
+    "consultation": {
+      "title": "Profile Assessment & Consultation",
+      "desc": "Expert evaluation of your eligibility, financial standing, and travel history to recommend the best visa pathways."
+    },
+    "form-filling": {
+      "title": "Application & Form Filling",
+      "desc": "Accurate completion of complex governmental portals (DS-160 for USA, IRCC for Canada, Schengen forms)."
+    },
+    "appointment-booking": {
+      "title": "Appointment Booking",
+      "desc": "Securing standard and premium appointment slots at local processing centers (TLScontact, BLS International, VFS Global)."
+    },
+    "document-preparation": {
+      "title": "Document Preparation & Formatting",
+      "desc": "Organizing and verifying required financial, employment, and civil documents to meet specific embassy standards."
+    },
+    "travel-itineraries": {
+      "title": "Flight & Accommodation Itineraries",
+      "desc": "Providing verifiable flight reservations and hotel bookings designed specifically for visa application compliance."
+    },
+    "travel-insurance": {
+      "title": "Travel Health Insurance",
+      "desc": "Issuing mandatory Schengen-compliant or international travel health insurance policies required by embassies."
+    },
+    "translation-legalization": {
+      "title": "Certified Translation & Legalization",
+      "desc": "Coordinating certified document translations from Arabic/French into target languages and assisting with Apostille procedures."
+    },
+    "interview-prep": {
+      "title": "Interview Preparation",
+      "desc": "Conducting mock interviews and providing coaching for in-person embassy appointments (specifically for US and UK visas)."
+    },
+    "refusal-appeal": {
+      "title": "Refusal Appeal & Re-application",
+      "desc": "Analyzing previous visa rejection letters and building stronger, corrected cases for subsequent applications."
+    }
+  },
+  "contactPage": {
+    "france": "France (Schengen)",
+    "spain": "Spain (Schengen)",
+    "canada": "Canada",
+    "other": "Other",
+    "workingHoursTime": "Mon-Fri: 09:00 - 18:00"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: October 2026",
+    "introTitle": "1. Introduction",
+    "introText": "Welcome to VisaPlus. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website.",
+    "dataCollectTitle": "2. The Data We Collect",
+    "dataCollectText": "We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows:",
+    "dataList1": "Identity Data: includes first name, last name, username or similar identifier.",
+    "dataList2": "Contact Data: includes billing address, email address and telephone numbers.",
+    "dataList3": "Document Data: includes passport copies, financial statements, and other sensitive documents required for visa processing.",
+    "useDataTitle": "3. How We Use Your Data",
+    "useDataText": "We will only use your personal data when the law allows us to. Most commonly, we will use your personal data to process your visa application and communicate with embassies on your behalf.",
+    "securityTitle": "4. Data Security",
+    "securityText": "We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorized way, altered or disclosed.",
+    "contactTitle": "5. Contact Us",
+    "contactText": "If you have any questions about this privacy policy or our privacy practices, please contact us at privacy@visaplus.com."
+  }
+}

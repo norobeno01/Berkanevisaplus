@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+ 
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 226 50% 8%; /* Deep Navy */
+
+    --card: 210 40% 98%;
+    --card-foreground: 226 50% 8%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 226 50% 8%;
+ 
+    --primary: 221 83% 53%; /* #2563EB Electric Cobalt */
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 226 50% 8%;
+ 
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+ 
+    --accent: 40 96% 50%; /* #F59E0B Gold Accent */
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 221 83% 53%;
+ 
+    --radius: 0.75rem;
+  }
+ 
+  .dark {
+    --background: 226 50% 8%; /* #0A0F1E Deep Navy */
+    --foreground: 210 40% 98%;
+ 
+    --card: 226 40% 12%;
+    --card-foreground: 210 40% 98%;
+ 
+    --popover: 226 50% 8%;
+    --popover-foreground: 210 40% 98%;
+ 
+    --primary: 221 83% 53%; /* #2563EB Electric Cobalt */
+    --primary-foreground: 210 40% 98%;
+ 
+    --secondary: 226 40% 16%;
+    --secondary-foreground: 210 40% 98%;
+ 
+    --muted: 226 30% 15%;
+    --muted-foreground: 215 20.2% 65.1%;
+ 
+    --accent: 40 96% 50%; /* #F59E0B Gold Accent */
+    --accent-foreground: 210 40% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+ 
+    --border: 226 30% 20%;
+    --input: 226 30% 20%;
+    --ring: 221 83% 53%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans selection:bg-primary/30;
+    /* Animated gradient mesh background base */
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(221,83%,53%,0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, hsla(40,96%,50%,0.1) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, hsla(221,83%,53%,0.1) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, hsla(40,96%,50%,0.05) 0px, transparent 50%);
+    background-attachment: fixed;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer utilities {
+  .rtl {
+    direction: rtl;
+    @apply font-arabic;
+  }
+  .rtl h1, .rtl h2, .rtl h3, .rtl h4, .rtl h5, .rtl h6 {
+    @apply font-arabic;
+  }
+  .glass {
+    @apply bg-foreground/5 backdrop-blur-xl border border-border shadow-[0_8px_32px_0_rgba(0,0,0,0.1)];
+  }
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-xl border border-border shadow-[0_8px_32px_0_rgba(0,0,0,0.1)];
+  }
+  .glass-panel {
+    @apply bg-background/80 backdrop-blur-2xl border border-border;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-foreground via-foreground/90 to-foreground/50;
+  }
+  .text-gradient-gold {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-gold-400 to-gold-600;
+  }
+}

@@ -1,0 +1,1 @@
+<div className="text-foreground/80 dark:text-white/80 bg-navy-950 border-white/10 text-foreground dark:text-white hover:text-foreground/50 dark:hover:text-white/50 group-hover:text-foreground/30 dark:group-hover:text-white/30"></div>

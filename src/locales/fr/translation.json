@@ -1,0 +1,344 @@
+{
+  "common": {
+    "agencyName": "VisaPlus Berkane",
+    "home": "Accueil",
+    "about": "À Propos",
+    "services": "Services",
+    "contact": "Contact",
+    "login": "Connexion",
+    "portal": "Espace Client",
+    "applyNow": "Postuler",
+    "dashboard": "Tableau de bord",
+    "readMore": "Lire la suite",
+    "viewRequirements": "Voir les exigences",
+    "backToHome": "Retour à l'accueil",
+    "schengenVisas": "Visas Schengen",
+    "canadaVisas": "Visas Canada",
+    "admin": "Admin",
+    "blog": "Blog"
+  },
+  "home": {
+    "heroTag": "Experts Mondiaux en Visa et Immigration",
+    "heroTitle": "Votre Passerelle vers le Monde",
+    "heroSubtitle": "Assistance visa fluide pour l'espace Schengen, l'Amérique du Nord, le Royaume-Uni et les pays du Golfe. Réservez votre consultation et recevez une confirmation WhatsApp instantanée.",
+    "bookConsultation": "Réserver une Consultation",
+    "exploreVisas": "Explorer les Types de Visas",
+    "stats": {
+      "approved": "Visas Approuvés",
+      "successRate": "Taux de Réussite",
+      "countries": "Pays Desservis",
+      "support": "Support Client"
+    },
+    "destinations": {
+      "title": "Destinations Populaires",
+      "subtitle": "Expertise spécialisée dans les procédures d'immigration Schengen et Nord-Américaines."
+    },
+    "process": {
+      "title": "Comment ça marche",
+      "subtitle": "Un processus simple et transparent en 5 étapes pour obtenir votre visa.",
+      "step1": {
+        "title": "Consultation",
+        "desc": "Évaluation experte de votre profil"
+      },
+      "step2": {
+        "title": "Collecte de Documents",
+        "desc": "Rassembler et traduire les exigences"
+      },
+      "step3": {
+        "title": "Dépôt de Demande",
+        "desc": "Préparation minutieuse des formulaires"
+      },
+      "step4": {
+        "title": "Suivi Consulaire",
+        "desc": "Mises à jour de statut en temps réel"
+      },
+      "step5": {
+        "title": "Livraison du Visa",
+        "desc": "Passeport retourné en toute sécurité"
+      }
+    },
+    "testimonials": {
+      "badge": "Approuvé par des milliers",
+      "title": "Histoires de Réussite",
+      "subtitle": "Ne nous croyez pas sur parole. Lisez ce que nos clients disent de leur expérience avec VisaPlus Berkane."
+    }
+  },
+  "footer": {
+    "description": "Votre partenaire de confiance pour les visas Schengen et Nord-Américains, basé à Berkane, Maroc. Nous transformons des procédures d'immigration complexes en un parcours fluide.",
+    "quickLinks": "Liens Rapides",
+    "topDestinations": "Destinations Phares",
+    "contactInfo": "Coordonnées",
+    "rights": "VisaPlus Berkane. Tous droits réservés.",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions d'utilisation"
+  },
+  "about": {
+    "tag": "Notre Histoire",
+    "title": "À Propos de VisaPlus Berkane",
+    "subtitle": "La principale agence d'assistance visa dans la région de l'Oriental, dédiée à faire de vos rêves de voyage international une réalité.",
+    "whoWeAre": "Qui Sommes-Nous",
+    "p1": "Fondée à Berkane, VisaPlus est devenue le cabinet de conseil en immigration et visa le plus fiable de l'Est du Maroc. Nous nous spécialisons dans les demandes de visa Schengen et Canadien, offrant des solutions sur mesure pour les touristes, les étudiants et les professionnels.",
+    "p2": "Naviguer dans les exigences des ambassades peut être intimidant. Notre mission est de fournir des conseils transparents, précis et professionnels pour assurer le taux de réussite le plus élevé possible pour nos clients.",
+    "stats": {
+      "years": "Années d'Expérience",
+      "clients": "Clients Satisfaits",
+      "countries": "Pays Couverts",
+      "success": "Taux de Réussite"
+    }
+  },
+  "contact": {
+    "title": "Contactez-Nous",
+    "subtitle": "Nos experts sont prêts à vous aider dans votre demande de visa. Visitez notre bureau à Berkane ou contactez-nous en ligne.",
+    "formTitle": "Envoyez-nous un message",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "visaType": "Type de Visa / Destination",
+    "selectOption": "Sélectionnez une option",
+    "message": "Message",
+    "placeholderMessage": "Parlez-nous de votre cas...",
+    "send": "Envoyer le Message",
+    "callUs": "Appelez-nous",
+    "emailUs": "Écrivez-nous",
+    "whatsapp": "WhatsApp",
+    "workingHours": "Heures d'Ouverture"
+  },
+  "apply": {
+    "title": "Réservez votre Consultation",
+    "subtitle": "Choisissez une date et une heure qui vous conviennent, et parlez-nous de vos besoins en matière de visa. Nos experts sont prêts à vous aider.",
+    "selectDate": "Sélectionner la Date",
+    "selectTime": "Sélectionner l'Heure",
+    "yourDetails": "Vos Coordonnées",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Adresse Email",
+    "phone": "Numéro de Téléphone",
+    "visaType": "Type de Visa",
+    "serviceType": "Service Requis",
+    "selectService": "Sélectionnez un service...",
+    "notes": "Notes Additionnelles (Optionnel)",
+    "confirmBtn": "Confirmer le Rendez-vous",
+    "selectFirst": "Sélectionnez d'abord la Date et l'Heure",
+    "successTitle": "Rendez-vous Confirmé !",
+    "successDesc": "Merci. Votre consultation est planifiée.",
+    "returnHome": "Retour à l'accueil"
+  },
+  "portal": {
+    "welcome": "Bon retour",
+    "manageApps": "Gérez vos demandes de visa et vos documents.",
+    "newApplication": "Nouvelle Demande",
+    "myApplications": "Mes Demandes",
+    "status": "Statut"
+  },
+  "auth": {
+    "loginTitle": "Bon Retour",
+    "loginSubtitle": "Connectez-vous pour accéder à votre espace client et suivre vos demandes.",
+    "registerTitle": "Créer un Compte",
+    "registerSubtitle": "Rejoignez VisaPlus pour commencer votre parcours de demande de visa aujourd'hui.",
+    "email": "Adresse Email",
+    "password": "Mot de Passe",
+    "name": "Nom Complet",
+    "phone": "Numéro de Téléphone",
+    "signIn": "Se Connecter",
+    "signUp": "Créer un Compte",
+    "noAccount": "Vous n'avez pas de compte ?",
+    "hasAccount": "Vous avez déjà un compte ?"
+  },
+  "chatbot": {
+    "title": "Assistant VisaPlus",
+    "online": "En ligne",
+    "greeting": "Bonjour ! Je suis votre assistant virtuel VisaPlus. Comment puis-je vous aider aujourd'hui ?",
+    "placeholder": "Écrivez votre message...",
+    "error": "J'ai du mal à me connecter pour le moment. Veuillez réessayer plus tard."
+  },
+  "countryData": {
+    "france": {
+      "name": "France",
+      "type": "Schengen (Type C & D)",
+      "processingTime": "15 - 30 Jours",
+      "fee": "90 € + frais TLScontact",
+      "description": "La destination Schengen la plus demandée depuis le Maroc. Idéale pour le tourisme, les affaires et les études (Campus France).",
+      "requirements": [
+        "Passeport valide (validité de 6 mois)",
+        "2 photos biométriques récentes",
+        "Assurance médicale de voyage (couverture 30 000 €)",
+        "Preuve d'hébergement (Hôtel ou Attestation d'accueil)",
+        "Réservation de vol aller-retour",
+        "Preuve de moyens financiers (relevés bancaires de 3 mois)",
+        "Documents d'emploi/d'affaires"
+      ]
+    },
+    "spain": {
+      "name": "Espagne",
+      "type": "Schengen (Type C & D)",
+      "processingTime": "15 - 45 Jours",
+      "fee": "90 € + frais BLS",
+      "description": "Un choix de premier ordre pour les vacances d'été et les visites familiales. Traité via BLS International.",
+      "requirements": [
+        "Passeport valide",
+        "Formulaire de demande de visa",
+        "Assurance de voyage",
+        "Réservation d'hôtel ou lettre d'invitation (Carta de Invitación)",
+        "Itinéraire de vol",
+        "Preuve financière (Relevés bancaires)",
+        "Certificat de travail et historique CNSS"
+      ]
+    },
+    "italy": {
+      "name": "Italie",
+      "type": "Schengen (Type C & D)",
+      "processingTime": "15 - 30 Jours",
+      "fee": "90 € + frais TLScontact",
+      "description": "Célèbre pour sa riche histoire et ses opportunités commerciales (Decreto Flussi).",
+      "requirements": [
+        "Passeport valide",
+        "2 photos biométriques",
+        "Assurance de voyage",
+        "Preuve d'hébergement",
+        "Itinéraire de vol",
+        "Preuve de moyens financiers",
+        "Documents d'enregistrement d'emploi/d'affaires"
+      ]
+    },
+    "belgium": {
+      "name": "Belgique",
+      "type": "Schengen (Type C & D)",
+      "processingTime": "15 - 45 Jours",
+      "fee": "90 € + frais VFS",
+      "description": "Cœur de l'UE, très demandé pour les visites familiales et les études universitaires.",
+      "requirements": [
+        "Passeport valide",
+        "Formulaire de demande de visa",
+        "Annexe 3bis (Obligation formelle pour visite familiale)",
+        "Assurance médicale de voyage",
+        "Preuve financière",
+        "Preuve d'état civil (Livret de famille)"
+      ]
+    },
+    "canada": {
+      "name": "Canada",
+      "type": "Permis de visiteur, d'études et de travail",
+      "processingTime": "30 - 90 Jours",
+      "fee": "100 $ CA + 85 $ CA Biométrie",
+      "description": "Que vous souhaitiez étudier, travailler ou visiter, nous vous aidons à naviguer sur le portail complexe d'IRCC.",
+      "requirements": [
+        "Passeport valide",
+        "Photo numérique",
+        "Preuve de fonds (Relevés bancaires, lettres de parrainage)",
+        "Lettre d'explication / Plan d'études",
+        "Lettre d'acceptation (pour les étudiants)",
+        "Preuve d'attaches au pays d'origine"
+      ]
+    },
+    "usa": {
+      "name": "États-Unis",
+      "type": "Touriste B1/B2, Étudiant F1",
+      "processingTime": "Dépend du créneau d'entretien",
+      "fee": "185 $ US",
+      "description": "Assistance spécialisée avec le formulaire DS-160 et préparation rigoureuse aux entretiens simulés pour l'ambassade américaine.",
+      "requirements": [
+        "Passeport valide",
+        "Page de confirmation DS-160",
+        "Confirmation de rendez-vous",
+        "Photo de visa américain (2x2 pouces)",
+        "Preuve d'attaches au Maroc",
+        "Relevés bancaires et preuve d'emploi"
+      ]
+    },
+    "uk": {
+      "name": "Royaume-Uni",
+      "type": "Visiteur standard, Étudiant",
+      "processingTime": "15 - 21 Jours",
+      "fee": "115 £ GBP",
+      "description": "Traitement fluide des demandes via TLScontact pour le tourisme, les affaires et les études au Royaume-Uni.",
+      "requirements": [
+        "Passeport valide",
+        "Formulaire de demande en ligne",
+        "Preuves financières (Relevés bancaires)",
+        "Preuve d'emploi ou d'études",
+        "Détails de l'hébergement",
+        "Itinéraire de voyage"
+      ]
+    },
+    "gulf": {
+      "name": "Pays du Golfe (EAU, KSA, Qatar)",
+      "type": "E-Visa, Omra, Travail",
+      "processingTime": "2 - 5 Jours",
+      "fee": "Varie selon le pays",
+      "description": "Traitement accéléré pour les e-visas touristiques de Dubaï, les forfaits Omra saoudiens et les visas d'affaires du Qatar.",
+      "requirements": [
+        "Copie du passeport (Haute résolution)",
+        "Photo personnelle avec fond blanc",
+        "Copie du billet d'avion (pour les EAU)",
+        "Copie de la carte nationale d'identité"
+      ]
+    }
+  },
+  "servicesPage": {
+    "title": "Nos Services | VisaPlus",
+    "description": "Services complets de visas et d'immigration au Maroc.",
+    "heroSubtitle": "De l'évaluation du profil à la délivrance finale du visa, nous proposons une suite complète de services conçus pour maximiser vos chances d'approbation."
+  },
+  "servicesData": {
+    "consultation": {
+      "title": "Évaluation de Profil & Consultation",
+      "desc": "Évaluation experte de votre éligibilité, de votre situation financière et de votre historique de voyage pour recommander les meilleures voies de visa."
+    },
+    "form-filling": {
+      "title": "Demande & Remplissage de Formulaires",
+      "desc": "Remplissage précis des portails gouvernementaux complexes (DS-160 pour les États-Unis, IRCC pour le Canada, formulaires Schengen)."
+    },
+    "appointment-booking": {
+      "title": "Prise de Rendez-vous",
+      "desc": "Obtention de créneaux de rendez-vous standard et premium dans les centres de traitement locaux (TLScontact, BLS International, VFS Global)."
+    },
+    "document-preparation": {
+      "title": "Préparation & Formatage de Documents",
+      "desc": "Organisation et vérification des documents financiers, professionnels et d'état civil requis pour répondre aux normes spécifiques des ambassades."
+    },
+    "travel-itineraries": {
+      "title": "Itinéraires de Vol & Hébergement",
+      "desc": "Fourniture de réservations de vol vérifiables et de réservations d'hôtel conçues spécifiquement pour la conformité des demandes de visa."
+    },
+    "travel-insurance": {
+      "title": "Assurance Maladie de Voyage",
+      "desc": "Délivrance de polices d'assurance maladie de voyage obligatoires conformes à Schengen ou internationales requises par les ambassades."
+    },
+    "translation-legalization": {
+      "title": "Traduction Certifiée & Légalisation",
+      "desc": "Coordination des traductions certifiées de documents de l'arabe/français vers les langues cibles et assistance pour les procédures d'Apostille."
+    },
+    "interview-prep": {
+      "title": "Préparation aux Entretiens",
+      "desc": "Réalisation d'entretiens blancs et accompagnement pour les rendez-vous en personne à l'ambassade (spécifiquement pour les visas américains et britanniques)."
+    },
+    "refusal-appeal": {
+      "title": "Appel de Refus & Nouvelle Demande",
+      "desc": "Analyse des lettres de rejet de visa précédentes et constitution de dossiers plus solides et corrigés pour les demandes ultérieures."
+    }
+  },
+  "contactPage": {
+    "france": "France (Schengen)",
+    "spain": "Espagne (Schengen)",
+    "canada": "Canada",
+    "other": "Autre",
+    "workingHoursTime": "Lun-Ven : 09h00 - 18h00"
+  },
+  "privacy": {
+    "title": "Politique de Confidentialité",
+    "lastUpdated": "Dernière mise à jour : Octobre 2026",
+    "introTitle": "1. Introduction",
+    "introText": "Bienvenue chez VisaPlus. Nous respectons votre vie privée et nous nous engageons à protéger vos données personnelles. Cette politique vous informera de la manière dont nous traitons vos données lorsque vous visitez notre site Web.",
+    "dataCollectTitle": "2. Les données que nous collectons",
+    "dataCollectText": "Nous pouvons collecter, utiliser, stocker et transférer différents types de données personnelles vous concernant :",
+    "dataList1": "Données d'identité : prénom, nom, identifiant.",
+    "dataList2": "Données de contact : adresse, e-mail et numéros de téléphone.",
+    "dataList3": "Données documentaires : copies de passeport, relevés financiers, documents requis pour le visa.",
+    "useDataTitle": "3. Comment nous utilisons vos données",
+    "useDataText": "Nous n'utiliserons vos données que lorsque la loi nous y autorise, principalement pour traiter votre demande de visa.",
+    "securityTitle": "4. Sécurité des données",
+    "securityText": "Nous avons mis en place des mesures de sécurité pour éviter la perte, l'utilisation non autorisée ou la divulgation de vos données.",
+    "contactTitle": "5. Contactez-nous",
+    "contactText": "Pour toute question, veuillez nous contacter à privacy@visaplus.com."
+  }
+}
