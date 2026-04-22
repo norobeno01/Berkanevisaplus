@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { Globe, Menu, X, LogOut, User } from 'lucide-react'
 import { useState, useEffect, Suspense, lazy } from 'react'
@@ -186,10 +186,91 @@ function AuthGuard({ children, requireAdmin }: { children: React.ReactNode, requ
   return <>{children}</>
 }
 
+function TrackPageViews() {
+  const location = useLocation()
+  useEffect(() => {
+    // If Facebook Pixel is loaded
+    if (typeof window !== 'undefined' && (window as any).fbq) {
+      (window as any).fbq('track', 'PageView')
+    }
+    // If Google Analytics (gtag.js) is loaded
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'page_view', {
+        page_path: location.pathname + location.search
+      })
+    }
+  }, [location])
+  return null
+}
+
+function GlobalTracker() {
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.json() as any)
+      .then(data => {
+        if (data.success && data.data) {
+          const { metaPixel, googleAnalytics, googleTagManager } = data.data
+          
+          if (metaPixel) {
+            const fbScript = document.createElement('script')
+            fbScript.innerHTML = `
+              !function(f,b,e,v,n,t,s)
+              {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+              n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+              if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+              n.queue=[];t=b.createElement(e);t.async=!0;
+              t.src=v;s=b.getElementsByTagName(e)[0];
+              s.parentNode.insertBefore(t,s)}(window, document,'script',
+              'https://connect.facebook.net/en_US/fbevents.js');
+              fbq('init', '${metaPixel}');
+            `
+            document.head.appendChild(fbScript)
+          }
+
+          if (googleAnalytics) {
+            const gaScript = document.createElement('script')
+            gaScript.src = `https://www.googletagmanager.com/gtag/js?id=${googleAnalytics}`
+            gaScript.async = true
+            document.head.appendChild(gaScript)
+
+            const gaInit = document.createElement('script')
+            gaInit.innerHTML = `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', '${googleAnalytics}');
+            `
+            document.head.appendChild(gaInit)
+          }
+
+          if (googleTagManager) {
+            const gtmScript = document.createElement('script')
+            gtmScript.innerHTML = `
+              (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+              new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+              j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+              'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+              })(window,document,'script','dataLayer','${googleTagManager}');
+            `
+            document.head.appendChild(gtmScript)
+            
+            const gtmNoScript = document.createElement('noscript')
+            gtmNoScript.innerHTML = `<iframe src="https://www.googletagmanager.com/ns.html?id=${googleTagManager}" height="0" width="0" style="display:none;visibility:hidden"></iframe>`
+            document.body.insertBefore(gtmNoScript, document.body.firstChild)
+          }
+        }
+      })
+      .catch(console.error)
+  }, [])
+  return null
+}
+
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="e-visaschengen-theme">
       <Router>
+        <GlobalTracker />
+        <TrackPageViews />
         <Layout>
           <ScrollToTop />
           <Suspense fallback={<PageLoader />}>

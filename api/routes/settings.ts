@@ -35,6 +35,9 @@ router.get('/', async (c) => {
         INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('siteName', 'siteName', '${oldSeo.siteName.replace(/'/g, "''")}', datetime('now'));
         INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('siteDesc', 'siteDesc', '${oldSeo.siteDesc.replace(/'/g, "''")}', datetime('now'));
         INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('keywords', 'keywords', '${oldSeo.keywords.replace(/'/g, "''")}', datetime('now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('metaPixel', 'metaPixel', '', datetime('now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('googleAnalytics', 'googleAnalytics', '', datetime('now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('googleTagManager', 'googleTagManager', '', datetime('now'));
         DROP TABLE IF EXISTS "Settings";
         ALTER TABLE "Settings_new" RENAME TO "Settings";
       `)
@@ -59,7 +62,10 @@ router.get('/', async (c) => {
         phone: config.phone || '',
         email: config.email || '',
         whatsapp: config.whatsapp || '',
-        workingHours: config.workingHours || ''
+        workingHours: config.workingHours || '',
+        metaPixel: config.metaPixel || '',
+        googleAnalytics: config.googleAnalytics || '',
+        googleTagManager: config.googleTagManager || ''
       }
     })
   } catch (error) {
@@ -85,9 +91,9 @@ router.post('/', authenticate, requireAdmin, async (c) => {
     }
 
     return c.json({ success: true })
-  } catch (error) {
+  } catch (error: any) {
     console.error('Settings save error:', error)
-    return c.json({ success: false, error: 'Failed to save settings' }, 500)
+    return c.json({ success: false, error: error.message || 'Failed to save settings' }, 500)
   }
 })
 

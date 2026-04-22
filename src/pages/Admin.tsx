@@ -146,6 +146,11 @@ export default function Admin() {
             whatsapp: data.data.whatsapp || '',
             workingHours: data.data.workingHours || ''
           })
+          setTrackingLinks({
+            metaPixel: data.data.metaPixel || '',
+            googleAnalytics: data.data.googleAnalytics || '',
+            googleTagManager: data.data.googleTagManager || ''
+          })
         }
       })
   }, [token])
@@ -395,6 +400,8 @@ export default function Admin() {
   const [socialLinks, setSocialLinks] = useState({ facebook: '', instagram: '', linkedin: '', x: '', tiktok: '', address: '', phone: '', email: '', whatsapp: '', workingHours: '' })
   const [socialStatus, setSocialStatus] = useState({ loading: false, message: '', isError: false })
   const [contactStatus, setContactStatus] = useState({ loading: false, message: '', isError: false })
+  const [trackingLinks, setTrackingLinks] = useState({ metaPixel: '', googleAnalytics: '', googleTagManager: '' })
+  const [trackingStatus, setTrackingStatus] = useState({ loading: false, message: '', isError: false })
 
   const handleCreateAdmin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -441,6 +448,31 @@ export default function Admin() {
       }
     } catch (err) {
       setContactStatus({ loading: false, message: 'Network error', isError: true })
+    }
+  }
+
+  const handleSaveTracking = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setTrackingStatus({ loading: true, message: '', isError: false })
+    try {
+      const payload = {
+        metaPixel: trackingLinks.metaPixel,
+        googleAnalytics: trackingLinks.googleAnalytics,
+        googleTagManager: trackingLinks.googleTagManager
+      }
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(payload)
+      })
+      const data = await res.json() as any
+      if (data.success) {
+        setTrackingStatus({ loading: false, message: 'Tracking scripts updated successfully!', isError: false })
+      } else {
+        setTrackingStatus({ loading: false, message: 'Failed to update tracking scripts', isError: true })
+      }
+    } catch (err) {
+      setTrackingStatus({ loading: false, message: 'Network error', isError: true })
     }
   }
 
@@ -592,6 +624,34 @@ export default function Admin() {
               <div className="flex justify-end pt-2">
                 <Button type="submit" disabled={socialStatus.loading} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
                   {socialStatus.loading ? 'Saving...' : 'Save Social Links'}
+                </Button>
+              </div>
+            </form>
+            <form onSubmit={handleSaveTracking} className="space-y-4 pt-4 border-t border-border">
+              <h3 className="font-semibold text-lg text-foreground border-b border-border pb-2">Tracking & Analytics Scripts</h3>
+              <p className="text-sm text-muted-foreground mb-4">Paste your measurement IDs or full script codes below.</p>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Meta (Facebook) Pixel ID</label>
+                  <Input value={trackingLinks.metaPixel} onChange={e => setTrackingLinks({...trackingLinks, metaPixel: e.target.value})} placeholder="e.g. 123456789012345" className="bg-card border-border text-foreground" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Google Analytics ID</label>
+                  <Input value={trackingLinks.googleAnalytics} onChange={e => setTrackingLinks({...trackingLinks, googleAnalytics: e.target.value})} placeholder="e.g. G-ABC123XYZ" className="bg-card border-border text-foreground" />
+                </div>
+                <div className="space-y-2 md:col-span-2">
+                  <label className="text-sm font-medium text-muted-foreground">Google Tag Manager ID</label>
+                  <Input value={trackingLinks.googleTagManager} onChange={e => setTrackingLinks({...trackingLinks, googleTagManager: e.target.value})} placeholder="e.g. GTM-ABC1234" className="bg-card border-border text-foreground" />
+                </div>
+              </div>
+              {trackingStatus.message && (
+                <p className={`text-sm ${trackingStatus.isError ? 'text-red-500' : 'text-green-500'}`}>
+                  {trackingStatus.message}
+                </p>
+              )}
+              <div className="flex justify-end pt-2">
+                <Button type="submit" disabled={trackingStatus.loading} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
+                  {trackingStatus.loading ? 'Saving...' : 'Save Tracking Scripts'}
                 </Button>
               </div>
             </form>
