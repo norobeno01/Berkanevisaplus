@@ -1,13 +1,12 @@
-import express, { type Request, type Response } from 'express'
-import { PrismaClient } from '@prisma/client'
-import { authenticate, requireAdmin } from './auth.js'
+import { Hono } from 'hono'
+import { getPrisma } from '../db'
+import { authenticate, requireAdmin, type Bindings, type Variables } from './auth'
 
-const router = express.Router()
-const prisma = new PrismaClient()
+const router = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-// Get Global Settings
-router.get('/settings', async (req: Request, res: Response) => {
+router.get('/settings', async (c) => {
   try {
+    const prisma = getPrisma(c.env.DB)
     let settings = await prisma.settings.findUnique({ where: { id: 'global' } })
     if (!settings) {
       settings = await prisma.settings.create({
@@ -19,104 +18,68 @@ router.get('/settings', async (req: Request, res: Response) => {
         }
       })
     }
-    res.json({ success: true, data: settings })
+    return c.json({ success: true, data: settings })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to load settings' })
+    return c.json({ success: false, error: 'Failed to load settings' }, 500)
   }
 })
 
-// Update Global Settings (Admin Only)
-router.put('/settings', authenticate, requireAdmin, async (req: Request, res: Response) => {
+router.put('/settings', authenticate, requireAdmin, async (c) => {
   try {
-    const { siteName, siteDesc, keywords } = req.body
+    const prisma = getPrisma(c.env.DB)
+    const { siteName, siteDesc, keywords } = await c.req.json()
     const settings = await prisma.settings.upsert({
       where: { id: 'global' },
       update: { siteName, siteDesc, keywords },
       create: { id: 'global', siteName, siteDesc, keywords }
     })
-    res.json({ success: true, data: settings })
+    return c.json({ success: true, data: settings })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to update settings' })
+    return c.json({ success: false, error: 'Failed to update settings' }, 500)
   }
 })
 
-// Generate Sitemap.xml dynamically
-router.get('/sitemap.xml', async (req: Request, res: Response) => {
+router.get('/sitemap.xml', async (c) => {
   try {
+    const prisma = getPrisma(c.env.DB)
     const blogs = await prisma.blog.findMany({
       where: { published: true },
       select: { slug: true, updatedAt: true }
     })
 
-    const baseUrl = process.env.CLIENT_URL || 'https://visaplus.com'
-    
-    // Core Static Routes
-    const staticPages = [
-      '',
-      '/about',
-      '/contact',
-      '/apply',
-      '/visas/schengen',
-      '/blog'
-    ]
+    const baseUrl = 'https://visaplus.com'
 
-    let xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`
+    const staticPages = ['', '/about', '/contact', '/apply', '/visas/schengen', '/blog']
 
-    // Add Static Pages
+    let xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`
+
     staticPages.forEach(page => {
-      xml += `
-  <url>
-    <loc>${baseUrl}${page}</loc>
-    <changefreq>weekly</changefreq>
-    <priority>${page === '' ? '1.0' : '0.8'}</priority>
-  </url>`
+      xml += `\n  <url>\n    <loc>${baseUrl}${page}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>${page === '' ? '1.0' : '0.8'}</priority>\n  </url>`
     })
 
-    // Add Dynamic Blog Posts
     blogs.forEach(blog => {
-      xml += `
-  <url>
-    <loc>${baseUrl}/blog/${blog.slug}</loc>
-    <lastmod>${blog.updatedAt.toISOString().split('T')[0]}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>`
+      xml += `\n  <url>\n    <loc>${baseUrl}/blog/${blog.slug}</loc>\n    <lastmod>${blog.updatedAt.toISOString().split('T')[0]}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>0.7</priority>\n  </url>`
     })
 
     xml += `\n</urlset>`
 
-    res.header('Content-Type', 'application/xml')
-    res.send(xml)
+    c.header('Content-Type', 'application/xml')
+    return c.body(xml)
   } catch (error) {
-    res.status(500).send('Error generating sitemap')
+    return c.text('Error generating sitemap', 500)
   }
 })
 
-// Generate robots.txt dynamically
-router.get('/robots.txt', (req: Request, res: Response) => {
-  const baseUrl = process.env.CLIENT_URL || 'https://visaplus.com'
-  const robots = `User-agent: *
-Allow: /
-Disallow: /admin/
-Disallow: /portal/
-Disallow: /api/
-
-Sitemap: ${baseUrl}/api/seo/sitemap.xml`
-
-  res.header('Content-Type', 'text/plain')
-  res.send(robots)
+router.get('/robots.txt', async (c) => {
+  const baseUrl = 'https://visaplus.com'
+  const robots = `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /portal/\nDisallow: /api/\n\nSitemap: ${baseUrl}/api/seo/sitemap.xml`
+  c.header('Content-Type', 'text/plain')
+  return c.body(robots)
 })
 
-// Ping Google manually (Simulation for Admin tool)
-router.post('/ping-google', authenticate, requireAdmin, async (req: Request, res: Response) => {
-  // In a real scenario, this would make a request to Google's ping endpoint
-  // Example: fetch(`http://www.google.com/ping?sitemap=${baseUrl}/api/seo/sitemap.xml`)
-  
-  // Simulate delay
+router.post('/ping-google', authenticate, requireAdmin, async (c) => {
   await new Promise(resolve => setTimeout(resolve, 1000))
-  
-  res.json({ success: true, message: 'Sitemap successfully submitted to Google' })
+  return c.json({ success: true, message: 'Sitemap successfully submitted to Google' })
 })
 
 export default router

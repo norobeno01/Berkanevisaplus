@@ -1,54 +1,38 @@
-import express, { type Request, type Response } from 'express'
-import { knowledgeBase } from '../data/chatbotKnowledge.js'
+import { Hono } from 'hono'
 
-const router = express.Router()
+// Simple mock chatbot handler for the edge since we just echo mock data in this demo
+const router = new Hono()
 
-// Advanced Keyword-based Mock Chatbot
-router.post('/', async (req: Request, res: Response) => {
+const KNOWLEDGE_BASE = [
+  { keywords: ['schengen', 'europe', 'france', 'spain'], response: 'For Schengen visas, you typically need a valid passport, travel insurance, proof of accommodation, and financial means. Processing takes 15-30 days.' },
+  { keywords: ['price', 'cost', 'fee', 'how much'], response: 'Our service fees start at €50 for basic consultation. Full application processing ranges from €100-€300 depending on the destination.' },
+  { keywords: ['canada', 'express entry'], response: 'Canadian visas require comprehensive documentation. We assist with Express Entry, Study Permits, and Visitor Visas. Processing times vary significantly.' },
+  { keywords: ['time', 'how long', 'duration'], response: 'Processing times vary by embassy. Schengen is usually 2-4 weeks, USA can be several months for appointments, and Canada takes 1-3 months.' },
+  { keywords: ['hello', 'hi', 'hey'], response: 'Hello! I am the VisaPlus AI assistant. How can I help you with your visa or immigration questions today?' },
+  { keywords: ['contact', 'phone', 'address', 'where'], response: 'You can reach us at contact@visaplus.com or call +212 5XX XX XX XX. Our office is located in Berkane, Morocco.' }
+]
+
+router.post('/', async (c) => {
   try {
-    const { message, lang = 'en' } = req.body
-    
-    if (!message) {
-      return res.status(400).json({ success: false, error: 'Message is required' })
-    }
+    const { message } = await c.req.json()
+    if (!message) return c.json({ success: false, error: 'Message is required' }, 400)
 
-    const text = message.toLowerCase()
-    
-    // Default fallback responses based on language
-    const fallbackResponses: Record<string, string> = {
-      en: "I'm your VisaPlus virtual assistant. For specific inquiries, I recommend booking a free consultation on our Apply page, or you can ask me another question about Schengen, Canada, US, or UK visas!",
-      fr: "Je suis votre assistant virtuel VisaPlus. Pour des questions spécifiques, je vous recommande de réserver une consultation gratuite sur notre page Postuler, ou posez-moi une autre question sur les visas Schengen, Canada, USA, ou UK !",
-      ar: "أنا مساعدك الافتراضي من VisaPlus. للاستفسارات المحددة، أوصي بحجز استشارة مجانية في صفحة التقديم، أو يمكنك سؤالي سؤالاً آخر حول تأشيرات شنغن، كندا، أمريكا، أو بريطانيا!",
-      es: "Soy su asistente virtual de VisaPlus. Para consultas específicas, le recomiendo reservar una consulta gratuita en nuestra página de Aplicación, ¡o puede hacerme otra pregunta sobre visas Schengen, Canadá, EE.UU. o Reino Unido!"
-    }
+    const userMessage = message.toLowerCase()
+    let response = "I'm not sure I understand. Could you rephrase your question about visas, pricing, or specific countries?"
 
-    let response = fallbackResponses[lang] || fallbackResponses['en']
-    let highestMatchScore = 0
-
-    // Matching Algorithm
-    for (const kb of knowledgeBase) {
-      let matchCount = 0
-      for (const keyword of kb.keywords) {
-        if (text.includes(keyword)) {
-          matchCount++
-        }
-      }
-
-      // If we found matches, and it's better than our previous best match
-      if (matchCount > 0 && matchCount > highestMatchScore) {
-        highestMatchScore = matchCount
-        // Safely access the requested language, fallback to English if not found
-        response = (kb.responses as any)[lang] || kb.responses['en']
+    for (const entry of KNOWLEDGE_BASE) {
+      if (entry.keywords.some(kw => userMessage.includes(kw))) {
+        response = entry.response
+        break
       }
     }
 
-    // Simulate human typing delay
-    await new Promise(resolve => setTimeout(resolve, 800 + Math.random() * 800))
+    // Simulate thinking delay
+    await new Promise(resolve => setTimeout(resolve, 1000))
 
-    res.json({ success: true, reply: response })
+    return c.json({ success: true, response })
   } catch (error) {
-    console.error("Chatbot error:", error)
-    res.status(500).json({ success: false, error: 'Chatbot encountered an error' })
+    return c.json({ success: false, error: 'Chatbot error' }, 500)
   }
 })
 

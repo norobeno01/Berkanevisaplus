@@ -1,64 +1,65 @@
-import express, { type Request, type Response } from 'express'
-import { PrismaClient } from '@prisma/client'
-import { authenticate, requireAdmin } from './auth.js'
+import { Hono } from 'hono'
+import { getPrisma } from '../db'
+import { authenticate, requireAdmin, type Bindings, type Variables } from './auth'
 
-const router = express.Router()
-const prisma = new PrismaClient()
+const router = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-// GET all active services (Public)
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', async (c) => {
   try {
+    const prisma = getPrisma(c.env.DB)
     const services = await prisma.service.findMany({ where: { active: true } })
-    res.json({ success: true, data: services })
+    return c.json({ success: true, data: services })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to load services' })
+    return c.json({ success: false, error: 'Failed to load services' }, 500)
   }
 })
 
-// GET all services including inactive (Admin)
-router.get('/all', authenticate, requireAdmin, async (req: Request, res: Response) => {
+router.get('/all', authenticate, requireAdmin, async (c) => {
   try {
+    const prisma = getPrisma(c.env.DB)
     const services = await prisma.service.findMany()
-    res.json({ success: true, data: services })
+    return c.json({ success: true, data: services })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to load services' })
+    return c.json({ success: false, error: 'Failed to load services' }, 500)
   }
 })
 
-// POST create service (Admin)
-router.post('/', authenticate, requireAdmin, async (req: Request, res: Response) => {
+router.post('/', authenticate, requireAdmin, async (c) => {
   try {
-    const { title, description, icon, active } = req.body
+    const prisma = getPrisma(c.env.DB)
+    const { title, description, icon, active } = await c.req.json()
     const service = await prisma.service.create({
       data: { title, description, icon, active }
     })
-    res.json({ success: true, data: service })
+    return c.json({ success: true, data: service })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to create service' })
+    return c.json({ success: false, error: 'Failed to create service' }, 500)
   }
 })
 
-// PUT update service (Admin)
-router.put('/:id', authenticate, requireAdmin, async (req: Request, res: Response) => {
+router.put('/:id', authenticate, requireAdmin, async (c) => {
   try {
-    const { title, description, icon, active } = req.body
+    const prisma = getPrisma(c.env.DB)
+    const id = c.req.param('id')
+    const { title, description, icon, active } = await c.req.json()
     const service = await prisma.service.update({
-      where: { id: req.params.id },
+      where: { id },
       data: { title, description, icon, active }
     })
-    res.json({ success: true, data: service })
+    return c.json({ success: true, data: service })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to update service' })
+    return c.json({ success: false, error: 'Failed to update service' }, 500)
   }
 })
 
-// DELETE service (Admin)
-router.delete('/:id', authenticate, requireAdmin, async (req: Request, res: Response) => {
+router.delete('/:id', authenticate, requireAdmin, async (c) => {
   try {
-    await prisma.service.delete({ where: { id: req.params.id } })
-    res.json({ success: true })
+    const prisma = getPrisma(c.env.DB)
+    const id = c.req.param('id')
+    await prisma.service.delete({ where: { id } })
+    return c.json({ success: true })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to delete service' })
+    return c.json({ success: false, error: 'Failed to delete service' }, 500)
   }
 })
 

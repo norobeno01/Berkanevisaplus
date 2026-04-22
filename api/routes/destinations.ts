@@ -1,64 +1,65 @@
-import express, { type Request, type Response } from 'express'
-import { PrismaClient } from '@prisma/client'
-import { authenticate, requireAdmin } from './auth.js'
+import { Hono } from 'hono'
+import { getPrisma } from '../db'
+import { authenticate, requireAdmin, type Bindings, type Variables } from './auth'
 
-const router = express.Router()
-const prisma = new PrismaClient()
+const router = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-// GET all active destinations (Public)
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', async (c) => {
   try {
+    const prisma = getPrisma(c.env.DB)
     const destinations = await prisma.destination.findMany({ where: { active: true } })
-    res.json({ success: true, data: destinations })
+    return c.json({ success: true, data: destinations })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to load destinations' })
+    return c.json({ success: false, error: 'Failed to load destinations' }, 500)
   }
 })
 
-// GET all destinations including inactive (Admin)
-router.get('/all', authenticate, requireAdmin, async (req: Request, res: Response) => {
+router.get('/all', authenticate, requireAdmin, async (c) => {
   try {
+    const prisma = getPrisma(c.env.DB)
     const destinations = await prisma.destination.findMany()
-    res.json({ success: true, data: destinations })
+    return c.json({ success: true, data: destinations })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to load destinations' })
+    return c.json({ success: false, error: 'Failed to load destinations' }, 500)
   }
 })
 
-// POST create destination (Admin)
-router.post('/', authenticate, requireAdmin, async (req: Request, res: Response) => {
+router.post('/', authenticate, requireAdmin, async (c) => {
   try {
-    const { name, type, processingTime, fee, description, image, requirements, active } = req.body
+    const prisma = getPrisma(c.env.DB)
+    const { name, type, processingTime, fee, description, image, requirements, active } = await c.req.json()
     const destination = await prisma.destination.create({
       data: { name, type, processingTime, fee, description, image, requirements, active }
     })
-    res.json({ success: true, data: destination })
+    return c.json({ success: true, data: destination })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to create destination' })
+    return c.json({ success: false, error: 'Failed to create destination' }, 500)
   }
 })
 
-// PUT update destination (Admin)
-router.put('/:id', authenticate, requireAdmin, async (req: Request, res: Response) => {
+router.put('/:id', authenticate, requireAdmin, async (c) => {
   try {
-    const { name, type, processingTime, fee, description, image, requirements, active } = req.body
+    const prisma = getPrisma(c.env.DB)
+    const id = c.req.param('id')
+    const { name, type, processingTime, fee, description, image, requirements, active } = await c.req.json()
     const destination = await prisma.destination.update({
-      where: { id: req.params.id },
+      where: { id },
       data: { name, type, processingTime, fee, description, image, requirements, active }
     })
-    res.json({ success: true, data: destination })
+    return c.json({ success: true, data: destination })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to update destination' })
+    return c.json({ success: false, error: 'Failed to update destination' }, 500)
   }
 })
 
-// DELETE destination (Admin)
-router.delete('/:id', authenticate, requireAdmin, async (req: Request, res: Response) => {
+router.delete('/:id', authenticate, requireAdmin, async (c) => {
   try {
-    await prisma.destination.delete({ where: { id: req.params.id } })
-    res.json({ success: true })
+    const prisma = getPrisma(c.env.DB)
+    const id = c.req.param('id')
+    await prisma.destination.delete({ where: { id } })
+    return c.json({ success: true })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to delete destination' })
+    return c.json({ success: false, error: 'Failed to delete destination' }, 500)
   }
 })
 

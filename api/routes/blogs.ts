@@ -1,34 +1,35 @@
-import express, { type Request, type Response } from 'express'
-import { PrismaClient } from '@prisma/client'
+import { Hono } from 'hono'
+import { getPrisma } from '../db'
+import { authenticate, requireAdmin, type Bindings, type Variables } from './auth'
 
-const router = express.Router()
-const prisma = new PrismaClient()
+const router = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-// GET all published blogs
-router.get('/', async (req: Request, res: Response) => {
+router.get('/', async (c) => {
   try {
+    const prisma = getPrisma(c.env.DB)
     const blogs = await prisma.blog.findMany({
       where: { published: true },
       orderBy: { createdAt: 'desc' }
     })
-    res.json({ success: true, data: blogs })
+    return c.json({ success: true, data: blogs })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to load blogs' })
+    return c.json({ success: false, error: 'Failed to load blogs' }, 500)
   }
 })
 
-// GET single blog by slug
-router.get('/:slug', async (req: Request, res: Response) => {
+router.get('/:slug', async (c) => {
   try {
+    const prisma = getPrisma(c.env.DB)
+    const slug = c.req.param('slug')
     const blog = await prisma.blog.findUnique({
-      where: { slug: req.params.slug }
+      where: { slug }
     })
     if (!blog || !blog.published) {
-      return res.status(404).json({ success: false, error: 'Blog not found' })
+      return c.json({ success: false, error: 'Blog not found' }, 404)
     }
-    res.json({ success: true, data: blog })
+    return c.json({ success: true, data: blog })
   } catch (error) {
-    res.status(500).json({ success: false, error: 'Failed to load blog' })
+    return c.json({ success: false, error: 'Failed to load blog' }, 500)
   }
 })
 

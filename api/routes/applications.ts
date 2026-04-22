@@ -1,62 +1,84 @@
-import express, { type Request, type Response } from 'express'
-import { authenticate, requireAdmin } from './auth.js'
+import { Hono } from 'hono'
+import { getPrisma } from '../db'
+import { authenticate, requireAdmin, type Bindings, type Variables } from './auth'
 
-const router = express.Router()
+const router = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-// Mock Database
-const applications = [  {
-    id: "APP-2024-001",
-    client: "Ahmed M.",
-    clientId: "1",
-    destination: "France",
-    type: "Tourist",
-    status: "Review",
-    days: 3,
-    progress: 60
-  },
-  {
-    id: "APP-2024-002",
-    client: "Fatima Z.",
-    clientId: "2",
-    destination: "Canada",
-    type: "Student",
-    status: "Review",
-    days: 1,
-    progress: 40
-  },
-  {
-    id: "APP-2024-003",
-    client: "Youssef B.",
-    clientId: "3",
-    destination: "Spain",
-    type: "Work",
-    status: "Submitted",
-    days: 12,
-    progress: 90
+router.get('/', authenticate, requireAdmin, async (c) => {
+  try {
+    const prisma = getPrisma(c.env.DB)
+    const applications = await prisma.application.findMany({
+      include: {
+        user: { select: { name: true, email: true, phone: true } },
+        service: { select: { title: true } },
+        destination: { select: { name: true } }
+      },
+      orderBy: { createdAt: 'desc' }
+    })
+    return c.json({ success: true, data: applications })
+  } catch (error) {
+    return c.json({ success: false, error: 'Failed to load applications' }, 500)
   }
-]
-
-router.get('/', authenticate, requireAdmin, (req: Request, res: Response) => {
-  res.json({
-    success: true,
-    data: applications
-  })
 })
 
-router.get('/client/:clientId', authenticate, (req: Request, res: Response) => {
-  // If not admin, they can only request their own applications
-  if (req.user?.role === 'CLIENT' && req.user.id !== req.params.clientId) {
-    return res.status(403).json({ success: false, error: 'Forbidden' })
+router.get('/my-applications', authenticate, async (c) => {
+  try {
+    const prisma = getPrisma(c.env.DB)
+    const user = c.get('user')
+    const applications = await prisma.application.findMany({
+      where: { userId: user.id },
+      include: {
+        service: { select: { title: true } },
+        destination: { select: { name: true } }
+      },
+      orderBy: { createdAt: 'desc' }
+    })
+    return c.json({ success: true, data: applications })
+  } catch (error) {
+    return c.json({ success: false, error: 'Failed to load applications' }, 500)
   }
+})
 
-  const { clientId } = req.params
-  // Since we use mock data and user IDs are now generated UUIDs,
-  // we just return the mock data for demonstration if they don't match the mock client IDs exactly.
-  const clientApps = applications.filter(app => app.clientId === clientId)
-  res.json({
-    success: true,
-    data: clientApps.length > 0 ? clientApps : applications.slice(0, 1) // Fallback to 1 app for demo
-  })
+router.post('/', authenticate, async (c) => {
+  try {
+    const prisma = getPrisma(c.env.DB)
+    const user = c.get('user')
+    const { serviceId, destinationId, passportNumber, nationality, departureDate, returnDate } = await c.req.json()
+
+    const application = await prisma.application.create({
+      data: {
+        userId: user.id,
+        serviceId,
+        destinationId,
+        passportNumber,
+        nationality,
+        departureDate: new Date(departureDate),
+        returnDate: returnDate ? new Date(returnDate) : null,
+        status: 'PENDING'
+      }
+    })
+
+    return c.json({ success: true, data: application })
+  } catch (error) {
+    return c.json({ success: false, error: 'Failed to submit application' }, 500)
+  }
+})
+
+router.put('/:id/status', authenticate, requireAdmin, async (c) => {
+  try {
+    const prisma = getPrisma(c.env.DB)
+    const id = c.req.param('id')
+    const { status } = await c.req.json()
+
+    const application = await prisma.application.update({
+      where: { id },
+      data: { status }
+    })
+
+    return c.json({ success: true, data: application })
+  } catch (error) {
+    return c.json({ success: false, error: 'Failed to update status' }, 500)
+  }
 })
 
 export default router

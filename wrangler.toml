@@ -1,0 +1,8 @@
+name = "visaplus-api"
+main = "api/server.ts"
+compatibility_date = "2024-04-22"
+
+[[d1_databases]]
+binding = "DB" # i.e. available in your Worker on env.DB
+database_name = "visaplus"
+database_id = "e02b28be-99d8-48e2-9fc5-ca8579751a39"
