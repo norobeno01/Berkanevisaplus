@@ -137,7 +137,12 @@ export default function Admin() {
             instagram: data.data.instagram || '',
             linkedin: data.data.linkedin || '',
             x: data.data.x || '',
-            tiktok: data.data.tiktok || ''
+            tiktok: data.data.tiktok || '',
+            address: data.data.address || '',
+            phone: data.data.phone || '',
+            email: data.data.email || '',
+            whatsapp: data.data.whatsapp || '',
+            workingHours: data.data.workingHours || ''
           })
         }
       })
@@ -438,7 +443,7 @@ export default function Admin() {
 
   const [newAdmin, setNewAdmin] = useState({ name: '', email: '', password: '', phone: '' })
   const [adminStatus, setAdminStatus] = useState({ loading: false, message: '', isError: false })
-  const [socialLinks, setSocialLinks] = useState({ facebook: '', instagram: '', linkedin: '', x: '', tiktok: '' })
+  const [socialLinks, setSocialLinks] = useState({ facebook: '', instagram: '', linkedin: '', x: '', tiktok: '', address: '', phone: '', email: '', whatsapp: '', workingHours: '' })
   const [socialStatus, setSocialStatus] = useState({ loading: false, message: '', isError: false })
 
   const handleCreateAdmin = async (e: React.FormEvent) => {
@@ -527,67 +532,65 @@ export default function Admin() {
         </CardContent>
       </Card>
 
-      <Card className="glass-panel border-border">
-        <CardHeader>
-          <CardTitle className="text-xl font-display text-foreground">General Information</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">Agency Name</label>
-              <Input defaultValue="VisaPlus Berkane" className="bg-card border-border text-foreground" />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">Support Email</label>
-              <Input defaultValue="contact@visaplus-berkane.ma" className="bg-card border-border text-foreground" />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">Office Phone</label>
-              <Input defaultValue="+212 536 61 23 45" className="bg-card border-border text-foreground" />
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-muted-foreground">WhatsApp Business API</label>
-              <Input defaultValue="+212 600 11 22 33" className="bg-card border-border text-foreground" />
-            </div>
-            <div className="space-y-2 md:col-span-2">
-              <label className="text-sm font-medium text-muted-foreground">Office Address</label>
-              <Input defaultValue="123 Boulevard Mohammed V, Berkane 60300, Morocco" className="bg-card border-border text-foreground" />
-            </div>
-          </div>
-          <div className="pt-6 border-t border-border flex justify-end">
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">Save Changes</Button>
-          </div>
-        </CardContent>
-      </Card>
 
-      <Card className="glass-panel border-border">
+      <Card className="glass-panel border-border mt-8">
         <CardHeader>
-          <CardTitle className="text-xl font-display text-foreground">Social Media Links</CardTitle>
+          <CardTitle className="text-xl font-display text-foreground">Global Contact & Social Settings</CardTitle>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSaveSocials} className="space-y-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-muted-foreground">Facebook URL</label>
-                <Input value={socialLinks.facebook} onChange={e => setSocialLinks({...socialLinks, facebook: e.target.value})} placeholder="https://facebook.com/..." className="bg-card border-border text-foreground" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-muted-foreground">Instagram URL</label>
-                <Input value={socialLinks.instagram} onChange={e => setSocialLinks({...socialLinks, instagram: e.target.value})} placeholder="https://instagram.com/..." className="bg-card border-border text-foreground" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-muted-foreground">LinkedIn URL</label>
-                <Input value={socialLinks.linkedin} onChange={e => setSocialLinks({...socialLinks, linkedin: e.target.value})} placeholder="https://linkedin.com/..." className="bg-card border-border text-foreground" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-muted-foreground">X (Twitter) URL</label>
-                <Input value={socialLinks.x} onChange={e => setSocialLinks({...socialLinks, x: e.target.value})} placeholder="https://x.com/..." className="bg-card border-border text-foreground" />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-muted-foreground">TikTok URL</label>
-                <Input value={socialLinks.tiktok} onChange={e => setSocialLinks({...socialLinks, tiktok: e.target.value})} placeholder="https://tiktok.com/@..." className="bg-card border-border text-foreground" />
+            <div className="space-y-4">
+              <h3 className="font-semibold text-lg text-foreground border-b border-border pb-2">Contact Information</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Office Address</label>
+                  <Input value={socialLinks.address} onChange={e => setSocialLinks({...socialLinks, address: e.target.value})} placeholder="123 Boulevard..." className="bg-card border-border text-foreground" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Office Phone</label>
+                  <Input value={socialLinks.phone} onChange={e => setSocialLinks({...socialLinks, phone: e.target.value})} placeholder="+212 536..." className="bg-card border-border text-foreground" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">WhatsApp Business API</label>
+                  <Input value={socialLinks.whatsapp} onChange={e => setSocialLinks({...socialLinks, whatsapp: e.target.value})} placeholder="+212 600..." className="bg-card border-border text-foreground" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Email Address</label>
+                  <Input type="email" value={socialLinks.email} onChange={e => setSocialLinks({...socialLinks, email: e.target.value})} placeholder="contact@..." className="bg-card border-border text-foreground" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Working Hours</label>
+                  <Input value={socialLinks.workingHours} onChange={e => setSocialLinks({...socialLinks, workingHours: e.target.value})} placeholder="Mon-Fri: 09:00 - 18:00..." className="bg-card border-border text-foreground" />
+                </div>
               </div>
             </div>
+
+            <div className="space-y-4 pt-4">
+              <h3 className="font-semibold text-lg text-foreground border-b border-border pb-2">Social Media Links</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Facebook URL</label>
+                  <Input value={socialLinks.facebook} onChange={e => setSocialLinks({...socialLinks, facebook: e.target.value})} placeholder="https://facebook.com/..." className="bg-card border-border text-foreground" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Instagram URL</label>
+                  <Input value={socialLinks.instagram} onChange={e => setSocialLinks({...socialLinks, instagram: e.target.value})} placeholder="https://instagram.com/..." className="bg-card border-border text-foreground" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">LinkedIn URL</label>
+                  <Input value={socialLinks.linkedin} onChange={e => setSocialLinks({...socialLinks, linkedin: e.target.value})} placeholder="https://linkedin.com/..." className="bg-card border-border text-foreground" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">X (Twitter) URL</label>
+                  <Input value={socialLinks.x} onChange={e => setSocialLinks({...socialLinks, x: e.target.value})} placeholder="https://x.com/..." className="bg-card border-border text-foreground" />
+                </div>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">TikTok URL</label>
+                  <Input value={socialLinks.tiktok} onChange={e => setSocialLinks({...socialLinks, tiktok: e.target.value})} placeholder="https://tiktok.com/@..." className="bg-card border-border text-foreground" />
+                </div>
+              </div>
+            </div>
+            
             {socialStatus.message && (
               <p className={`text-sm ${socialStatus.isError ? 'text-red-500' : 'text-green-500'}`}>
                 {socialStatus.message}
@@ -595,7 +598,7 @@ export default function Admin() {
             )}
             <div className="flex justify-end pt-4">
               <Button type="submit" disabled={socialStatus.loading} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
-                {socialStatus.loading ? 'Saving...' : 'Save Social Links'}
+                {socialStatus.loading ? 'Saving...' : 'Save Settings'}
               </Button>
             </div>
           </form>

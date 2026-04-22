@@ -21,7 +21,12 @@ router.get('/', async (c) => {
         instagram: config.instagram || '',
         linkedin: config.linkedin || '',
         x: config.x || '',
-        tiktok: config.tiktok || ''
+        tiktok: config.tiktok || '',
+        address: config.address || '123 Boulevard Mohammed V, Berkane 60300, Morocco',
+        phone: config.phone || '+212 536 61 23 45',
+        email: config.email || 'contact@visaplus-berkane.ma',
+        whatsapp: config.whatsapp || '+212 600 11 22 33',
+        workingHours: config.workingHours || 'Mon-Fri: 09:00 - 18:00\nSat: 09:00 - 13:00'
       }
     })
   } catch (error) {

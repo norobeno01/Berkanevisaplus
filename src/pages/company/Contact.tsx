@@ -4,9 +4,27 @@ import { MapPin, Mail, Phone, Clock, MessageCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { useState, useEffect } from 'react'
 
 export default function Contact() {
   const { t } = useTranslation()
+  const [settings, setSettings] = useState({
+    phone: "+212 536 61 23 45",
+    email: "contact@visaplus-berkane.ma",
+    whatsapp: "+212 600 11 22 33",
+    workingHours: "Mon-Fri: 09:00 - 18:00\nSat: 09:00 - 13:00"
+  })
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then(res => res.json() as any)
+      .then(data => {
+        if (data.success && data.data) {
+          setSettings(prev => ({ ...prev, ...data.data }))
+        }
+      })
+      .catch(console.error)
+  }, [])
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -97,7 +115,7 @@ export default function Contact() {
                       <Phone className="h-6 w-6" />
                     </div>
                     <h3 className="font-display font-bold text-lg text-foreground">{t('contact.callUs')}</h3>
-                    <p className="text-muted-foreground" dir="ltr">+212 536 61 23 45</p>
+                    <p className="text-muted-foreground" dir="ltr">{settings.phone}</p>
                   </CardContent>
                 </Card>
 
@@ -107,7 +125,7 @@ export default function Contact() {
                       <Mail className="h-6 w-6" />
                     </div>
                     <h3 className="font-display font-bold text-lg text-foreground">{t('contact.emailUs')}</h3>
-                    <p className="text-muted-foreground">contact@visaplus-berkane.ma</p>
+                    <p className="text-muted-foreground">{settings.email}</p>
                   </CardContent>
                 </Card>
 
@@ -117,7 +135,7 @@ export default function Contact() {
                       <MessageCircle className="h-6 w-6" />
                     </div>
                     <h3 className="font-display font-bold text-lg text-foreground">{t('contact.whatsapp')}</h3>
-                    <p className="text-muted-foreground" dir="ltr">+212 600 11 22 33</p>
+                    <p className="text-muted-foreground" dir="ltr">{settings.whatsapp}</p>
                   </CardContent>
                 </Card>
 
@@ -127,7 +145,7 @@ export default function Contact() {
                       <Clock className="h-6 w-6" />
                     </div>
                     <h3 className="font-display font-bold text-lg text-foreground">{t('contact.workingHours')}</h3>
-                    <p className="text-muted-foreground">{t('contactPage.workingHoursTime', 'Mon-Fri: 09:00 - 18:00')}</p>
+                    <p className="text-muted-foreground whitespace-pre-line">{settings.workingHours}</p>
                   </CardContent>
                 </Card>
               </div>
@@ -150,7 +168,7 @@ export default function Contact() {
 
       {/* Floating WhatsApp Button */}
       <a 
-        href="https://wa.me/212600112233" 
+        href={`https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}`} 
         target="_blank" 
         rel="noreferrer"
         className="fixed bottom-6 right-6 z-50 h-14 w-14 rounded-full bg-green-500 hover:bg-green-600 flex items-center justify-center text-foreground shadow-lg shadow-green-500/30 hover:scale-110 transition-transform"

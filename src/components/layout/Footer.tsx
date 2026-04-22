@@ -24,7 +24,11 @@ export default function Footer() {
     instagram: "https://instagram.com/visaplus",
     linkedin: "https://linkedin.com/company/visaplus",
     x: "https://x.com/visaplus",
-    tiktok: "https://tiktok.com/@visaplus"
+    tiktok: "https://tiktok.com/@visaplus",
+    address: "123 Boulevard Mohammed V, Berkane 60300, Morocco",
+    phone: "+212 536 61 23 45",
+    email: "contact@visaplus-berkane.ma",
+    workingHours: "Mon-Fri: 09:00 - 18:00\nSat: 09:00 - 13:00"
   })
 
   useEffect(() => {
@@ -103,19 +107,19 @@ export default function Footer() {
             <ul className="space-y-4 text-sm text-muted-foreground">
               <li className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-gold-400 shrink-0 mt-0.5" />
-                <span>123 Boulevard Mohammed V, Berkane 60300, Morocco</span>
+                <span>{socialLinks.address}</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-gold-400 shrink-0" />
-                <span dir="ltr">+212 536 61 23 45</span>
+                <span dir="ltr">{socialLinks.phone}</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 text-gold-400 shrink-0" />
-                <span>contact@visaplus-berkane.ma</span>
+                <span>{socialLinks.email}</span>
               </li>
               <li className="flex items-start space-x-3">
                 <Clock className="h-5 w-5 text-gold-400 shrink-0 mt-0.5" />
-                <span>Mon-Fri: 09:00 - 18:00<br/>Sat: 09:00 - 13:00</span>
+                <span className="whitespace-pre-line">{socialLinks.workingHours}</span>
               </li>
             </ul>
           </div>
