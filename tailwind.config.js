@@ -17,9 +17,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['"DM Sans"', 'sans-serif'],
-        display: ['"Playfair Display"', 'serif'],
-        arabic: ['"Noto Naskh Arabic"', 'serif'],
+        sans: ['"DM Sans"', '"Cairo"', 'sans-serif'],
+        display: ['"Playfair Display"', '"Cairo"', 'serif'],
+        arabic: ['"Cairo"', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",

@@ -12,6 +12,8 @@ import { Badge } from '@/components/ui/badge'
 import { useEffect, useState } from 'react'
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import ReactMarkdown from 'react-markdown'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 import { blogPosts as initialBlogPosts } from '@/data/blog'
 
 import { useAuthStore } from '@/store/authStore'
@@ -69,7 +71,18 @@ export default function Admin() {
   const { t } = useTranslation()
   const { token, user } = useAuthStore()
   const [pipeline, setPipeline] = useState<Application[]>([])
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'applications' | 'crm' | 'documents' | 'calendar' | 'financial' | 'communications' | 'blog' | 'settings' | 'seo'>('dashboard')
+  const [dashboardStats, setDashboardStats] = useState<any>({
+    users: 0,
+    applications: 0,
+    pendingApplications: 0,
+    appointments: 0,
+    pendingAppointments: 0,
+    blogs: 0
+  })
+  const [usersList, setUsersList] = useState<any[]>([])
+  const [appointmentsList, setAppointmentsList] = useState<any[]>([])
+  const [applicationsList, setApplicationsList] = useState<any[]>([])
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'applications' | 'crm' | 'documents' | 'calendar' | 'financial' | 'communications' | 'blog' | 'settings' | 'seo' | 'services'>('dashboard')
   const [selectedApp, setSelectedApp] = useState<Application | null>(null)
   
   // Blog State
@@ -84,27 +97,69 @@ export default function Admin() {
   const [sitemapLoading, setSitemapLoading] = useState(false)
 
   useEffect(() => {
+    if (!token) return
+
     fetch('/api/applications', {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
+      headers: { 'Authorization': `Bearer ${token}` }
     })
       .then(res => res.json() as any)
       .then(data => {
         if (data.success) setPipeline(data.data)
       })
+
+    fetch('/api/auth/stats', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+      .then(res => res.json() as any)
+      .then(data => {
+        if (data.success) {
+          if (data.stats) setDashboardStats(data.stats)
+          if (data.users) setUsersList(data.users)
+          if (data.appointments) setAppointmentsList(data.appointments)
+          if (data.applications) setApplicationsList(data.applications)
+        }
+      })
   }, [token])
 
   const stats = [
-    { title: "Total Clients", value: "1,248", icon: <Users className="h-5 w-5 text-primary" />, trend: "+12%" },
-    { title: "Active Applications", value: "156", icon: <Activity className="h-5 w-5 text-gold-500" />, trend: "+4%" },
-    { title: "Approved Visas", value: "892", icon: <FileCheck className="h-5 w-5 text-green-500" />, trend: "+18%" },
-    { title: "Revenue (MAD)", value: "142k", icon: <CreditCard className="h-5 w-5 text-purple-500" />, trend: "+8%" },
+    { title: "Total Clients", value: dashboardStats.users.toString(), icon: <Users className="h-5 w-5 text-primary" />, trend: "+12%" },
+    { title: "Total Applications", value: dashboardStats.applications.toString(), icon: <Activity className="h-5 w-5 text-gold-500" />, trend: "+4%" },
+    { title: "Pending Apps", value: dashboardStats.pendingApplications.toString(), icon: <FileCheck className="h-5 w-5 text-green-500" />, trend: "+18%" },
+    { title: "Published Blogs", value: dashboardStats.blogs.toString(), icon: <PenTool className="h-5 w-5 text-purple-500" />, trend: "+8%" },
   ]
 
   const insertMarkdown = (prefix: string, suffix: string = '') => {
     setMarkdownContent(prev => prev + `${prefix}text${suffix}`)
   }
+
+  const [seoScore, setSeoScore] = useState(0)
+  const [seoSuggestions, setSeoSuggestions] = useState<string[]>([])
+
+  useEffect(() => {
+    // Calculate simple SEO score
+    let score = 100
+    let suggestions = []
+    
+    if (!editingBlog?.title || editingBlog.title.length < 10) {
+      score -= 20
+      suggestions.push("Title is too short. Aim for at least 40 characters.")
+    }
+    if (!markdownContent || markdownContent.length < 300) {
+      score -= 30
+      suggestions.push("Content is too thin. Write at least 300 words for better ranking.")
+    }
+    if (markdownContent && !markdownContent.includes('<h2>') && !markdownContent.includes('<h3>')) {
+      score -= 15
+      suggestions.push("Use headings (H2, H3) to structure your content.")
+    }
+    if (markdownContent && !markdownContent.includes('<img')) {
+      score -= 10
+      suggestions.push("Include images in your content to improve engagement.")
+    }
+
+    setSeoScore(Math.max(0, score))
+    setSeoSuggestions(suggestions)
+  }, [editingBlog?.title, markdownContent])
 
   const renderBlog = () => {
     if (editingBlog) {
@@ -153,20 +208,50 @@ export default function Admin() {
                   </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  {/* Toolbar */}
-                  <div className="flex gap-2 p-2 bg-card rounded-md border border-border">
-                    <Button size="icon" variant="ghost" onClick={() => insertMarkdown('**', '**')} className="h-8 w-8 text-muted-foreground hover:text-foreground"><Bold className="h-4 w-4"/></Button>
-                    <Button size="icon" variant="ghost" onClick={() => insertMarkdown('*', '*')} className="h-8 w-8 text-muted-foreground hover:text-foreground"><Italic className="h-4 w-4"/></Button>
-                    <Button size="icon" variant="ghost" onClick={() => insertMarkdown('[', '](url)')} className="h-8 w-8 text-muted-foreground hover:text-foreground"><LinkIcon className="h-4 w-4"/></Button>
-                    <Button size="icon" variant="ghost" onClick={() => insertMarkdown('![alt](', ')')} className="h-8 w-8 text-muted-foreground hover:text-foreground"><ImageIcon className="h-4 w-4"/></Button>
-                    <Button size="icon" variant="ghost" onClick={() => insertMarkdown('- ')} className="h-8 w-8 text-muted-foreground hover:text-foreground"><List className="h-4 w-4"/></Button>
+                  {/* Editor */}
+                  <div className="bg-card text-foreground">
+                    <ReactQuill 
+                      theme="snow"
+                      value={markdownContent}
+                      onChange={setMarkdownContent}
+                      className="h-[450px] mb-12"
+                      modules={{
+                        toolbar: [
+                          [{ 'header': [1, 2, 3, false] }],
+                          ['bold', 'italic', 'underline', 'strike'],
+                          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                          ['link', 'image'],
+                          ['clean']
+                        ]
+                      }}
+                    />
                   </div>
-                  <textarea 
-                    className="w-full h-[500px] rounded-md bg-card border border-border p-4 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary font-mono leading-relaxed"
-                    placeholder="Write your article content here in Markdown..."
-                    value={markdownContent}
-                    onChange={(e) => setMarkdownContent(e.target.value)}
-                  />
+                </CardContent>
+              </Card>
+
+              {/* SEO Score Card */}
+              <Card className="glass-panel border-border">
+                <CardHeader>
+                  <CardTitle className="text-lg font-display text-foreground flex justify-between items-center">
+                    SEO Rankability
+                    <Badge className={seoScore >= 80 ? 'bg-green-500/20 text-green-500' : seoScore >= 50 ? 'bg-amber-500/20 text-amber-500' : 'bg-red-500/20 text-red-500'}>
+                      Score: {seoScore}/100
+                    </Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  {seoSuggestions.length === 0 ? (
+                    <p className="text-sm text-green-500 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Excellent! This article is well optimized.</p>
+                  ) : (
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      {seoSuggestions.map((s, i) => (
+                        <li key={i} className="flex items-start gap-2 text-amber-500">
+                          <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
+                          <span>{s}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </CardContent>
               </Card>
             </div>
@@ -177,8 +262,8 @@ export default function Admin() {
                 <CardHeader>
                   <CardTitle className="text-lg font-display text-muted-foreground">Live Preview</CardTitle>
                 </CardHeader>
-                <CardContent className="prose prose-invert prose-lg max-w-none text-muted-foreground prose-headings:font-display prose-headings:text-foreground prose-a:text-primary">
-                  {markdownContent ? <ReactMarkdown>{markdownContent}</ReactMarkdown> : <p className="text-muted-foreground italic">Start typing to see preview...</p>}
+                <CardContent className="prose dark:prose-invert prose-lg max-w-none text-muted-foreground prose-headings:font-display prose-headings:text-foreground prose-a:text-primary">
+                  {markdownContent ? <div dangerouslySetInnerHTML={{ __html: markdownContent }} /> : <p className="text-muted-foreground italic">Start typing to see preview...</p>}
                 </CardContent>
               </Card>
             </div>
@@ -263,33 +348,32 @@ export default function Admin() {
               </tr>
             </thead>
             <tbody>
-              {mockClients.map((c, i) => (
-                <tr key={c.id} className={`border-b border-border hover:bg-foreground/5 transition-colors ${i === mockClients.length - 1 ? 'border-b-0' : ''}`}>
-                  <td className="p-4 font-mono text-muted-foreground">{c.id}</td>
+              {usersList.length > 0 ? usersList.map((c, i) => (
+                <tr key={c.id} className={`border-b border-border hover:bg-foreground/5 transition-colors ${i === usersList.length - 1 ? 'border-b-0' : ''}`}>
+                  <td className="p-4 font-mono text-muted-foreground">{c.id.substring(0,8)}...</td>
                   <td className="p-4 font-medium text-foreground flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary to-purple-500 flex items-center justify-center text-[10px] font-bold text-foreground">
-                      {c.name.charAt(0)}
+                      {c.name.charAt(0).toUpperCase()}
                     </div>
                     {c.name}
                   </td>
                   <td className="p-4">{c.email}</td>
-                  <td className="p-4" dir="ltr">{c.phone}</td>
-                  <td className="p-4 text-center">{c.apps}</td>
+                  <td className="p-4" dir="ltr">{c.phone || '-'}</td>
+                  <td className="p-4 text-center">{applicationsList.filter(app => app.clientId === c.id).length}</td>
                   <td className="p-4">
                     <Badge variant="outline" className={`
-                      ${c.status === 'Active' ? 'border-primary/50 text-primary bg-primary/10' : ''}
-                      ${c.status === 'VIP' ? 'border-gold-500/50 text-gold-400 bg-gold-500/10' : ''}
-                      ${c.status === 'Completed' ? 'border-green-500/50 text-green-400 bg-green-500/10' : ''}
-                      ${c.status === 'Lead' ? 'border-border text-muted-foreground bg-foreground/5' : ''}
+                      ${c.role === 'ADMIN' ? 'border-primary/50 text-primary bg-primary/10' : 'border-border text-muted-foreground bg-foreground/5'}
                     `}>
-                      {c.status}
+                      {c.role}
                     </Badge>
                   </td>
                   <td className="p-4 text-right">
                     <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80 hover:bg-primary/10">View Profile</Button>
                   </td>
                 </tr>
-              ))}
+              )) : (
+                <tr><td colSpan={7} className="text-center p-4 text-muted-foreground">No clients found</td></tr>
+              )}
             </tbody>
           </table>
         </CardContent>
@@ -297,12 +381,74 @@ export default function Admin() {
     </motion.div>
   )
 
+  const [newAdmin, setNewAdmin] = useState({ name: '', email: '', password: '', phone: '' })
+  const [adminStatus, setAdminStatus] = useState({ loading: false, message: '', isError: false })
+
+  const handleCreateAdmin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setAdminStatus({ loading: true, message: '', isError: false })
+    try {
+      const res = await fetch('/api/auth/admin-register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ ...newAdmin, role: 'ADMIN' })
+      })
+      const data = await res.json() as any
+      if (data.success) {
+        setAdminStatus({ loading: false, message: 'Admin account created successfully!', isError: false })
+        setNewAdmin({ name: '', email: '', password: '', phone: '' })
+      } else {
+        setAdminStatus({ loading: false, message: data.error || 'Failed to create admin', isError: true })
+      }
+    } catch (err) {
+      setAdminStatus({ loading: false, message: 'Network error', isError: true })
+    }
+  }
+
   const renderSettings = () => (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6 max-w-4xl">
       <div className="mb-8">
         <h1 className="text-3xl font-display font-bold tracking-tight text-foreground">Agency Settings</h1>
         <p className="text-muted-foreground mt-1">Configure global platform preferences and contact details.</p>
       </div>
+
+      <Card className="glass-panel border-border">
+        <CardHeader>
+          <CardTitle className="text-xl font-display text-foreground">Create Admin Account</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleCreateAdmin} className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">Admin Name</label>
+                <Input value={newAdmin.name} onChange={e => setNewAdmin({...newAdmin, name: e.target.value})} required className="bg-card border-border text-foreground" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">Email</label>
+                <Input type="email" value={newAdmin.email} onChange={e => setNewAdmin({...newAdmin, email: e.target.value})} required className="bg-card border-border text-foreground" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">Password</label>
+                <Input type="password" value={newAdmin.password} onChange={e => setNewAdmin({...newAdmin, password: e.target.value})} required className="bg-card border-border text-foreground" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">Phone</label>
+                <Input value={newAdmin.phone} onChange={e => setNewAdmin({...newAdmin, phone: e.target.value})} required className="bg-card border-border text-foreground" />
+              </div>
+            </div>
+            {adminStatus.message && (
+              <p className={`text-sm ${adminStatus.isError ? 'text-red-500' : 'text-green-500'}`}>
+                {adminStatus.message}
+              </p>
+            )}
+            <div className="flex justify-end pt-4">
+              <Button type="submit" disabled={adminStatus.loading} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
+                {adminStatus.loading ? 'Creating...' : 'Create Admin'}
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
 
       <Card className="glass-panel border-border">
         <CardHeader>
@@ -564,17 +710,17 @@ export default function Admin() {
                   </tr>
                 </thead>
                 <tbody>
-                  {mockAppointments.map((apt, i) => (
-                    <tr key={apt.id} className={`border-b border-border hover:bg-foreground/5 transition-colors ${i === mockAppointments.length - 1 ? 'border-b-0' : ''}`}>
+                  {appointmentsList.length > 0 ? appointmentsList.map((apt, i) => (
+                    <tr key={apt.id} className={`border-b border-border hover:bg-foreground/5 transition-colors ${i === appointmentsList.length - 1 ? 'border-b-0' : ''}`}>
                       <td className="p-4">
                         <div className="font-medium text-foreground">{apt.time}</div>
-                        <div className="text-xs text-muted-foreground">{apt.date}</div>
+                        <div className="text-xs text-muted-foreground">{new Date(apt.date).toLocaleDateString()}</div>
                       </td>
-                      <td className="p-4 font-medium text-foreground">{apt.client}</td>
+                      <td className="p-4 font-medium text-foreground">{apt.firstName} {apt.lastName}</td>
                       <td className="p-4">
-                        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30">{apt.type}</Badge>
+                        <Badge variant="outline" className="bg-primary/10 text-primary border-primary/30">{apt.visaType}</Badge>
                       </td>
-                      <td className="p-4 text-muted-foreground">{apt.agent}</td>
+                      <td className="p-4 text-muted-foreground">-</td>
                       <td className="p-4">
                         <Badge variant="outline" className={`
                           ${apt.status === 'Confirmed' ? 'border-green-500/50 text-green-400 bg-green-500/10' : ''}
@@ -584,7 +730,9 @@ export default function Admin() {
                         </Badge>
                       </td>
                     </tr>
-                  ))}
+                  )) : (
+                    <tr><td colSpan={5} className="text-center p-4 text-muted-foreground">No appointments found</td></tr>
+                  )}
                 </tbody>
               </table>
             </CardContent>

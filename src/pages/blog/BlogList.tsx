@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Calendar, User, ArrowRight } from 'lucide-react'
@@ -17,6 +18,7 @@ interface Blog {
 }
 
 export default function BlogList() {
+  const { t } = useTranslation()
   const [blogs, setBlogs] = useState<Blog[]>([])
   const [loading, setLoading] = useState(true)
 
@@ -54,10 +56,10 @@ export default function BlogList() {
               Visa & Migration Insights
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl font-display text-gradient">
-              Our Blog
+              {t('blogPage.title')}
             </h1>
             <p className="text-lg text-muted-foreground font-light">
-              Latest news, tips, and guides for Moroccan travelers and migrants.
+              {t('blogPage.subtitle')}
             </p>
           </motion.div>
         </div>
@@ -107,7 +109,7 @@ export default function BlogList() {
                           {new Date(post.createdAt).toLocaleDateString()}
                         </div>
                         <div className="flex items-center gap-1.5 text-primary group-hover:text-gold-400 transition-colors font-medium">
-                          Read More <ArrowRight className="h-3 w-3" />
+                          {t('blogPage.readMore')} <ArrowRight className="h-3 w-3" />
                         </div>
                       </div>
                     </CardContent>

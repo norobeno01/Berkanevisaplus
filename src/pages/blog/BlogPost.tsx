@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import { useTranslation } from 'react-i18next'
 import { Calendar, User, ArrowLeft, Tag } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -24,6 +25,7 @@ interface Blog {
 }
 
 export default function BlogPost() {
+  const { t } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const [post, setPost] = useState<Blog | null>(null)
   const [loading, setLoading] = useState(true)
@@ -58,9 +60,9 @@ export default function BlogPost() {
   if (!post) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center space-y-4 bg-background text-foreground">
-        <h1 className="text-4xl font-display font-bold">Post Not Found</h1>
-        <p className="text-muted-foreground">The article you are looking for does not exist.</p>
-        <Button asChild className="bg-primary hover:bg-primary/90"><Link to="/blog">Return to Blog</Link></Button>
+        <h1 className="text-4xl font-display font-bold">{t('blogPage.postNotFound')}</h1>
+        <p className="text-muted-foreground">{t('blogPage.postNotFoundDesc')}</p>
+        <Button asChild className="bg-primary hover:bg-primary/90"><Link to="/blog">{t('blogPage.returnToBlog')}</Link></Button>
       </div>
     )
   }
@@ -81,7 +83,7 @@ export default function BlogPost() {
         
         <div className="container px-4 md:px-6 relative z-10">
           <Button variant="ghost" asChild className="mb-8 text-muted-foreground hover:text-foreground hover:bg-foreground/5 -ml-4">
-            <Link to="/blog"><ArrowLeft className="mr-2 h-4 w-4" /> Back to Blog</Link>
+            <Link to="/blog"><ArrowLeft className="mr-2 h-4 w-4" /> {t('blogPage.backToBlog')}</Link>
           </Button>
           
           <motion.div
@@ -94,10 +96,10 @@ export default function BlogPost() {
                 <Tag className="h-3.5 w-3.5" /> {post.category}
               </span>
               <span className="flex items-center gap-1.5">
-                <Calendar className="h-4 w-4" /> {new Date(post.createdAt).toLocaleDateString()}
+                <Calendar className="h-4 w-4" /> {t('blogPage.publishedOn')} {new Date(post.createdAt).toLocaleDateString()}
               </span>
               <span className="flex items-center gap-1.5">
-                <User className="h-4 w-4" /> {post.author}
+                <User className="h-4 w-4" /> {t('blogPage.author')} {post.author}
               </span>
             </div>
             
@@ -113,7 +115,11 @@ export default function BlogPost() {
         <div className="container px-4 md:px-6 max-w-4xl mx-auto">
           <Card className="glass-panel border-border">
             <CardContent className="p-8 md:p-12 prose dark:prose-invert prose-lg max-w-none text-muted-foreground prose-headings:font-display prose-headings:text-foreground prose-a:text-primary hover:prose-a:text-primary/80">
-              <ReactMarkdown>{post.content}</ReactMarkdown>
+              {post.content.trim().startsWith('<') ? (
+                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+              ) : (
+                <ReactMarkdown>{post.content}</ReactMarkdown>
+              )}
             </CardContent>
           </Card>
         </div>

@@ -131,4 +131,87 @@ authRoutes.get('/me', authenticate, async (c) => {
   }
 })
 
+authRoutes.post('/admin-register', authenticate, requireAdmin, async (c) => {
+  try {
+    const prisma = getPrisma(c.env.DB)
+    const { email, password, name, phone, role } = await c.req.json()
+
+    const existingUser = await prisma.user.findUnique({ where: { email } })
+    if (existingUser) {
+      return c.json({ success: false, error: 'Email already registered' }, 400)
+    }
+
+    const hashedPassword = await hashPassword(password)
+
+    const user = await prisma.user.create({
+      data: { email, password: hashedPassword, name, phone, role: role || 'ADMIN' }
+    })
+
+    return c.json({
+      success: true,
+      user: { id: user.id, name: user.name, email: user.email, role: user.role }
+    })
+  } catch (err) {
+    console.error(err)
+    return c.json({ success: false, error: 'Server error' }, 500)
+  }
+})
+
+authRoutes.get('/stats', authenticate, requireAdmin, async (c) => {
+  try {
+    const prisma = getPrisma(c.env.DB)
+    
+    const usersCount = await prisma.user.count()
+    const applicationsCount = await prisma.application.count()
+    const pendingAppsCount = await prisma.application.count({ where: { status: 'PENDING' } })
+    const appointmentsCount = await prisma.appointment.count()
+    const pendingAppointmentsCount = await prisma.appointment.count({ where: { status: 'Pending' } })
+    const blogsCount = await prisma.blog.count()
+
+    // recent applications
+    const recentApplications = await prisma.application.findMany({
+      take: 5,
+      orderBy: { createdAt: 'desc' },
+      include: {
+        client: { select: { name: true, email: true } }
+      }
+    })
+
+    const users = await prisma.user.findMany({
+      select: { id: true, name: true, email: true, phone: true, role: true, createdAt: true }
+    })
+    
+    const appointments = await prisma.appointment.findMany({
+      include: {
+        client: { select: { name: true } }
+      }
+    })
+
+    const applications = await prisma.application.findMany({
+      include: {
+        client: { select: { name: true } }
+      }
+    })
+
+    return c.json({
+      success: true,
+      stats: {
+        users: usersCount,
+        applications: applicationsCount,
+        pendingApplications: pendingAppsCount,
+        appointments: appointmentsCount,
+        pendingAppointments: pendingAppointmentsCount,
+        blogs: blogsCount
+      },
+      recentApplications,
+      users,
+      appointments,
+      applications
+    })
+  } catch (err) {
+    console.error(err)
+    return c.json({ success: false, error: 'Server error' }, 500)
+  }
+})
+
 export default authRoutes

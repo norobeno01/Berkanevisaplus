@@ -9,15 +9,15 @@ export default function Schengen() {
   const { t } = useTranslation()
 
   const requirements = [
-    "Valid Passport (issued within last 10 years, valid for 3+ months beyond return date, 2+ blank pages)",
-    "Two recent biometric passport photos (ICAO standard, white background)",
-    "Schengen Visa application form, fully completed and signed",
-    "Travel Medical Insurance (minimum coverage €30,000, valid for entire Schengen area)",
-    "Proof of Accommodation (hotel reservation, host invitation 'Attestation d'accueil', or rental agreement)",
-    "Round-trip flight reservation or travel itinerary",
-    "Proof of Financial Means (bank statements for last 3 months showing min. 3000 MAD/day or sponsor letter)",
-    "Proof of Socio-Economic Status (work certificate, last 3 salary slips, CNSS registration, or commerce registry for business owners)",
-    "Family record book (Livret de famille) for married applicants"
+    t('schengen.req1'),
+    t('schengen.req2'),
+    t('schengen.req3'),
+    t('schengen.req4'),
+    t('schengen.req5'),
+    t('schengen.req6'),
+    t('schengen.req7'),
+    t('schengen.req8'),
+    t('schengen.req9')
   ]
 
   return (
@@ -36,13 +36,13 @@ export default function Schengen() {
             className="max-w-3xl space-y-6"
           >
             <div className="inline-flex items-center rounded-full border border-border bg-foreground/5 px-3 py-1 text-sm font-medium backdrop-blur-md text-gold-400">
-              Type C — Short Stay (up to 90 days)
+              {t('schengen.type')}
             </div>
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl font-display text-foreground">
-              Schengen Visas
+              {t('schengen.title')}
             </h1>
             <p className="text-xl text-muted-foreground font-light">
-              Complete assistance for Tourist, Business, and Family Visit visas to France, Spain, Italy, Germany, and all 27 Schengen member states.
+              {t('schengen.subtitle')}
             </p>
           </motion.div>
         </div>
@@ -58,14 +58,14 @@ export default function Schengen() {
               
               {/* Timeline */}
               <div className="space-y-6">
-                <h2 className="text-3xl font-display font-bold text-gradient">Application Procedure</h2>
+                <h2 className="text-3xl font-display font-bold text-gradient">{t('schengen.procedureTitle')}</h2>
                 <div className="relative border-l border-border ml-3 md:ml-4 space-y-8 pb-4">
                   {[
-                    { title: "Consultation & Document Review", desc: "We analyze your profile and compile the exact checklist needed." },
-                    { title: "File Preparation & Translation", desc: "Translation of Arabic documents to French/English/Spanish, filling forms." },
-                    { title: "Appointment Booking", desc: "Securing a slot at VFS Global, TLScontact, or BLS." },
-                    { title: "Biometrics & Submission", desc: "You submit your file and biometrics at the application center." },
-                    { title: "Passport Collection", desc: "Tracking your application until your passport is returned." }
+                    { title: t('schengen.step1Title'), desc: t('schengen.step1Desc') },
+                    { title: t('schengen.step2Title'), desc: t('schengen.step2Desc') },
+                    { title: t('schengen.step3Title'), desc: t('schengen.step3Desc') },
+                    { title: t('schengen.step4Title'), desc: t('schengen.step4Desc') },
+                    { title: t('schengen.step5Title'), desc: t('schengen.step5Desc') }
                   ].map((step, idx) => (
                     <div key={idx} className="relative pl-8">
                       <div className="absolute -left-3.5 top-1 h-7 w-7 rounded-full bg-background border-2 border-primary flex items-center justify-center">
@@ -81,9 +81,9 @@ export default function Schengen() {
               {/* Requirements */}
               <div className="space-y-6">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-3xl font-display font-bold text-gradient">Document Checklist</h2>
+                  <h2 className="text-3xl font-display font-bold text-gradient">{t('schengen.checklistTitle')}</h2>
                   <Button variant="outline" size="sm" className="glass border-border">
-                    <Download className="mr-2 h-4 w-4" /> Download PDF
+                    <Download className="mr-2 h-4 w-4" /> {t('schengen.downloadPdf')}
                   </Button>
                 </div>
                 <Card className="glass-card border-border">
@@ -99,7 +99,7 @@ export default function Schengen() {
                     <div className="mt-6 p-4 rounded-lg bg-primary/10 border border-primary/20 flex gap-3">
                       <AlertCircle className="h-5 w-5 text-primary shrink-0" />
                       <p className="text-sm text-primary-foreground/90">
-                        Note: Additional documents may be required depending on your specific socio-economic status (e.g., pensioners, students, minors).
+                        {t('schengen.note')}
                       </p>
                     </div>
                   </CardContent>
@@ -112,7 +112,7 @@ export default function Schengen() {
             <div className="space-y-6">
               <Card className="glass-panel border-border sticky top-24">
                 <CardHeader>
-                  <CardTitle className="text-2xl font-display">Visa Summary</CardTitle>
+                  <CardTitle className="text-2xl font-display">{t('schengen.summaryTitle')}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-6">
                   
@@ -121,8 +121,8 @@ export default function Schengen() {
                       <Clock className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="font-semibold text-foreground">Processing Time</p>
-                      <p className="text-sm text-muted-foreground">15 - 30 working days (Varies by embassy)</p>
+                      <p className="font-semibold text-foreground">{t('schengen.processingTime')}</p>
+                      <p className="text-sm text-muted-foreground">{t('schengen.processingDesc')}</p>
                     </div>
                   </div>
 
@@ -131,8 +131,8 @@ export default function Schengen() {
                       <Calendar className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="font-semibold text-foreground">Validity</p>
-                      <p className="text-sm text-muted-foreground">Up to 90 days within a 180-day period</p>
+                      <p className="font-semibold text-foreground">{t('schengen.validity')}</p>
+                      <p className="text-sm text-muted-foreground">{t('schengen.validityDesc')}</p>
                     </div>
                   </div>
 
@@ -141,22 +141,22 @@ export default function Schengen() {
                       <MapPin className="h-5 w-5" />
                     </div>
                     <div>
-                      <p className="font-semibold text-foreground">Application Centers</p>
-                      <p className="text-sm text-muted-foreground">Rabat, Nador, Oujda, Casablanca</p>
+                      <p className="font-semibold text-foreground">{t('schengen.appCenters')}</p>
+                      <p className="text-sm text-muted-foreground">{t('schengen.appCentersDesc')}</p>
                     </div>
                   </div>
 
                   <div className="pt-4 border-t border-border">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-muted-foreground">Embassy Fee:</span>
+                      <span className="text-muted-foreground">{t('schengen.embassyFee')}</span>
                       <span className="font-semibold text-foreground">€90</span>
                     </div>
                     <div className="flex justify-between items-center mb-4">
-                      <span className="text-muted-foreground">VFS/TLS Service Fee:</span>
+                      <span className="text-muted-foreground">{t('schengen.serviceFee')}</span>
                       <span className="font-semibold text-foreground">~450 MAD</span>
                     </div>
                     <Button asChild className="w-full h-12 text-lg shadow-[0_0_20px_rgba(37,99,235,0.2)]">
-                      <Link to="/portal">Start Application</Link>
+                      <Link to="/portal">{t('schengen.startApp')}</Link>
                     </Button>
                   </div>
                   
