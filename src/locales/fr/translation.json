@@ -22,7 +22,11 @@
     "visaSummary": "Résumé du Visa",
     "processingTime": "Délai de traitement",
     "visaType": "Type de Visa",
-    "officialFees": "Frais Officiels :"
+    "officialFees": "Frais Officiels :",
+    "visas": "Visas",
+    "searchCountry": "Rechercher un pays...",
+    "changeCountry": "Changer de destination",
+    "destination": "Destination"
   },
   "home": {
     "heroTag": "Experts Mondiaux en Visa et Immigration",

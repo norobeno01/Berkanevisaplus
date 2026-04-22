@@ -90,7 +90,7 @@ function Layout({ children }: { children: React.ReactNode }) {
             <Link to="/" className="transition-colors hover:text-foreground">{t('common.home')}</Link>
             <Link to="/services" className="transition-colors hover:text-foreground">{t('common.services', 'Services')}</Link>
             <Link to="/visas" className="transition-colors hover:text-foreground">{t('common.visas', 'Visas')}</Link>
-            <Link to="/blog" className="transition-colors hover:text-foreground">Blog</Link>
+            <Link to="/blog" className="transition-colors hover:text-foreground">{t('common.blog', 'Blog')}</Link>
             <Link to="/contact" className="transition-colors hover:text-foreground">{t('common.contact', 'Contact')}</Link>
             <Link to="/about" className="transition-colors hover:text-foreground">{t('common.about', 'About')}</Link>
           </nav>
@@ -144,7 +144,7 @@ function Layout({ children }: { children: React.ReactNode }) {
             <Link to="/" onClick={() => setIsMenuOpen(false)}>{t('common.home')}</Link>
             <Link to="/services" onClick={() => setIsMenuOpen(false)}>{t('common.services', 'Services')}</Link>
             <Link to="/visas" onClick={() => setIsMenuOpen(false)}>{t('common.visas', 'Visas')}</Link>
-            <Link to="/blog" onClick={() => setIsMenuOpen(false)}>Blog</Link>
+            <Link to="/blog" onClick={() => setIsMenuOpen(false)}>{t('common.blog', 'Blog')}</Link>
             <Link to="/contact" onClick={() => setIsMenuOpen(false)}>{t('common.contact', 'Contact')}</Link>
             <Link to="/about" onClick={() => setIsMenuOpen(false)}>{t('common.about', 'About')}</Link>
             

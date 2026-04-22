@@ -243,7 +243,7 @@ export default function Home() {
                   viewport={{ once: true }}
                   transition={{ delay: idx * 0.1 }}
                 >
-                  <Link to={`/visas/${country.id}`} className="block w-full h-full">
+                  <Link to="/visas" state={{ countryId: country.id }} className="block w-full h-full">
                     <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent z-10" />
                     <img src={country.image} alt={t(`countryData.${country.id}.name`, country.name)} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                     <div className={`absolute bottom-0 left-0 z-20 w-full ${isFeatured ? 'p-8' : 'p-6'}`}>

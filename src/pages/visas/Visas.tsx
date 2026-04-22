@@ -1,5 +1,5 @@
-import { useState, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useMemo, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { CheckCircle2, Clock, Download, AlertCircle, ArrowLeft, FileText, Search, MapPin, Globe } from 'lucide-react'
@@ -12,8 +12,15 @@ import SEO from '@/components/SEO'
 
 export default function Visas() {
   const { t, i18n } = useTranslation()
+  const location = useLocation()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null)
+
+  useEffect(() => {
+    if (location.state?.countryId) {
+      setSelectedCountryId(location.state.countryId)
+    }
+  }, [location.state])
 
   const filteredCountries = useMemo(() => {
     if (!searchTerm) return countriesData

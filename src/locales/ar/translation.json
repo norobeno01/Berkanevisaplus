@@ -22,7 +22,11 @@
     "visaSummary": "ملخص التأشيرة",
     "processingTime": "وقت المعالجة",
     "visaType": "نوع التأشيرة",
-    "officialFees": "الرسوم الرسمية:"
+    "officialFees": "الرسوم الرسمية:",
+    "visas": "التأشيرات",
+    "searchCountry": "ابحث عن دولة...",
+    "changeCountry": "تغيير الوجهة",
+    "destination": "الوجهة"
   },
   "home": {
     "heroTag": "خبراء التأشيرات والهجرة العالمية",

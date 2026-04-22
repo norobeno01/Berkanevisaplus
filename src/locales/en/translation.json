@@ -22,7 +22,11 @@
     "visaSummary": "Visa Summary",
     "processingTime": "Processing Time",
     "visaType": "Visa Type",
-    "officialFees": "Official Fees:"
+    "officialFees": "Official Fees:",
+    "visas": "Visas",
+    "searchCountry": "Search for a country...",
+    "changeCountry": "Change Destination",
+    "destination": "Destination"
   },
   "home": {
     "heroTag": "Global Visa & Immigration Experts",
