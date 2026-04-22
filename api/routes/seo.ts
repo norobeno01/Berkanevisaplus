@@ -7,18 +7,20 @@ const router = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 router.get('/settings', async (c) => {
   try {
     const prisma = getPrisma(c.env.DB)
-    let settings = await prisma.settings.findUnique({ where: { id: 'global' } })
-    if (!settings) {
-      settings = await prisma.settings.create({
-        data: {
-          id: 'global',
-          siteName: 'VisaPlus',
-          siteDesc: 'Expert Visa & Immigration Services',
-          keywords: 'visa, immigration, travel, schengen'
-        }
-      })
-    }
-    return c.json({ success: true, data: settings })
+    const settings = await prisma.settings.findMany()
+    const config = settings.reduce((acc: any, curr: any) => {
+      acc[curr.key] = curr.value
+      return acc
+    }, {})
+
+    return c.json({ 
+      success: true, 
+      data: {
+        siteName: config.siteName || 'VisaPlus',
+        siteDesc: config.siteDesc || 'Expert Visa & Immigration Services',
+        keywords: config.keywords || 'visa, immigration, travel, schengen'
+      }
+    })
   } catch (error) {
     return c.json({ success: false, error: 'Failed to load settings' }, 500)
   }
@@ -27,13 +29,19 @@ router.get('/settings', async (c) => {
 router.put('/settings', authenticate, requireAdmin, async (c) => {
   try {
     const prisma = getPrisma(c.env.DB)
-    const { siteName, siteDesc, keywords } = await c.req.json()
-    const settings = await prisma.settings.upsert({
-      where: { id: 'global' },
-      update: { siteName, siteDesc, keywords },
-      create: { id: 'global', siteName, siteDesc, keywords }
-    })
-    return c.json({ success: true, data: settings })
+    const body = await c.req.json()
+
+    for (const [key, value] of Object.entries(body)) {
+      if (['siteName', 'siteDesc', 'keywords'].includes(key)) {
+        await prisma.settings.upsert({
+          where: { key },
+          update: { value: String(value) },
+          create: { key, value: String(value) }
+        })
+      }
+    }
+    
+    return c.json({ success: true })
   } catch (error) {
     return c.json({ success: false, error: 'Failed to update settings' }, 500)
   }

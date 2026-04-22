@@ -1,6 +1,6 @@
 import { Hono } from 'hono'
 import { getPrisma } from '../db'
-import { authenticate, requireAdmin } from '../middleware'
+import { authenticate, requireAdmin } from './auth'
 
 const router = new Hono<{ Bindings: { DB: D1Database } }>()
 
