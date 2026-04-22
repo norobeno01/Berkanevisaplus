@@ -60,10 +60,14 @@ authRoutes.post('/register', async (c) => {
       return c.json({ success: false, error: 'Email already registered' }, 400)
     }
 
+    // Check if this is the very first user in the database
+    const userCount = await prisma.user.count()
+    const role = userCount === 0 ? 'ADMIN' : 'CLIENT'
+
     const hashedPassword = await hashPassword(password)
 
     const user = await prisma.user.create({
-      data: { email, password: hashedPassword, name, phone, role: 'CLIENT' }
+      data: { email, password: hashedPassword, name, phone, role }
     })
 
     const token = await jwt.sign({ id: user.id, role: user.role, exp: Math.floor(Date.now() / 1000) + (7 * 24 * (60 * 60)) }, c.env.JWT_SECRET || JWT_SECRET)
