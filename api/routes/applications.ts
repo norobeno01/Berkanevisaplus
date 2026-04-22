@@ -9,9 +9,7 @@ router.get('/', authenticate, requireAdmin, async (c) => {
     const prisma = getPrisma(c.env.DB)
     const applications = await prisma.application.findMany({
       include: {
-        user: { select: { name: true, email: true, phone: true } },
-        service: { select: { title: true } },
-        destination: { select: { name: true } }
+        client: { select: { name: true, email: true, phone: true } }
       },
       orderBy: { createdAt: 'desc' }
     })
@@ -26,11 +24,7 @@ router.get('/my-applications', authenticate, async (c) => {
     const prisma = getPrisma(c.env.DB)
     const user = c.get('user')
     const applications = await prisma.application.findMany({
-      where: { userId: user.id },
-      include: {
-        service: { select: { title: true } },
-        destination: { select: { name: true } }
-      },
+      where: { clientId: user.id },
       orderBy: { createdAt: 'desc' }
     })
     return c.json({ success: true, data: applications })
@@ -43,17 +37,14 @@ router.post('/', authenticate, async (c) => {
   try {
     const prisma = getPrisma(c.env.DB)
     const user = c.get('user')
-    const { serviceId, destinationId, passportNumber, nationality, departureDate, returnDate } = await c.req.json()
+    const { destination, type } = await c.req.json()
 
     const application = await prisma.application.create({
       data: {
-        userId: user.id,
-        serviceId,
-        destinationId,
-        passportNumber,
-        nationality,
-        departureDate: new Date(departureDate),
-        returnDate: returnDate ? new Date(returnDate) : null,
+        clientId: user.id,
+        appNumber: 'APP-' + Math.floor(100000 + Math.random() * 900000),
+        destination,
+        type,
         status: 'PENDING'
       }
     })

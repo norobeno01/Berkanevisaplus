@@ -89,7 +89,7 @@ export default function Admin() {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(res => res.json())
+      .then(res => res.json() as any)
       .then(data => {
         if (data.success) setPipeline(data.data)
       })

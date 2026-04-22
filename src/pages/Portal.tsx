@@ -30,7 +30,7 @@ export default function Portal() {
         'Authorization': `Bearer ${token}`
       }
     })
-      .then(res => res.json())
+      .then(res => res.json() as any)
       .then(data => {
         if (data.success) setApplications(data.data)
         setLoading(false)

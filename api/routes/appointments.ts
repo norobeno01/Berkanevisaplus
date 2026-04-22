@@ -9,8 +9,7 @@ router.get('/', authenticate, requireAdmin, async (c) => {
     const prisma = getPrisma(c.env.DB)
     const appointments = await prisma.appointment.findMany({
       include: {
-        user: { select: { name: true, email: true, phone: true } },
-        service: { select: { title: true } }
+        client: { select: { name: true, email: true, phone: true } }
       },
       orderBy: { date: 'asc' }
     })
@@ -25,10 +24,7 @@ router.get('/my-appointments', authenticate, async (c) => {
     const prisma = getPrisma(c.env.DB)
     const user = c.get('user')
     const appointments = await prisma.appointment.findMany({
-      where: { userId: user.id },
-      include: {
-        service: { select: { title: true } }
-      },
+      where: { clientId: user.id },
       orderBy: { date: 'asc' }
     })
     return c.json({ success: true, data: appointments })
@@ -41,17 +37,21 @@ router.post('/', authenticate, async (c) => {
   try {
     const prisma = getPrisma(c.env.DB)
     const user = c.get('user')
-    const { serviceId, date, time, type, notes } = await c.req.json()
+    const { firstName, lastName, email, phone, visaType, serviceType, date, time, notes } = await c.req.json()
 
     const appointment = await prisma.appointment.create({
       data: {
-        userId: user.id,
-        serviceId,
+        clientId: user.id,
+        firstName,
+        lastName,
+        email,
+        phone,
+        visaType,
+        serviceType,
         date: new Date(date),
         time,
-        type,
         notes,
-        status: 'SCHEDULED'
+        status: 'Pending'
       }
     })
 

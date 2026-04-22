@@ -61,7 +61,7 @@ export default function Chatbot() {
           lang: i18n.language || 'en'
         })
       })
-      const data = await response.json()
+      const data = await response.json() as any
       
       if (data.success) {
         setMessages(prev => [...prev, {

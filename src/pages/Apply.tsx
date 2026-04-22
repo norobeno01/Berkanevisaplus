@@ -75,7 +75,7 @@ export default function Apply() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ phone: formData.phone })
       })
-      const data = await res.json()
+      const data = await res.json() as any
       if (!res.ok) throw new Error(data.error || 'Failed to send OTP')
       
       // In Dev mode, we could log the OTP here or pre-fill it for testing
@@ -104,7 +104,7 @@ export default function Apply() {
           code: otpCode
         })
       })
-      const data = await res.json()
+      const data = await res.json() as any
       if (!res.ok) throw new Error(data.error || 'Failed to verify OTP')
       
       setStep('success')
