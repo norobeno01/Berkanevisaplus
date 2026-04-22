@@ -33,11 +33,17 @@ router.put('/settings', authenticate, requireAdmin, async (c) => {
 
     for (const [key, value] of Object.entries(body)) {
       if (['siteName', 'siteDesc', 'keywords'].includes(key)) {
-        await prisma.settings.upsert({
-          where: { key },
-          update: { value: String(value) },
-          create: { key, value: String(value) }
-        })
+        const existing = await prisma.settings.findUnique({ where: { key } })
+        if (existing) {
+          await prisma.settings.update({
+            where: { key },
+            data: { value: String(value || '') }
+          })
+        } else {
+          await prisma.settings.create({
+            data: { key, value: String(value || '') }
+          })
+        }
       }
     }
     

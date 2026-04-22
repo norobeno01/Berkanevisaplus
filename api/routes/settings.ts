@@ -38,19 +38,24 @@ router.post('/', authenticate, requireAdmin, async (c) => {
     const prisma = getPrisma(c.env.DB)
     const body = await c.req.json()
 
-    const queries = Object.entries(body).map(([key, value]) => 
-      prisma.settings.upsert({
-        where: { key },
-        update: { value: String(value || '') },
-        create: { key, value: String(value || '') }
-      })
-    )
-
-    await prisma.$transaction(queries)
+    // Using sequential raw updates or find/update to avoid D1 upsert/transaction locks
+    for (const [key, value] of Object.entries(body)) {
+      const existing = await prisma.settings.findUnique({ where: { key } })
+      if (existing) {
+        await prisma.settings.update({
+          where: { key },
+          data: { value: String(value || '') }
+        })
+      } else {
+        await prisma.settings.create({
+          data: { key, value: String(value || '') }
+        })
+      }
+    }
 
     return c.json({ success: true })
   } catch (error) {
-    console.error(error)
+    console.error('Settings save error:', error)
     return c.json({ success: false, error: 'Failed to save settings' }, 500)
   }
 })
