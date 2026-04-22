@@ -55,7 +55,7 @@ app.notFound(async (c) => {
   // SPA Fallback: Serve index.html for non-API routes
   if (c.env?.ASSETS) {
     const url = new URL(c.req.url)
-    url.pathname = '/'
+    url.pathname = '/index.html'
     return c.env.ASSETS.fetch(new Request(url.toString(), c.req.raw))
   }
 
