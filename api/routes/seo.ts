@@ -25,21 +25,25 @@ router.get('/settings', async (c) => {
             "updatedAt" DATETIME NOT NULL
         );
         CREATE UNIQUE INDEX IF NOT EXISTS "Settings_key_key" ON "Settings_new"("key");
-        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('facebook', 'facebook', '', datetime('now'));
-        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('instagram', 'instagram', '', datetime('now'));
-        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('linkedin', 'linkedin', '', datetime('now'));
-        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('x', 'x', '', datetime('now'));
-        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('tiktok', 'tiktok', '', datetime('now'));
-        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('siteName', 'siteName', '${oldSeo.siteName.replace(/'/g, "''")}', datetime('now'));
-        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('siteDesc', 'siteDesc', '${oldSeo.siteDesc.replace(/'/g, "''")}', datetime('now'));
-        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('keywords', 'keywords', '${oldSeo.keywords.replace(/'/g, "''")}', datetime('now'));
-        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('metaPixel', 'metaPixel', '', datetime('now'));
-        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('googleAnalytics', 'googleAnalytics', '', datetime('now'));
-        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('googleTagManager', 'googleTagManager', '', datetime('now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('facebook', 'facebook', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('instagram', 'instagram', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('linkedin', 'linkedin', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('x', 'x', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('tiktok', 'tiktok', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('siteName', 'siteName', '${oldSeo.siteName.replace(/'/g, "''")}', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('siteDesc', 'siteDesc', '${oldSeo.siteDesc.replace(/'/g, "''")}', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('keywords', 'keywords', '${oldSeo.keywords.replace(/'/g, "''")}', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('metaPixel', 'metaPixel', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('googleAnalytics', 'googleAnalytics', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
+        INSERT INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('googleTagManager', 'googleTagManager', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
         DROP TABLE IF EXISTS "Settings";
         ALTER TABLE "Settings_new" RENAME TO "Settings";
       `)
     }
+
+    try {
+      await c.env.DB.exec(`UPDATE "Settings" SET "updatedAt" = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE "updatedAt" NOT LIKE '%T%'`)
+    } catch (err) {}
 
     const prisma = getPrisma(c.env.DB)
     const settings = await prisma.settings.findMany()
@@ -63,23 +67,26 @@ router.get('/settings', async (c) => {
 
 router.put('/settings', authenticate, requireAdmin, async (c) => {
   try {
+    const prisma = getPrisma(c.env.DB)
     const body = await c.req.json()
-    const queries = []
 
     for (const [key, value] of Object.entries(body)) {
       if (['siteName', 'siteDesc', 'keywords'].includes(key)) {
-        queries.push(
-          c.env.DB.prepare(`
-            INSERT INTO Settings (id, key, value, updatedAt) 
-            VALUES (?, ?, ?, datetime('now')) 
-            ON CONFLICT(key) DO UPDATE SET value = excluded.value, updatedAt = datetime('now')
-          `).bind(crypto.randomUUID(), key, String(value || ''))
-        )
+        const existing = await prisma.settings.findUnique({ where: { key } })
+        if (existing) {
+          await prisma.settings.update({
+            where: { key },
+            data: { value: String(value || '') }
+          })
+        } else {
+          await prisma.settings.create({
+            data: { 
+              key, 
+              value: String(value || '') 
+            }
+          })
+        }
       }
-    }
-    
-    if (queries.length > 0) {
-      await c.env.DB.batch(queries)
     }
     
     return c.json({ success: true })

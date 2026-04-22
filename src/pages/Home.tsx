@@ -221,7 +221,7 @@ export default function Home() {
       </section>
 
       {/* Bento Grid - Visa Destinations */}
-      <section id="destinations" className="w-full py-24">
+      <section id="destinations" className="w-full py-24 overflow-hidden">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-gradient">
@@ -272,7 +272,7 @@ export default function Home() {
       </section>
 
       {/* How It Works */}
-      <section className="w-full py-32 relative overflow-hidden">
+      <section id="process" className="w-full py-32 relative overflow-hidden">
         <div className="absolute inset-0 bg-card/30" />
         <div className="container px-4 md:px-6 relative z-10">
           <motion.div 
@@ -371,7 +371,7 @@ export default function Home() {
       </section>
 
       {/* Trust Badges & Testimonials */}
-      <section className="w-full py-24">
+      <section className="w-full py-24 overflow-hidden">
         <div className="container px-4 md:px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
@@ -386,11 +386,11 @@ export default function Home() {
                 {t('home.testimonials.subtitle')}
               </p>
               
-              <div className="flex gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+              <div className="flex flex-wrap gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
                 {/* Mock logos of embassies/partners */}
-                <div className="h-12 w-32 glass rounded-lg flex items-center justify-center font-display font-bold text-xl">VFS Global</div>
-                <div className="h-12 w-32 glass rounded-lg flex items-center justify-center font-display font-bold text-xl">TLScontact</div>
-                <div className="h-12 w-32 glass rounded-lg flex items-center justify-center font-display font-bold text-xl">BLS</div>
+                <div className="h-12 w-28 sm:w-32 glass rounded-lg flex items-center justify-center font-display font-bold text-lg sm:text-xl shrink-0">VFS Global</div>
+                <div className="h-12 w-28 sm:w-32 glass rounded-lg flex items-center justify-center font-display font-bold text-lg sm:text-xl shrink-0">TLScontact</div>
+                <div className="h-12 w-28 sm:w-32 glass rounded-lg flex items-center justify-center font-display font-bold text-lg sm:text-xl shrink-0">BLS</div>
               </div>
             </div>
 
@@ -412,12 +412,12 @@ export default function Home() {
                     className="absolute inset-0"
                   >
                     <Card className="glass-panel h-full border-border hover:border-gold-500/30 transition-colors shadow-2xl">
-                      <CardContent className="p-8 sm:p-10 flex flex-col h-full justify-between">
+                      <CardContent className="p-6 sm:p-10 flex flex-col h-full justify-between">
                         <div>
                           <div className="flex gap-1 text-gold-500 mb-4 sm:mb-6">
                             {[1,2,3,4,5].map(i => <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />)}
                           </div>
-                          <blockquote className="text-lg sm:text-xl italic font-light leading-relaxed mb-6 text-muted-foreground line-clamp-6 sm:line-clamp-4">
+                          <blockquote className="text-base sm:text-xl italic font-light leading-relaxed mb-6 text-muted-foreground line-clamp-6 sm:line-clamp-4">
                             "{test.text}"
                           </blockquote>
                         </div>
