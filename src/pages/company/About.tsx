@@ -11,7 +11,7 @@ export default function About() {
       {/* Hero Section */}
       <section className="relative w-full py-24 md:py-32 overflow-hidden bg-background">
         <div className="absolute inset-0 z-0 opacity-30">
-          <img src="https://images.unsplash.com/photo-1577950942548-18e388f895ab?q=80&w=2070&auto=format&fit=crop" alt="Morocco" className="w-full h-full object-cover" />
+          <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop" alt="VisaPlus Team" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/20" />
         </div>
         

@@ -356,7 +356,7 @@ export const countriesData: CountryData[] = [
   {
     id: "italy",
     name: "Italy",
-    image: "https://images.unsplash.com/photo-1516483638261-f40af5a52233?auto=format&fit=crop&w=1000&q=80",
+    image: "https://images.unsplash.com/photo-1515542622106-78bda8cd247a?auto=format&fit=crop&w=1000&q=80",
     type: "Tourist, Study & Work Visas",
     description: "Rich cultural heritage and popular Schengen destination.",
     visaTypes: [
@@ -1028,7 +1028,7 @@ export const countriesData: CountryData[] = [
   {
     id: "newzealand",
     name: "New Zealand",
-    image: "https://images.unsplash.com/photo-1469521669194-babbdf9aa987?auto=format&fit=crop&w=1000&q=80",
+    image: "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?auto=format&fit=crop&w=1000&q=80",
     type: "Tourist, Study & Work Visas",
     description: "Stunning landscapes and welcoming skilled migrant policies.",
     visaTypes: [
@@ -1084,7 +1084,7 @@ export const countriesData: CountryData[] = [
   {
     id: "sweden",
     name: "Sweden",
-    image: "https://images.unsplash.com/photo-1509356843151-38319e6231d6?auto=format&fit=crop&w=1000&q=80",
+    image: "https://images.unsplash.com/photo-1513407030348-c1e4e3715185?auto=format&fit=crop&w=1000&q=80",
     type: "Tourist, Study & Work Visas",
     description: "Scandinavian innovation with excellent work-life balance.",
     visaTypes: [
