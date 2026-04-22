@@ -1,5 +1,5 @@
 name = "visaplus-api"
-pages_build_output_dir = "dist"
+main = "api/app.ts"
 compatibility_date = "2024-04-22"
 compatibility_flags = ["nodejs_compat"]
 
