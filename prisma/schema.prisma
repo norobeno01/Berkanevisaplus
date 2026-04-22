@@ -77,11 +77,10 @@ model Blog {
 }
 
 model Settings {
-  id          String   @id @default("global")
-  siteName    String   @default("VisaPlus")
-  siteDesc    String   @default("Expert Visa & Immigration Services")
-  keywords    String   @default("visa, immigration, travel, schengen")
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
 }
 
 model Service {

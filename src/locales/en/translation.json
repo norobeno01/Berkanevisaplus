@@ -83,6 +83,10 @@
         "specialist": "Senior Visa Specialist",
         "coordinator": "Application Coordinator"
       }
+    },
+    "visas": {
+      "title": "Select Your Destination",
+      "subtitle": "Choose from over 20+ global destinations and discover the exact visa types and requirements."
     }
   },
   "footer": {

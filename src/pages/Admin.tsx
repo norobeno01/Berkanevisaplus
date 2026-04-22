@@ -127,6 +127,20 @@ export default function Admin() {
       .then(data => {
         if (data.success) setBlogs(data.data)
       })
+
+    fetch('/api/settings')
+      .then(res => res.json() as any)
+      .then(data => {
+        if (data.success && data.data) {
+          setSocialLinks({
+            facebook: data.data.facebook || '',
+            instagram: data.data.instagram || '',
+            linkedin: data.data.linkedin || '',
+            x: data.data.x || '',
+            tiktok: data.data.tiktok || ''
+          })
+        }
+      })
   }, [token])
 
   const stats = [
@@ -424,6 +438,8 @@ export default function Admin() {
 
   const [newAdmin, setNewAdmin] = useState({ name: '', email: '', password: '', phone: '' })
   const [adminStatus, setAdminStatus] = useState({ loading: false, message: '', isError: false })
+  const [socialLinks, setSocialLinks] = useState({ facebook: '', instagram: '', linkedin: '', x: '', tiktok: '' })
+  const [socialStatus, setSocialStatus] = useState({ loading: false, message: '', isError: false })
 
   const handleCreateAdmin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -443,6 +459,26 @@ export default function Admin() {
       }
     } catch (err) {
       setAdminStatus({ loading: false, message: 'Network error', isError: true })
+    }
+  }
+
+  const handleSaveSocials = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setSocialStatus({ loading: true, message: '', isError: false })
+    try {
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(socialLinks)
+      })
+      const data = await res.json() as any
+      if (data.success) {
+        setSocialStatus({ loading: false, message: 'Social links updated successfully!', isError: false })
+      } else {
+        setSocialStatus({ loading: false, message: 'Failed to update social links', isError: true })
+      }
+    } catch (err) {
+      setSocialStatus({ loading: false, message: 'Network error', isError: true })
     }
   }
 
@@ -521,6 +557,48 @@ export default function Admin() {
           <div className="pt-6 border-t border-border flex justify-end">
             <Button className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">Save Changes</Button>
           </div>
+        </CardContent>
+      </Card>
+
+      <Card className="glass-panel border-border">
+        <CardHeader>
+          <CardTitle className="text-xl font-display text-foreground">Social Media Links</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSaveSocials} className="space-y-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">Facebook URL</label>
+                <Input value={socialLinks.facebook} onChange={e => setSocialLinks({...socialLinks, facebook: e.target.value})} placeholder="https://facebook.com/..." className="bg-card border-border text-foreground" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">Instagram URL</label>
+                <Input value={socialLinks.instagram} onChange={e => setSocialLinks({...socialLinks, instagram: e.target.value})} placeholder="https://instagram.com/..." className="bg-card border-border text-foreground" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">LinkedIn URL</label>
+                <Input value={socialLinks.linkedin} onChange={e => setSocialLinks({...socialLinks, linkedin: e.target.value})} placeholder="https://linkedin.com/..." className="bg-card border-border text-foreground" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">X (Twitter) URL</label>
+                <Input value={socialLinks.x} onChange={e => setSocialLinks({...socialLinks, x: e.target.value})} placeholder="https://x.com/..." className="bg-card border-border text-foreground" />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-muted-foreground">TikTok URL</label>
+                <Input value={socialLinks.tiktok} onChange={e => setSocialLinks({...socialLinks, tiktok: e.target.value})} placeholder="https://tiktok.com/@..." className="bg-card border-border text-foreground" />
+              </div>
+            </div>
+            {socialStatus.message && (
+              <p className={`text-sm ${socialStatus.isError ? 'text-red-500' : 'text-green-500'}`}>
+                {socialStatus.message}
+              </p>
+            )}
+            <div className="flex justify-end pt-4">
+              <Button type="submit" disabled={socialStatus.loading} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
+                {socialStatus.loading ? 'Saving...' : 'Save Social Links'}
+              </Button>
+            </div>
+          </form>
         </CardContent>
       </Card>
     </motion.div>

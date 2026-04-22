@@ -10,6 +10,7 @@ import destinationsRoutes from './routes/destinations'
 import appointmentsRoutes from './routes/appointments'
 import blogsRoutes from './routes/blogs'
 import chatRoutes from './routes/chat'
+import settingsRoutes from './routes/settings'
 
 const app = new Hono()
 
@@ -28,6 +29,7 @@ app.route('/api/destinations', destinationsRoutes)
 app.route('/api/appointments', appointmentsRoutes)
 app.route('/api/blogs', blogsRoutes)
 app.route('/api/chat', chatRoutes)
+app.route('/api/settings', settingsRoutes)
 
 /**
  * health
