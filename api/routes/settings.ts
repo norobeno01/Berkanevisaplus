@@ -12,21 +12,20 @@ router.get('/', async (c) => {
       acc[curr.key] = curr.value
       return acc
     }, {})
-    
-    // Add defaults if missing
-    return c.json({ 
-      success: true, 
+
+    return c.json({
+      success: true,
       data: {
         facebook: config.facebook || '',
         instagram: config.instagram || '',
         linkedin: config.linkedin || '',
         x: config.x || '',
         tiktok: config.tiktok || '',
-        address: config.address || '123 Boulevard Mohammed V, Berkane 60300, Morocco',
-        phone: config.phone || '+212 536 61 23 45',
-        email: config.email || 'contact@visaplus-berkane.ma',
-        whatsapp: config.whatsapp || '+212 600 11 22 33',
-        workingHours: config.workingHours || 'Mon-Fri: 09:00 - 18:00\nSat: 09:00 - 13:00'
+        address: config.address || '',
+        phone: config.phone || '',
+        email: config.email || '',
+        whatsapp: config.whatsapp || '',
+        workingHours: config.workingHours || ''
       }
     })
   } catch (error) {
@@ -39,13 +38,15 @@ router.post('/', authenticate, requireAdmin, async (c) => {
     const prisma = getPrisma(c.env.DB)
     const body = await c.req.json()
 
-    for (const [key, value] of Object.entries(body)) {
-      await prisma.settings.upsert({
+    const queries = Object.entries(body).map(([key, value]) => 
+      prisma.settings.upsert({
         where: { key },
-        update: { value: String(value) },
-        create: { key, value: String(value) }
+        update: { value: String(value || '') },
+        create: { key, value: String(value || '') }
       })
-    }
+    )
+
+    await prisma.$transaction(queries)
 
     return c.json({ success: true })
   } catch (error) {

@@ -12,7 +12,7 @@ import blogsRoutes from './routes/blogs'
 import chatRoutes from './routes/chat'
 import settingsRoutes from './routes/settings'
 
-const app = new Hono()
+const app = new Hono<{ Bindings: { DB: D1Database, ASSETS: any } }>()
 
 // Security & Performance Middlewares
 app.use('*', secureHeaders())
@@ -47,6 +47,19 @@ app.onError((err, c) => {
 /**
  * 404 handler
  */
-app.notFound((c) => c.json({ success: false, error: 'API not found' }, 404))
+app.notFound(async (c) => {
+  if (c.req.path.startsWith('/api/')) {
+    return c.json({ success: false, error: 'API not found' }, 404)
+  }
+  
+  // SPA Fallback: Serve index.html for non-API routes
+  if (c.env?.ASSETS) {
+    const url = new URL(c.req.url)
+    url.pathname = '/'
+    return c.env.ASSETS.fetch(new Request(url.toString(), c.req.raw))
+  }
+
+  return c.json({ success: false, error: 'Page not found' }, 404)
+})
 
 export default app

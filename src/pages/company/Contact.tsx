@@ -20,7 +20,15 @@ export default function Contact() {
       .then(res => res.json() as any)
       .then(data => {
         if (data.success && data.data) {
-          setSettings(prev => ({ ...prev, ...data.data }))
+          setSettings(prev => {
+            const merged = { ...prev }
+            for (const key in data.data) {
+              if (data.data[key] && data.data[key].trim() !== '') {
+                merged[key as keyof typeof merged] = data.data[key]
+              }
+            }
+            return merged
+          })
         }
       })
       .catch(console.error)

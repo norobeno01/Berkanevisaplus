@@ -36,7 +36,19 @@ export default function Footer() {
       .then(res => res.json() as any)
       .then(data => {
         if (data.success && data.data) {
-          setSocialLinks(prev => ({ ...prev, ...data.data }))
+          setSocialLinks(prev => {
+            const merged = { ...prev }
+            for (const key in data.data) {
+              if (['facebook', 'instagram', 'linkedin', 'x', 'tiktok'].includes(key)) {
+                // Allow social links to be empty (so we can hide them)
+                merged[key as keyof typeof merged] = data.data[key] || ''
+              } else if (data.data[key] && data.data[key].trim() !== '') {
+                // For contact info, only override if not empty
+                merged[key as keyof typeof merged] = data.data[key]
+              }
+            }
+            return merged
+          })
         }
       })
       .catch(console.error)
@@ -59,21 +71,31 @@ export default function Footer() {
               {t('footer.description')}
             </p>
             <div className="flex items-center space-x-4">
-              <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-foreground/5 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors border border-border">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-foreground/5 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors border border-border">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-foreground/5 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors border border-border">
-                <Linkedin className="h-5 w-5" />
-              </a>
-              <a href={socialLinks.x} target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-foreground/5 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors border border-border">
-                <XLogo className="h-4 w-4" />
-              </a>
-              <a href={socialLinks.tiktok} target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-foreground/5 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors border border-border">
-                <TikTokLogo className="h-5 w-5" />
-              </a>
+              {socialLinks.facebook && (
+                <a href={socialLinks.facebook} target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-foreground/5 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors border border-border">
+                  <Facebook className="h-5 w-5" />
+                </a>
+              )}
+              {socialLinks.instagram && (
+                <a href={socialLinks.instagram} target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-foreground/5 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors border border-border">
+                  <Instagram className="h-5 w-5" />
+                </a>
+              )}
+              {socialLinks.linkedin && (
+                <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-foreground/5 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors border border-border">
+                  <Linkedin className="h-5 w-5" />
+                </a>
+              )}
+              {socialLinks.x && (
+                <a href={socialLinks.x} target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-foreground/5 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors border border-border">
+                  <XLogo className="h-4 w-4" />
+                </a>
+              )}
+              {socialLinks.tiktok && (
+                <a href={socialLinks.tiktok} target="_blank" rel="noopener noreferrer" className="h-10 w-10 rounded-full bg-foreground/5 flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors border border-border">
+                  <TikTokLogo className="h-5 w-5" />
+                </a>
+              )}
             </div>
           </div>
 
