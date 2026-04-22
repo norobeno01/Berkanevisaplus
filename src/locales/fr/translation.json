@@ -171,188 +171,1075 @@
   },
   "countryData": {
     "france": {
-      "name": "France (Schengen)",
-      "type": "Schengen (Type C & D)",
-      "description": "La destination Schengen la plus demandée depuis le Maroc. Idéal pour le tourisme, les affaires et les études (Campus France).",
+      "name": "France",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Top Schengen destination from Morocco for tourism, business, and Campus France.",
       "visaTypes": {
         "tourist": {
-          "name": "Visa Touristique (Type C)",
-          "description": "Pour les courts séjours jusqu'à 90 jours pour le tourisme ou pour visiter famille/amis.",
-          "processingTime": "15 - 30 Jours",
-          "fee": "90 € + Frais TLScontact",
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
           "requirements": [
-            "Passeport valide (délivré dans les 10 dernières années, valide pour 3+ mois au-delà de la date de retour, 2+ pages vierges)",
-            "Deux photos d'identité biométriques récentes (norme OACI, fond blanc)",
-            "Formulaire de demande de visa Schengen, entièrement rempli et signé via France-Visas",
-            "Assurance médicale de voyage (couverture minimale 30 000 €, valide pour tout l'espace Schengen)",
-            "Preuve d'hébergement (réservation d'hôtel ou 'Attestation d'accueil')",
-            "Réservation de vol aller-retour",
-            "Preuve de moyens financiers (relevés bancaires des 3 derniers mois montrant min. 3000 MAD/jour)",
-            "Preuve de statut socio-économique (attestation de travail, 3 dernières fiches de paie, inscription CNSS ou registre de commerce)",
-            "Livret de famille pour les demandeurs mariés"
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
           ]
         },
-        "student": {
-          "name": "Visa Étudiant (Type D)",
-          "description": "Pour les longs séjours de plus de 90 jours pour étudier dans une université française ou une école de langue.",
-          "processingTime": "15 - 45 Jours",
-          "fee": "50 € (tarif réduit pour EEF) + Frais TLScontact",
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
           "requirements": [
-            "Passeport valide",
-            "Formulaire de demande de visa de long séjour",
-            "Certificat d'Accord préalable de Campus France ou Etudes en France (EEF)",
-            "Preuve d'inscription dans un établissement d'enseignement français",
-            "Preuve de ressources financières (minimum 615 € par mois) via un compte bloqué ou un garant",
-            "Preuve d'hébergement en France pour au moins les 3 premiers mois",
-            "Relevés de notes académiques précédents et diplômes"
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
           ]
         }
       }
     },
     "spain": {
-      "name": "Espagne (Schengen)",
-      "type": "Schengen (Type C & D)",
-      "description": "Un choix de premier plan pour les vacances d'été et les visites familiales. Traité via BLS International.",
+      "name": "Spain",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Popular for summer holidays and family visits. Processed via BLS International.",
       "visaTypes": {
         "tourist": {
-          "name": "Tourisme / Visite Familiale (Type C)",
-          "description": "Visa de court séjour pour le tourisme ou pour visiter de la famille en Espagne.",
-          "processingTime": "15 - 45 Jours",
-          "fee": "90 € + Frais BLS",
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
           "requirements": [
-            "Passeport valide (validité de 6 mois recommandée)",
-            "Formulaire de demande de visa rempli en espagnol ou en français",
-            "Assurance médicale de voyage (couverture 30 000 €)",
-            "Réservation d'hôtel ou lettre d'invitation (Carta de Invitación de la Policia Nacional)",
-            "Itinéraire de vol",
-            "Preuve financière (Relevés bancaires pour 3 mois)",
-            "Attestation de travail & historique CNSS",
-            "Copies de tous les visas Schengen précédents"
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
           ]
         }
       }
     },
-    "italy": {
-      "name": "Italie",
-      "type": "Schengen (Type C & D)",
-      "processingTime": "15 - 30 Jours",
-      "fee": "90 € + frais TLScontact",
-      "description": "Célèbre pour sa riche histoire et ses opportunités commerciales (Decreto Flussi).",
-      "requirements": [
-        "Passeport valide",
-        "2 photos biométriques",
-        "Assurance de voyage",
-        "Preuve d'hébergement",
-        "Itinéraire de vol",
-        "Preuve de moyens financiers",
-        "Documents d'enregistrement d'emploi/d'affaires"
-      ]
-    },
-    "belgium": {
-      "name": "Belgique",
-      "type": "Schengen (Type C & D)",
-      "processingTime": "15 - 45 Jours",
-      "fee": "90 € + frais VFS",
-      "description": "Cœur de l'UE, très demandé pour les visites familiales et les études universitaires.",
-      "requirements": [
-        "Passeport valide",
-        "Formulaire de demande de visa",
-        "Annexe 3bis (Obligation formelle pour visite familiale)",
-        "Assurance médicale de voyage",
-        "Preuve financière",
-        "Preuve d'état civil (Livret de famille)"
-      ]
-    },
     "canada": {
       "name": "Canada",
-      "type": "Visiteur, Études & Travail",
-      "description": "Que vous souhaitiez étudier, travailler ou visiter, nous vous aidons à naviguer sur le portail complexe d'IRCC.",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Navigating the complex IRCC portal for Visitor, Study, and Work permits.",
       "visaTypes": {
-        "visitor": {
-          "name": "Visa de Visiteur (VRT)",
-          "description": "Pour le tourisme, les visites familiales ou de courts voyages d'affaires au Canada.",
-          "processingTime": "30 - 90 Jours",
-          "fee": "100 $ CAD + 85 $ Biométrie",
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
           "requirements": [
-            "Passeport valide",
-            "Photo numérique (spécifications IRCC)",
-            "Preuve de fonds (Relevés bancaires, propriété, lettres de garant)",
-            "Lettre d'explication détaillant le but du voyage",
-            "Preuve d'attaches au pays d'origine (lettre d'emploi, liens familiaux, propriété)",
-            "Historique de voyage (visas précédents)"
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
           ]
         },
         "study": {
-          "name": "Permis d'Études",
-          "description": "Requis pour les étudiants internationaux pour étudier dans des Établissements d'Enseignement Désignés (EED) au Canada.",
-          "processingTime": "4 - 12 Semaines",
-          "fee": "150 $ CAD + 85 $ Biométrie",
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
           "requirements": [
-            "Lettre d'acceptation d'un EED canadien",
-            "Lettre d'Attestation Provinciale (PAL) si applicable",
-            "Preuve de soutien financier (frais de scolarité + 20 635 $ CAD pour frais de subsistance)",
-            "Lettre d'explication / Plan d'études",
-            "CAQ (Certificat d'acceptation du Québec) si vous étudiez au Québec",
-            "Examen médical et certificat de police (si requis)"
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
           ]
         }
       }
     },
     "usa": {
-      "name": "États-Unis",
-      "type": "B1/B2 Tourisme, F1 Étudiant",
-      "description": "Assistance experte avec le formulaire DS-160 et préparation rigoureuse aux entretiens pour l'Ambassade des États-Unis.",
+      "name": "United States",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Expert assistance with DS-160 and mock interview preparation.",
       "visaTypes": {
-        "b1b2": {
-          "name": "B1/B2 Tourisme & Affaires",
-          "description": "Visa non-immigrant pour les personnes se rendant aux États-Unis temporairement pour les affaires (B-1) ou pour le plaisir/traitement médical (B-2).",
-          "processingTime": "Dépend de la date d'entretien (souvent 1-6 mois)",
-          "fee": "185 $ USD",
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
           "requirements": [
-            "Passeport valide (valide pendant au moins 6 mois au-delà de la période de séjour)",
-            "Page de confirmation de la demande de visa non-immigrant DS-160",
-            "Page de confirmation de rendez-vous",
-            "Photo de visa américain (2x2 pouces, fond blanc, sans lunettes)",
-            "Preuve d'attaches fortes au Maroc (emploi, propriété, famille)",
-            "Relevés bancaires & preuve d'emploi",
-            "Itinéraire de voyage ou lettre d'invitation (si applicable)"
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
           ]
         }
       }
     },
     "uk": {
-      "name": "Royaume-Uni",
-      "type": "Visiteur Standard, Étudiant",
-      "description": "Traitement transparent des demandes via TLScontact pour le tourisme, les affaires et les études au Royaume-Uni.",
+      "name": "United Kingdom",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Seamless application processing via TLScontact for UK Visas.",
       "visaTypes": {
-        "visitor": {
-          "name": "Visa Visiteur Standard",
-          "description": "Pour le tourisme, les affaires, les études (cours jusqu'à 6 mois) et d'autres activités autorisées.",
-          "processingTime": "15 - 21 Jours",
-          "fee": "115 £ GBP (jusqu'à 6 mois)",
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
           "requirements": [
-            "Passeport valide",
-            "Formulaire de demande en ligne via Gov.uk",
-            "Preuve financière (Relevés bancaires montrant un revenu et des économies constants)",
-            "Preuve d'emploi (lettre de l'employeur indiquant le salaire, le rôle et le congé approuvé)",
-            "Détails de l'hébergement au Royaume-Uni",
-            "Itinéraire de voyage détaillé et coûts estimés"
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
           ]
         }
       }
     },
-    "gulf": {
-      "name": "Pays du Golfe (EAU, KSA, Qatar)",
-      "type": "E-Visa, Omra, Travail",
-      "processingTime": "2 - 5 Jours",
-      "fee": "Varie selon le pays",
-      "description": "Traitement accéléré pour les e-visas touristiques de Dubaï, les forfaits Omra saoudiens et les visas d'affaires du Qatar.",
-      "requirements": [
-        "Copie du passeport (Haute résolution)",
-        "Photo personnelle avec fond blanc",
-        "Copie du billet d'avion (pour les EAU)",
-        "Copie de la carte nationale d'identité"
-      ]
+    "germany": {
+      "name": "Germany",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Leading European economy with strong opportunities for skilled workers.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "italy": {
+      "name": "Italy",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Rich cultural heritage and popular Schengen destination.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "netherlands": {
+      "name": "Netherlands",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Innovative economy with streamlined highly skilled migrant visas.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "switzerland": {
+      "name": "Switzerland",
+      "type": "Tourist, Study & Work Visas",
+      "description": "High quality of life and premium tourism destination.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "belgium": {
+      "name": "Belgium",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Heart of Europe, excellent for business and study.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "australia": {
+      "name": "Australia",
+      "type": "Tourist, Study & Work Visas",
+      "description": "World-class education and points-based immigration system.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "uae": {
+      "name": "United Arab Emirates",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Fast-tracked e-visas and Golden Visa opportunities.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "saudiarabia": {
+      "name": "Saudi Arabia",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Umrah, business, and the new rapid e-Visa system.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "turkey": {
+      "name": "Turkey",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Bridge between Europe and Asia with easy e-Visa access.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "japan": {
+      "name": "Japan",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Unique culture with rising demand for international workers.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "china": {
+      "name": "China",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Global business hub and massive educational opportunities.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "southkorea": {
+      "name": "South Korea",
+      "type": "Tourist, Study & Work Visas",
+      "description": "K-ETA support and vibrant student visa pathways.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "singapore": {
+      "name": "Singapore",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Premier Asian business hub with streamlined work passes.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "newzealand": {
+      "name": "New Zealand",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Stunning landscapes and welcoming skilled migrant policies.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "sweden": {
+      "name": "Sweden",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Scandinavian innovation with excellent work-life balance.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
+    },
+    "qatar": {
+      "name": "Qatar",
+      "type": "Tourist, Study & Work Visas",
+      "description": "Rapidly growing Gulf state with Hayya card facilitation.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa",
+          "description": "For short stays, holidays, and family visits.",
+          "processingTime": "15 - 30 Days",
+          "fee": "Varies by consulate",
+          "requirements": [
+            "Valid Passport (6+ months validity)",
+            "Completed Visa Application Form",
+            "Two recent biometric passport photos",
+            "Travel Medical Insurance",
+            "Proof of Accommodation (Hotel or Invitation)",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (Bank statements)",
+            "Proof of Employment / Socio-Economic Status"
+          ]
+        },
+        "study": {
+          "name": "Study Visa",
+          "description": "For long-term enrollment in educational institutions.",
+          "processingTime": "4 - 8 Weeks",
+          "fee": "Varies by institution/consulate",
+          "requirements": [
+            "Valid Passport",
+            "Letter of Acceptance from recognized institution",
+            "Proof of tuition payment or financial support",
+            "Previous academic transcripts and diplomas",
+            "Proof of accommodation",
+            "Language proficiency certificate (if required)"
+          ]
+        },
+        "work": {
+          "name": "Work Visa",
+          "description": "For employment, sponsored by a recognized company.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "Varies by country",
+          "requirements": [
+            "Valid Passport",
+            "Official Job Offer / Employment Contract",
+            "Work Permit approval from local labor ministry",
+            "Professional qualifications and diplomas",
+            "Police clearance certificate",
+            "Medical examination report"
+          ]
+        }
+      }
     }
   },
   "servicesPage": {

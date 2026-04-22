@@ -161,7 +161,7 @@ authRoutes.get('/stats', authenticate, requireAdmin, async (c) => {
   try {
     const prisma = getPrisma(c.env.DB)
     
-    const usersCount = await prisma.user.count()
+    const usersCount = await prisma.user.count({ where: { role: 'CLIENT' } })
     const applicationsCount = await prisma.application.count()
     const pendingAppsCount = await prisma.application.count({ where: { status: 'PENDING' } })
     const appointmentsCount = await prisma.appointment.count()
@@ -178,6 +178,7 @@ authRoutes.get('/stats', authenticate, requireAdmin, async (c) => {
     })
 
     const users = await prisma.user.findMany({
+      where: { role: 'CLIENT' },
       select: { id: true, name: true, email: true, phone: true, role: true, createdAt: true }
     })
     

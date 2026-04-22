@@ -14,13 +14,13 @@ import { ThemeProvider } from './components/ThemeProvider'
 import ThemeToggle from './components/ThemeToggle'
 import AnimatedBackground from './components/AnimatedBackground'
 import ScrollToTop from './components/ScrollToTop'
+import ScrollUpButton from './components/ScrollUpButton'
 
 // Lazy-loaded routes for performance optimization
 const Home = lazy(() => import('./pages/Home'))
 const Portal = lazy(() => import('./pages/Portal'))
 const Admin = lazy(() => import('./pages/Admin'))
-const Schengen = lazy(() => import('./pages/visas/Schengen'))
-const CountryVisa = lazy(() => import('./pages/visas/CountryVisa'))
+const Visas = lazy(() => import('./pages/visas/Visas'))
 const Contact = lazy(() => import('./pages/company/Contact'))
 const About = lazy(() => import('./pages/company/About'))
 const Services = lazy(() => import('./pages/company/Services'))
@@ -86,15 +86,15 @@ function Layout({ children }: { children: React.ReactNode }) {
               {t('common.agencyName')}
             </span>
           </Link>
-          <nav className="hidden md:flex items-center space-x-6 text-sm font-medium">
+          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link to="/" className="transition-colors hover:text-foreground">{t('common.home')}</Link>
-            <Link to="/about" className="transition-colors hover:text-foreground">{t('common.about', 'About')}</Link>
             <Link to="/services" className="transition-colors hover:text-foreground">{t('common.services', 'Services')}</Link>
-            <Link to="/visas/schengen" className="transition-colors hover:text-foreground">Schengen Visas</Link>
+            <Link to="/visas" className="transition-colors hover:text-foreground">{t('common.visas', 'Visas')}</Link>
             <Link to="/blog" className="transition-colors hover:text-foreground">Blog</Link>
             <Link to="/contact" className="transition-colors hover:text-foreground">{t('common.contact', 'Contact')}</Link>
+            <Link to="/about" className="transition-colors hover:text-foreground">{t('common.about', 'About')}</Link>
           </nav>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center gap-2">
             <ThemeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -140,13 +140,13 @@ function Layout({ children }: { children: React.ReactNode }) {
         </div>
         {/* Mobile menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-border p-4 flex flex-col space-y-4 bg-background">
+          <div className="md:hidden border-t border-border p-4 flex flex-col gap-4 bg-background">
             <Link to="/" onClick={() => setIsMenuOpen(false)}>{t('common.home')}</Link>
-            <Link to="/about" onClick={() => setIsMenuOpen(false)}>{t('common.about', 'About')}</Link>
             <Link to="/services" onClick={() => setIsMenuOpen(false)}>{t('common.services', 'Services')}</Link>
-            <Link to="/visas/schengen" onClick={() => setIsMenuOpen(false)}>Schengen Visas</Link>
+            <Link to="/visas" onClick={() => setIsMenuOpen(false)}>{t('common.visas', 'Visas')}</Link>
             <Link to="/blog" onClick={() => setIsMenuOpen(false)}>Blog</Link>
             <Link to="/contact" onClick={() => setIsMenuOpen(false)}>{t('common.contact', 'Contact')}</Link>
+            <Link to="/about" onClick={() => setIsMenuOpen(false)}>{t('common.about', 'About')}</Link>
             
             <div className="pt-4 border-t border-border flex flex-col gap-2">
               {isAuthenticated ? (
@@ -195,8 +195,7 @@ function App() {
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/visas/schengen" element={<Schengen />} />
-              <Route path="/visas/:country" element={<CountryVisa />} />
+              <Route path="/visas" element={<Visas />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/about" element={<About />} />
               <Route path="/services" element={<Services />} />
@@ -219,6 +218,7 @@ function App() {
             </Routes>
           </Suspense>
           <Chatbot />
+          <ScrollUpButton />
         </Layout>
       </Router>
     </ThemeProvider>
