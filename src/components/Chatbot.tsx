@@ -18,7 +18,7 @@ export default function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'welcome',
-      text: t('chatbot.greeting', "Hi! I'm your VisaPlus virtual assistant. How can I help you today?"),
+      text: t('chatbot.greeting', "Hi! I'm your E-Visa Schengen virtual assistant. How can I help you today?"),
       isBot: true,
       timestamp: new Date()
     }
@@ -119,7 +119,7 @@ export default function Chatbot() {
                   <Bot className="h-5 w-5 text-foreground" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-foreground text-sm">{t('chatbot.title', 'VisaPlus Assistant')}</h3>
+                  <h3 className="font-bold text-foreground text-sm">{t('chatbot.title', 'E-Visa Schengen Assistant')}</h3>
                   <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                     <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
                     {t('chatbot.online', 'Online')}

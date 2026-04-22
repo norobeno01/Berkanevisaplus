@@ -34,7 +34,7 @@ export default function Home() {
 
   const testimonials = [
     {
-      text: "The team at VisaPlus Berkane made my Canadian student visa process incredibly smooth. Their attention to detail in document preparation is unmatched. I got my approval in just 3 weeks!",
+      text: "The team at E-Visa Schengen made my Canadian student visa process incredibly smooth. Their attention to detail in document preparation is unmatched. I got my approval in just 3 weeks!",
       name: "Yassine M.",
       type: "Student Visa, Canada",
       image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80",
@@ -50,7 +50,7 @@ export default function Home() {
       color: "from-purple-500 to-pink-500"
     },
     {
-      text: "I was struggling with my Express Entry profile, but VisaPlus helped me maximize my CRS score and handled all the complex paperwork. Thanks to them, I am now a permanent resident.",
+      text: "I was struggling with my Express Entry profile, but E-Visa Schengen helped me maximize my CRS score and handled all the complex paperwork. Thanks to them, I am now a permanent resident.",
       name: "Hassan R.",
       type: "Express Entry, Canada",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
@@ -65,7 +65,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <SEO 
-        title="VisaPlus - Expert Visa & Immigration Services" 
+        title="E-Visa Schengen - Expert Visa & Immigration Services" 
         description="Your trusted partner for Schengen Visas, Canadian Study Permits, and global immigration services." 
       />
       {/* Hero Section */}

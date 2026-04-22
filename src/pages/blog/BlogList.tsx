@@ -43,7 +43,7 @@ export default function BlogList() {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <SEO 
-        title="Visa & Immigration Blog | VisaPlus" 
+        title="Visa & Immigration Blog | E-Visa Schengen" 
         description="Latest news, tips, and guides for Moroccan travelers and migrants regarding Schengen, Canada, and US visas."
       />
       <section className="relative w-full py-24 overflow-hidden border-b border-border">

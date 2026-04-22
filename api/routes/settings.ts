@@ -12,7 +12,7 @@ router.get('/', async (c) => {
     } catch (e) {
       console.log('Running automatic Settings migration...')
       // Backup old SEO settings if they exist
-      let oldSeo = { siteName: 'VisaPlus', siteDesc: 'Expert Visa & Immigration Services', keywords: 'visa, immigration, travel, schengen' }
+      let oldSeo = { siteName: 'E-Visa Schengen', siteDesc: 'Expert Visa & Immigration Services', keywords: 'visa, immigration, travel, schengen' }
       try {
         const old = await c.env.DB.prepare('SELECT siteName, siteDesc, keywords FROM Settings LIMIT 1').first()
         if (old) oldSeo = old as any

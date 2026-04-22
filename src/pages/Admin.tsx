@@ -94,7 +94,7 @@ export default function Admin() {
   const [blogLang, setBlogLang] = useState<'en' | 'ar' | 'fr'>('en')
   const [markdownContent, setMarkdownContent] = useState('')
   const [seoSettings, setSeoSettings] = useState({
-    siteName: 'VisaPlus',
+    siteName: 'E-Visa Schengen',
     siteDesc: 'Expert Visa & Immigration Services',
     keywords: 'visa, immigration, travel, schengen'
   })

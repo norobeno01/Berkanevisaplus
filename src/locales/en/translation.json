@@ -1,6 +1,6 @@
 {
   "common": {
-    "agencyName": "VisaPlus Berkane",
+    "agencyName": "E-Visa Schengen",
     "home": "Home",
     "about": "About",
     "services": "Services",
@@ -71,7 +71,7 @@
     "testimonials": {
       "badge": "Trusted by Thousands",
       "title": "Client Success Stories",
-      "subtitle": "Don't just take our word for it. Read what our clients have to say about their experience with VisaPlus Berkane."
+      "subtitle": "Don't just take our word for it. Read what our clients have to say about their experience with E-Visa Schengen."
     },
     "brands": {
       "brandsTitle": "Partners & Official Bodies",
@@ -94,16 +94,16 @@
     "quickLinks": "Quick Links",
     "topDestinations": "Top Destinations",
     "contactInfo": "Contact Info",
-    "rights": "VisaPlus Berkane. All rights reserved.",
+    "rights": "E-Visa Schengen. All rights reserved.",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service"
   },
   "about": {
     "tag": "Our Story",
-    "title": "About VisaPlus Berkane",
+    "title": "About E-Visa Schengen",
     "subtitle": "The leading visa assistance agency in the Oriental region, dedicated to making your international travel dreams a reality.",
     "whoWeAre": "Who We Are",
-    "p1": "Founded in Berkane, VisaPlus has grown to become the most trusted immigration and visa consultancy in Eastern Morocco. We specialize in Schengen and Canadian visa applications, offering tailored solutions for tourists, students, and professionals.",
+    "p1": "Founded in Berkane, E-Visa Schengen has grown to become the most trusted immigration and visa consultancy in Eastern Morocco. We specialize in Schengen and Canadian visa applications, offering tailored solutions for tourists, students, and professionals.",
     "p2": "Navigating embassy requirements can be daunting. Our mission is to provide transparent, accurate, and professional guidance to ensure the highest possible success rate for our clients.",
     "stats": {
       "years": "Years Experience",
@@ -160,7 +160,7 @@
     "loginTitle": "Welcome Back",
     "loginSubtitle": "Sign in to access your client portal and track your applications.",
     "registerTitle": "Create an Account",
-    "registerSubtitle": "Join VisaPlus to start your visa application journey today.",
+    "registerSubtitle": "Join E-Visa Schengen to start your visa application journey today.",
     "email": "Email Address",
     "password": "Password",
     "name": "Full Name",
@@ -171,9 +171,9 @@
     "hasAccount": "Already have an account?"
   },
   "chatbot": {
-    "title": "VisaPlus Assistant",
+    "title": "E-Visa Schengen Assistant",
     "online": "Online",
-    "greeting": "Hi! I'm your VisaPlus virtual assistant. How can I help you today?",
+    "greeting": "Hi! I'm your E-Visa Schengen virtual assistant. How can I help you today?",
     "placeholder": "Type your message...",
     "error": "I'm having trouble connecting right now. Please try again later."
   },
@@ -1251,7 +1251,7 @@
     }
   },
   "servicesPage": {
-    "title": "Our Services | VisaPlus",
+    "title": "Our Services | E-Visa Schengen",
     "description": "Comprehensive visa and immigration services in Morocco.",
     "heroSubtitle": "From profile assessment to final visa delivery, we offer a comprehensive suite of services designed to maximize your approval chances."
   },
@@ -1304,7 +1304,7 @@
     "title": "Privacy Policy",
     "lastUpdated": "Last updated: October 2026",
     "introTitle": "1. Introduction",
-    "introText": "Welcome to VisaPlus. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website.",
+    "introText": "Welcome to E-Visa Schengen. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website.",
     "dataCollectTitle": "2. The Data We Collect",
     "dataCollectText": "We may collect, use, store and transfer different kinds of personal data about you which we have grouped together as follows:",
     "dataList1": "Identity Data: includes first name, last name, username or similar identifier.",
@@ -1315,7 +1315,7 @@
     "securityTitle": "4. Data Security",
     "securityText": "We have put in place appropriate security measures to prevent your personal data from being accidentally lost, used or accessed in an unauthorized way, altered or disclosed.",
     "contactTitle": "5. Contact Us",
-    "contactText": "If you have any questions about this privacy policy or our privacy practices, please contact us at privacy@visaplus.com."
+    "contactText": "If you have any questions about this privacy policy or our privacy practices, please contact us at privacy@e-visaschengen.com."
   },
   "schengen": {
     "title": "Schengen Visas",

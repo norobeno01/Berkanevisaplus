@@ -269,7 +269,7 @@ export default function AdvancedSEOTool({ seoSettings, setSeoSettings, token }: 
                 <div className="max-w-2xl p-4 bg-white dark:bg-[#202124] rounded-lg shadow-sm border border-border/50 font-sans">
                   <div className="text-[#202124] dark:text-[#dadce0] text-[14px] flex items-center gap-2 mb-1">
                     <span className="bg-[#f1f3f4] dark:bg-[#303134] rounded-full w-6 h-6 flex items-center justify-center text-xs">V</span>
-                    <span className="truncate">https://www.visaplus-berkane.ma</span>
+                    <span className="truncate">https://www.e-visaschengen.com</span>
                   </div>
                   <h3 className="text-[20px] text-[#1a0dab] dark:text-[#8ab4f8] leading-tight hover:underline cursor-pointer mb-1">
                     {seoSettings.siteName}

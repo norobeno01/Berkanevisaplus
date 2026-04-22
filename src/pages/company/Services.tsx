@@ -28,7 +28,7 @@ export default function Services() {
   return (
     <div className="flex flex-col min-h-screen bg-background overflow-hidden">
       <SEO 
-        title={t('servicesPage.title', 'Our Services | VisaPlus')}
+        title={t('servicesPage.title', 'Our Services | E-Visa Schengen')}
         description={t('servicesPage.description', 'Comprehensive visa and immigration services in Morocco. We handle Schengen, USA, Canada, and Gulf visas from consultation to passport delivery.')}
       />
 

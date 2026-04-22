@@ -38,7 +38,7 @@ export default function Visas() {
   return (
     <div className="flex flex-col min-h-screen bg-background" dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}>
       <SEO 
-        title="Global Visas & Destinations | VisaPlus"
+        title="Global Visas & Destinations | E-Visa Schengen"
         description="Select your destination country and discover the exact visa types, processing times, and document requirements for tourist, study, and work visas."
         keywords="visas, schengen visa, work visa, study visa, immigration, global destinations"
       />

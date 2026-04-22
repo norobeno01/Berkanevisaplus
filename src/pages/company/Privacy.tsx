@@ -31,7 +31,7 @@ export default function Privacy() {
             <CardContent className="p-8 md:p-12 prose prose-invert max-w-none text-muted-foreground">
               <h2 className="text-foreground font-display text-2xl font-bold mb-4">{t('privacy.introTitle', '1. Introduction')}</h2>
               <p className="mb-6">
-                {t('privacy.introText', 'VisaPlus Berkane ("we", "our", or "us") respects your privacy and is committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you.')}
+                {t('privacy.introText', 'E-Visa Schengen ("we", "our", or "us") respects your privacy and is committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website and tell you about your privacy rights and how the law protects you.')}
               </p>
 
               <h2 className="text-foreground font-display text-2xl font-bold mb-4">{t('privacy.dataCollectTitle', '2. The Data We Collect')}</h2>
@@ -62,7 +62,7 @@ export default function Privacy() {
 
               <h2 className="text-foreground font-display text-2xl font-bold mb-4">{t('privacy.contactTitle', '5. Contact Us')}</h2>
               <p>
-                {t('privacy.contactText1', 'If you have any questions about this privacy policy or our privacy practices, please contact us at:')} <a href="mailto:privacy@visaplus-berkane.ma" className="text-primary hover:underline">privacy@visaplus-berkane.ma</a>.
+                {t('privacy.contactText1', 'If you have any questions about this privacy policy or our privacy practices, please contact us at:')} <a href="mailto:privacy@e-visaschengen.com" className="text-primary hover:underline">privacy@e-visaschengen.com</a>.
               </p>
             </CardContent>
           </Card>

@@ -83,20 +83,20 @@ export const knowledgeBase = [
     id: "contact_info",
     keywords: ["contact", "phone", "whatsapp", "email", "where", "location", "address", "téléphone", "adresse", "où", "teléfono", "dirección", "dónde", "اتصال", "هاتف", "واتساب", "أين", "عنوان"],
     responses: {
-      en: "You can reach us at our office in Berkane, Morocco. Call or WhatsApp us at +212 600 000 000, or email contact@visaplus.com. Our working hours are Mon-Fri, 9:00 AM - 6:00 PM.",
-      fr: "Vous pouvez nous trouver à Berkane, Maroc. Appelez ou WhatsApp au +212 600 000 000, ou email contact@visaplus.com. Lundi-Vendredi, 9h00 - 18h00.",
-      ar: "يمكنك الوصول إلينا في مكتبنا في بركان، المغرب. اتصل أو راسلنا عبر واتساب على 000 000 600 212+، أو عبر البريد contact@visaplus.com. (الاثنين-الجمعة، 9ص-6م).",
-      es: "Puede encontrarnos en Berkane, Marruecos. Llame o WhatsApp al +212 600 000 000, o email contact@visaplus.com. Lunes-Viernes, 9:00 AM - 6:00 PM."
+      en: "You can reach us at our office in Berkane, Morocco. Call or WhatsApp us at +212 600 000 000, or email contact@e-visaschengen.com. Our working hours are Mon-Fri, 9:00 AM - 6:00 PM.",
+      fr: "Vous pouvez nous trouver à Berkane, Maroc. Appelez ou WhatsApp au +212 600 000 000, ou email contact@e-visaschengen.com. Lundi-Vendredi, 9h00 - 18h00.",
+      ar: "يمكنك الوصول إلينا في مكتبنا في بركان، المغرب. اتصل أو راسلنا عبر واتساب على 000 000 600 212+، أو عبر البريد contact@e-visaschengen.com. (الاثنين-الجمعة، 9ص-6م).",
+      es: "Puede encontrarnos en Berkane, Marruecos. Llame o WhatsApp al +212 600 000 000, o email contact@e-visaschengen.com. Lunes-Viernes, 9:00 AM - 6:00 PM."
     }
   },
   {
     id: "greeting",
     keywords: ["hello", "hi", "hey", "bonjour", "salut", "hola", "salam", "مرحبا", "سلام", "أهلا"],
     responses: {
-      en: "Hello! Welcome to VisaPlus. How can I assist you with your visa or immigration plans today? You can ask me about Schengen, Canada, US visas, or how to book an appointment.",
-      fr: "Bonjour ! Bienvenue chez VisaPlus. Comment puis-je vous aider aujourd'hui ? Vous pouvez me poser des questions sur les visas Schengen, Canada, USA, ou comment prendre rendez-vous.",
-      ar: "مرحباً! أهلاً بك في VisaPlus. كيف يمكنني مساعدتك اليوم؟ يمكنك سؤالي عن تأشيرات شنغن، كندا، أمريكا، أو كيفية حجز موعد.",
-      es: "¡Hola! Bienvenido a VisaPlus. ¿Cómo puedo ayudarle hoy? Puede preguntarme sobre visas Schengen, Canadá, EE.UU., o cómo reservar una cita."
+      en: "Hello! Welcome to E-Visa Schengen. How can I assist you with your visa or immigration plans today? You can ask me about Schengen, Canada, US visas, or how to book an appointment.",
+      fr: "Bonjour ! Bienvenue chez E-Visa Schengen. Comment puis-je vous aider aujourd'hui ? Vous pouvez me poser des questions sur les visas Schengen, Canada, USA, ou comment prendre rendez-vous.",
+      ar: "مرحباً! أهلاً بك في E-Visa Schengen. كيف يمكنني مساعدتك اليوم؟ يمكنك سؤالي عن تأشيرات شنغن، كندا، أمريكا، أو كيفية حجز موعد.",
+      es: "¡Hola! Bienvenido a E-Visa Schengen. ¿Cómo puedo ayudarle hoy? Puede preguntarme sobre visas Schengen, Canadá, EE.UU., o cómo reservar una cita."
     }
   }
 ]

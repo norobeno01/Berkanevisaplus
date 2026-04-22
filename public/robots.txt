@@ -4,4 +4,4 @@ Disallow: /admin
 Disallow: /portal
 Disallow: /api/
 
-Sitemap: https://visaplus.com/sitemap.xml
+Sitemap: https://e-visaschengen.com/sitemap.xml

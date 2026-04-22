@@ -10,21 +10,21 @@ interface SEOProps {
 }
 
 export default function SEO({ 
-  title = 'VisaPlus - Expert Visa & Immigration Services', 
+  title = 'E-Visa Schengen - Expert Visa & Immigration Services', 
   description = 'Your trusted partner for Schengen Visas, Canadian Study Permits, and global immigration services. Expert consulting for a seamless journey.',
   keywords = 'visa, immigration, schengen, travel, study permit, canada express entry, visa berkane',
-  url = 'https://visaplus.com',
+  url = 'https://e-visaschengen.com',
   image = 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80'
 }: SEOProps) {
   const { i18n } = useTranslation()
-  const fullTitle = title.includes('VisaPlus') ? title : `${title} | VisaPlus`
+  const fullTitle = title.includes('E-Visa Schengen') ? title : `${title} | E-Visa Schengen`
   const currentLang = i18n.language || 'en'
 
   // LocalBusiness Schema JSON-LD (Essential for Local SEO/GEO in Berkane, Morocco)
   const localBusinessSchema = {
     "@context": "https://schema.org",
     "@type": "LegalService",
-    "name": "VisaPlus Agency",
+    "name": "E-Visa Schengen Agency",
     "image": image,
     "@id": url,
     "url": url,
@@ -50,8 +50,8 @@ export default function SEO({
       "closes": "18:00"
     },
     "sameAs": [
-      "https://www.facebook.com/visaplus",
-      "https://www.instagram.com/visaplus"
+      "https://www.facebook.com/e-visaschengen",
+      "https://www.instagram.com/e-visaschengen"
     ],
     "priceRange": "$$"
   }
@@ -79,7 +79,7 @@ export default function SEO({
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
       <meta property="og:locale" content={currentLang} />
-      <meta property="og:site_name" content="VisaPlus Agency" />
+      <meta property="og:site_name" content="E-Visa Schengen Agency" />
       
       {/* Twitter */}
       <meta name="twitter:card" content="summary_large_image" />

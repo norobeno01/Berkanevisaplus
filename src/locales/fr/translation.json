@@ -1,6 +1,6 @@
 {
   "common": {
-    "agencyName": "VisaPlus Berkane",
+    "agencyName": "E-Visa Schengen",
     "home": "Accueil",
     "about": "À Propos",
     "services": "Services",
@@ -71,7 +71,7 @@
     "testimonials": {
       "badge": "Approuvé par des milliers",
       "title": "Histoires de Réussite",
-      "subtitle": "Ne nous croyez pas sur parole. Lisez ce que nos clients disent de leur expérience avec VisaPlus Berkane."
+      "subtitle": "Ne nous croyez pas sur parole. Lisez ce que nos clients disent de leur expérience avec E-Visa Schengen."
     },
     "brands": {
       "brandsTitle": "Partenaires et Organismes Officiels",
@@ -94,16 +94,16 @@
     "quickLinks": "Liens Rapides",
     "topDestinations": "Destinations Phares",
     "contactInfo": "Coordonnées",
-    "rights": "VisaPlus Berkane. Tous droits réservés.",
+    "rights": "E-Visa Schengen. Tous droits réservés.",
     "privacy": "Politique de Confidentialité",
     "terms": "Conditions d'utilisation"
   },
   "about": {
     "tag": "Notre Histoire",
-    "title": "À Propos de VisaPlus Berkane",
+    "title": "À Propos de E-Visa Schengen",
     "subtitle": "La principale agence d'assistance visa dans la région de l'Oriental, dédiée à faire de vos rêves de voyage international une réalité.",
     "whoWeAre": "Qui Sommes-Nous",
-    "p1": "Fondée à Berkane, VisaPlus est devenue le cabinet de conseil en immigration et visa le plus fiable de l'Est du Maroc. Nous nous spécialisons dans les demandes de visa Schengen et Canadien, offrant des solutions sur mesure pour les touristes, les étudiants et les professionnels.",
+    "p1": "Fondée à Berkane, E-Visa Schengen est devenue le cabinet de conseil en immigration et visa le plus fiable de l'Est du Maroc. Nous nous spécialisons dans les demandes de visa Schengen et Canadien, offrant des solutions sur mesure pour les touristes, les étudiants et les professionnels.",
     "p2": "Naviguer dans les exigences des ambassades peut être intimidant. Notre mission est de fournir des conseils transparents, précis et professionnels pour assurer le taux de réussite le plus élevé possible pour nos clients.",
     "stats": {
       "years": "Années d'Expérience",
@@ -160,7 +160,7 @@
     "loginTitle": "Bon Retour",
     "loginSubtitle": "Connectez-vous pour accéder à votre espace client et suivre vos demandes.",
     "registerTitle": "Créer un Compte",
-    "registerSubtitle": "Rejoignez VisaPlus pour commencer votre parcours de demande de visa aujourd'hui.",
+    "registerSubtitle": "Rejoignez E-Visa Schengen pour commencer votre parcours de demande de visa aujourd'hui.",
     "email": "Adresse Email",
     "password": "Mot de Passe",
     "name": "Nom Complet",
@@ -171,9 +171,9 @@
     "hasAccount": "Vous avez déjà un compte ?"
   },
   "chatbot": {
-    "title": "Assistant VisaPlus",
+    "title": "Assistant E-Visa Schengen",
     "online": "En ligne",
-    "greeting": "Bonjour ! Je suis votre assistant virtuel VisaPlus. Comment puis-je vous aider aujourd'hui ?",
+    "greeting": "Bonjour ! Je suis votre assistant virtuel E-Visa Schengen. Comment puis-je vous aider aujourd'hui ?",
     "placeholder": "Écrivez votre message...",
     "error": "J'ai du mal à me connecter pour le moment. Veuillez réessayer plus tard."
   },
@@ -1251,7 +1251,7 @@
     }
   },
   "servicesPage": {
-    "title": "Nos Services | VisaPlus",
+    "title": "Nos Services | E-Visa Schengen",
     "description": "Services complets de visas et d'immigration au Maroc.",
     "heroSubtitle": "De l'évaluation du profil à la délivrance finale du visa, nous proposons une suite complète de services conçus pour maximiser vos chances d'approbation."
   },
@@ -1304,7 +1304,7 @@
     "title": "Politique de Confidentialité",
     "lastUpdated": "Dernière mise à jour : Octobre 2026",
     "introTitle": "1. Introduction",
-    "introText": "Bienvenue chez VisaPlus. Nous respectons votre vie privée et nous nous engageons à protéger vos données personnelles. Cette politique vous informera de la manière dont nous traitons vos données lorsque vous visitez notre site Web.",
+    "introText": "Bienvenue chez E-Visa Schengen. Nous respectons votre vie privée et nous nous engageons à protéger vos données personnelles. Cette politique vous informera de la manière dont nous traitons vos données lorsque vous visitez notre site Web.",
     "dataCollectTitle": "2. Les données que nous collectons",
     "dataCollectText": "Nous pouvons collecter, utiliser, stocker et transférer différents types de données personnelles vous concernant :",
     "dataList1": "Données d'identité : prénom, nom, identifiant.",
@@ -1315,7 +1315,7 @@
     "securityTitle": "4. Sécurité des données",
     "securityText": "Nous avons mis en place des mesures de sécurité pour éviter la perte, l'utilisation non autorisée ou la divulgation de vos données.",
     "contactTitle": "5. Contactez-nous",
-    "contactText": "Pour toute question, veuillez nous contacter à privacy@visaplus.com."
+    "contactText": "Pour toute question, veuillez nous contacter à privacy@e-visaschengen.com."
   },
   "schengen": {
     "title": "Schengen Visas",

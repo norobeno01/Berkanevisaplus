@@ -188,7 +188,7 @@ function AuthGuard({ children, requireAdmin }: { children: React.ReactNode, requ
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="visaplus-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="e-visaschengen-theme">
       <Router>
         <Layout>
           <ScrollToTop />

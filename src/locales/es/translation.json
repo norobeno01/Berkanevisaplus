@@ -1,6 +1,6 @@
 {
   "common": {
-    "agencyName": "VisaPlus Berkane",
+    "agencyName": "E-Visa Schengen",
     "home": "Inicio",
     "about": "Nosotros",
     "services": "Servicios",
@@ -60,7 +60,7 @@
     "testimonials": {
       "badge": "Confiado por Miles",
       "title": "Historias de Éxito",
-      "subtitle": "No te quedes solo con nuestra palabra. Lee lo que dicen nuestros clientes sobre su experiencia con VisaPlus Berkane."
+      "subtitle": "No te quedes solo con nuestra palabra. Lee lo que dicen nuestros clientes sobre su experiencia con E-Visa Schengen."
     }
   },
   "footer": {
@@ -68,16 +68,16 @@
     "quickLinks": "Enlaces Rápidos",
     "topDestinations": "Destinos Principales",
     "contactInfo": "Información de Contacto",
-    "rights": "VisaPlus Berkane. Todos los derechos reservados.",
+    "rights": "E-Visa Schengen. Todos los derechos reservados.",
     "privacy": "Política de Privacidad",
     "terms": "Términos de Servicio"
   },
   "about": {
     "tag": "Nuestra Historia",
-    "title": "Acerca de VisaPlus Berkane",
+    "title": "Acerca de E-Visa Schengen",
     "subtitle": "La principal agencia de asistencia de visas en la región Oriental, dedicada a hacer realidad tus sueños de viajes internacionales.",
     "whoWeAre": "Quiénes Somos",
-    "p1": "Fundada en Berkane, VisaPlus ha crecido hasta convertirse en la consultora de inmigración y visas más confiable del este de Marruecos. Nos especializamos en solicitudes de visas Schengen y canadienses, ofreciendo soluciones a medida para turistas, estudiantes y profesionales.",
+    "p1": "Fundada en Berkane, E-Visa Schengen ha crecido hasta convertirse en la consultora de inmigración y visas más confiable del este de Marruecos. Nos especializamos en solicitudes de visas Schengen y canadienses, ofreciendo soluciones a medida para turistas, estudiantes y profesionales.",
     "p2": "Navegar por los requisitos de la embajada puede ser abrumador. Nuestra misión es brindar orientación transparente, precisa y profesional para garantizar la tasa de éxito más alta posible para nuestros clientes.",
     "stats": {
       "years": "Años de Experiencia",
@@ -134,7 +134,7 @@
     "loginTitle": "Bienvenido de Nuevo",
     "loginSubtitle": "Inicia sesión para acceder a tu portal de cliente y hacer un seguimiento de tus solicitudes.",
     "registerTitle": "Crear una Cuenta",
-    "registerSubtitle": "Únete a VisaPlus para comenzar tu proceso de solicitud de visa hoy.",
+    "registerSubtitle": "Únete a E-Visa Schengen para comenzar tu proceso de solicitud de visa hoy.",
     "email": "Correo Electrónico",
     "password": "Contraseña",
     "name": "Nombre Completo",
@@ -145,9 +145,9 @@
     "hasAccount": "¿Ya tienes una cuenta?"
   },
   "chatbot": {
-    "title": "Asistente VisaPlus",
+    "title": "Asistente E-Visa Schengen",
     "online": "En línea",
-    "greeting": "¡Hola! Soy tu asistente virtual de VisaPlus. ¿Cómo puedo ayudarte hoy?",
+    "greeting": "¡Hola! Soy tu asistente virtual de E-Visa Schengen. ¿Cómo puedo ayudarte hoy?",
     "placeholder": "Escribe tu mensaje...",
     "error": "Tengo problemas para conectarme en este momento. Por favor, inténtalo de nuevo más tarde."
   },
@@ -275,7 +275,7 @@
     }
   },
   "servicesPage": {
-    "title": "Nuestros Servicios | VisaPlus",
+    "title": "Nuestros Servicios | E-Visa Schengen",
     "description": "Servicios integrales de visas e inmigración en Marruecos.",
     "heroSubtitle": "Desde la evaluación del perfil hasta la entrega final de la visa, ofrecemos un conjunto completo de servicios diseñados para maximizar sus posibilidades de aprobación."
   },
@@ -328,7 +328,7 @@
     "title": "Política de Privacidad",
     "lastUpdated": "Última actualización: Octubre 2026",
     "introTitle": "1. Introducción",
-    "introText": "Bienvenido a VisaPlus. Respetamos su privacidad y estamos comprometidos a proteger sus datos personales.",
+    "introText": "Bienvenido a E-Visa Schengen. Respetamos su privacidad y estamos comprometidos a proteger sus datos personales.",
     "dataCollectTitle": "2. Los Datos que Recopilamos",
     "dataCollectText": "Podemos recopilar, usar, almacenar y transferir diferentes tipos de datos personales sobre usted:",
     "dataList1": "Datos de identidad: incluye nombre, apellido o identificador similar.",
@@ -339,7 +339,7 @@
     "securityTitle": "4. Seguridad de los Datos",
     "securityText": "Hemos implementado medidas de seguridad adecuadas para evitar que sus datos personales se pierdan, usen o accedan de forma no autorizada.",
     "contactTitle": "5. Contáctenos",
-    "contactText": "Si tiene alguna pregunta, contáctenos en privacy@visaplus.com."
+    "contactText": "Si tiene alguna pregunta, contáctenos en privacy@e-visaschengen.com."
   },
   "schengen": {
     "title": "Schengen Visas",

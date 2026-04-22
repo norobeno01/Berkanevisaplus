@@ -20,14 +20,14 @@ const TikTokLogo = ({ className }: { className?: string }) => (
 export default function Footer() {
   const { t } = useTranslation()
   const [socialLinks, setSocialLinks] = useState({
-    facebook: "https://facebook.com/visaplus",
-    instagram: "https://instagram.com/visaplus",
-    linkedin: "https://linkedin.com/company/visaplus",
-    x: "https://x.com/visaplus",
-    tiktok: "https://tiktok.com/@visaplus",
+    facebook: "https://facebook.com/e-visaschengen",
+    instagram: "https://instagram.com/e-visaschengen",
+    linkedin: "https://linkedin.com/company/e-visaschengen",
+    x: "https://x.com/e-visaschengen",
+    tiktok: "https://tiktok.com/@e-visaschengen",
     address: "123 Boulevard Mohammed V, Berkane 60300, Morocco",
     phone: "+212 536 61 23 45",
-    email: "contact@visaplus-berkane.ma",
+    email: "contact@e-visaschengen.com",
     workingHours: "Mon-Fri: 09:00 - 18:00\nSat: 09:00 - 13:00"
   })
 

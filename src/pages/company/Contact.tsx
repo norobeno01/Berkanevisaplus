@@ -10,7 +10,7 @@ export default function Contact() {
   const { t } = useTranslation()
   const [settings, setSettings] = useState({
     phone: "+212 536 61 23 45",
-    email: "contact@visaplus-berkane.ma",
+    email: "contact@e-visaschengen.com",
     whatsapp: "+212 600 11 22 33",
     workingHours: "Mon-Fri: 09:00 - 18:00\nSat: 09:00 - 13:00"
   })

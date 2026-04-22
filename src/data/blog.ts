@@ -5,7 +5,7 @@ export const blogPosts = [
     excerpt: "A complete step-by-step guide to securing your tourist or student visa to France, including the latest TLScontact procedures.",
     image: "https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1000&q=80",
     date: "2024-10-15",
-    author: "VisaPlus Expert Team",
+    author: "E-Visa Schengen Expert Team",
     category: "Schengen Visas",
     content: `Applying for a French Schengen visa from Morocco can seem daunting, but with the right preparation, it's a straightforward process. France remains the number one destination for Moroccan travelers, whether for tourism, business, or higher education via Campus France.
       
@@ -27,7 +27,7 @@ In Morocco, visa appointments for France are managed by TLScontact. You must cre
 ### Step 4: The Interview and Biometrics
 On the day of your appointment, arrive 15 minutes early. You will submit your file, pay the visa fees (approx. 90 EUR + TLS service fees), and have your biometrics taken.
 
-**Tip from VisaPlus Berkane:** Always ensure your documents are translated by a sworn translator if they are only in Arabic. We provide complete file preparation and translation services to guarantee a 98% success rate.`
+**Tip from E-Visa Schengen:** Always ensure your documents are translated by a sworn translator if they are only in Arabic. We provide complete file preparation and translation services to guarantee a 98% success rate.`
   },
   {
     id: "canada-express-entry-guide-2026",
@@ -55,7 +55,7 @@ Your profile is ranked using the Comprehensive Ranking System (CRS). Points are 
 ### The French Language Advantage
 As a Moroccan applicant, you have a massive advantage if you speak French. The Canadian government offers significant bonus CRS points (up to 50 additional points) for strong French language skills, even if it's your second language alongside English. Taking the TEF or TCF Canada exam is highly recommended.
 
-If you need assistance calculating your CRS score or preparing your Express Entry profile, VisaPlus Berkane offers dedicated Canadian immigration consulting.`
+If you need assistance calculating your CRS score or preparing your Express Entry profile, E-Visa Schengen offers dedicated Canadian immigration consulting.`
   },
   {
     id: "top-5-reasons-visa-rejection",
@@ -65,7 +65,7 @@ If you need assistance calculating your CRS score or preparing your Express Entr
     date: "2024-09-10",
     author: "Visa Assessment Team",
     category: "Tips & Advice",
-    content: `Receiving a visa rejection (often referred to as 'Motif 3' or 'Motif 10') can be devastating. After processing thousands of applications at VisaPlus Berkane, we've identified the top 5 reasons for refusal:
+    content: `Receiving a visa rejection (often referred to as 'Motif 3' or 'Motif 10') can be devastating. After processing thousands of applications at E-Visa Schengen, we've identified the top 5 reasons for refusal:
 
 ### 1. Insufficient Financial Means
 The consulate must be convinced you can afford your trip. If your bank account shows sudden, large, unexplained deposits right before applying, it will raise red flags.

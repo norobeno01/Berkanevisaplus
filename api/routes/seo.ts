@@ -11,7 +11,7 @@ router.get('/settings', async (c) => {
       await c.env.DB.prepare('SELECT key FROM Settings LIMIT 1').first()
     } catch (e) {
       console.log('Running automatic Settings migration...')
-      let oldSeo = { siteName: 'VisaPlus', siteDesc: 'Expert Visa & Immigration Services', keywords: 'visa, immigration, travel, schengen' }
+      let oldSeo = { siteName: 'E-Visa Schengen', siteDesc: 'Expert Visa & Immigration Services', keywords: 'visa, immigration, travel, schengen' }
       try {
         const old = await c.env.DB.prepare('SELECT siteName, siteDesc, keywords FROM Settings LIMIT 1').first()
         if (old) oldSeo = old as any
@@ -48,7 +48,7 @@ router.get('/settings', async (c) => {
     return c.json({ 
       success: true, 
       data: {
-        siteName: config.siteName || 'VisaPlus',
+        siteName: config.siteName || 'E-Visa Schengen',
         siteDesc: config.siteDesc || 'Expert Visa & Immigration Services',
         keywords: config.keywords || 'visa, immigration, travel, schengen'
       }
@@ -97,7 +97,7 @@ router.get('/sitemap.xml', async (c) => {
       select: { slug: true, updatedAt: true }
     })
 
-    const baseUrl = 'https://visaplus.com'
+    const baseUrl = 'https://e-visaschengen.com'
 
     const staticPages = ['', '/about', '/contact', '/apply', '/visas/schengen', '/blog']
 
@@ -121,7 +121,7 @@ router.get('/sitemap.xml', async (c) => {
 })
 
 router.get('/robots.txt', async (c) => {
-  const baseUrl = 'https://visaplus.com'
+  const baseUrl = 'https://e-visaschengen.com'
   const robots = `User-agent: *\nAllow: /\nDisallow: /admin/\nDisallow: /portal/\nDisallow: /api/\n\nSitemap: ${baseUrl}/api/seo/sitemap.xml`
   c.header('Content-Type', 'text/plain')
   return c.body(robots)
