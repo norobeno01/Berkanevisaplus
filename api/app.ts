@@ -45,18 +45,30 @@ app.onError((err, c) => {
 })
 
 /**
- * 404 handler
+ * 404 handler & SPA Fallback
  */
 app.notFound(async (c) => {
+  // If it's an API route, return JSON 404
   if (c.req.path.startsWith('/api/')) {
     return c.json({ success: false, error: 'API not found' }, 404)
   }
-  
-  // SPA Fallback: Serve index.html for non-API routes
+
+  // If we have ASSETS binding, serve static files or SPA fallback
   if (c.env?.ASSETS) {
-    const url = new URL(c.req.url)
-    url.pathname = '/index.html'
-    return c.env.ASSETS.fetch(new Request(url.toString(), c.req.raw))
+    try {
+      // 1. Try to serve the exact asset (e.g. /assets/index.js)
+      const response = await c.env.ASSETS.fetch(c.req.raw)
+      if (response.status < 400) {
+        return response
+      }
+
+      // 2. If asset not found (like /admin), serve index.html for SPA routing
+      const url = new URL(c.req.url)
+      url.pathname = '/index.html'
+      return await c.env.ASSETS.fetch(new Request(url.toString(), c.req.raw))
+    } catch (e) {
+      console.error(e)
+    }
   }
 
   return c.json({ success: false, error: 'Page not found' }, 404)

@@ -60,27 +60,23 @@ router.get('/settings', async (c) => {
 
 router.put('/settings', authenticate, requireAdmin, async (c) => {
   try {
-    const prisma = getPrisma(c.env.DB)
     const body = await c.req.json()
+    const queries = []
 
     for (const [key, value] of Object.entries(body)) {
       if (['siteName', 'siteDesc', 'keywords'].includes(key)) {
-        const existing = await prisma.settings.findUnique({ where: { key } })
-        if (existing) {
-          await prisma.settings.update({
-            where: { key },
-            data: { value: String(value || '') }
-          })
-        } else {
-          await prisma.settings.create({
-            data: { 
-              id: crypto.randomUUID(),
-              key, 
-              value: String(value || '') 
-            }
-          })
-        }
+        queries.push(
+          c.env.DB.prepare(`
+            INSERT INTO Settings (id, key, value, updatedAt) 
+            VALUES (?, ?, ?, datetime('now')) 
+            ON CONFLICT(key) DO UPDATE SET value = excluded.value, updatedAt = datetime('now')
+          `).bind(crypto.randomUUID(), key, String(value || ''))
+        )
       }
+    }
+    
+    if (queries.length > 0) {
+      await c.env.DB.batch(queries)
     }
     
     return c.json({ success: true })

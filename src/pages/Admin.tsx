@@ -394,6 +394,7 @@ export default function Admin() {
   const [adminStatus, setAdminStatus] = useState({ loading: false, message: '', isError: false })
   const [socialLinks, setSocialLinks] = useState({ facebook: '', instagram: '', linkedin: '', x: '', tiktok: '', address: '', phone: '', email: '', whatsapp: '', workingHours: '' })
   const [socialStatus, setSocialStatus] = useState({ loading: false, message: '', isError: false })
+  const [contactStatus, setContactStatus] = useState({ loading: false, message: '', isError: false })
 
   const handleCreateAdmin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -416,14 +417,48 @@ export default function Admin() {
     }
   }
 
+  const handleSaveContact = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setContactStatus({ loading: true, message: '', isError: false })
+    try {
+      const payload = {
+        address: socialLinks.address,
+        phone: socialLinks.phone,
+        whatsapp: socialLinks.whatsapp,
+        email: socialLinks.email,
+        workingHours: socialLinks.workingHours
+      }
+      const res = await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(payload)
+      })
+      const data = await res.json() as any
+      if (data.success) {
+        setContactStatus({ loading: false, message: 'Business info updated successfully!', isError: false })
+      } else {
+        setContactStatus({ loading: false, message: 'Failed to update business info', isError: true })
+      }
+    } catch (err) {
+      setContactStatus({ loading: false, message: 'Network error', isError: true })
+    }
+  }
+
   const handleSaveSocials = async (e: React.FormEvent) => {
     e.preventDefault()
     setSocialStatus({ loading: true, message: '', isError: false })
     try {
+      const payload = {
+        facebook: socialLinks.facebook,
+        instagram: socialLinks.instagram,
+        linkedin: socialLinks.linkedin,
+        x: socialLinks.x,
+        tiktok: socialLinks.tiktok
+      }
       const res = await fetch('/api/settings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
-        body: JSON.stringify(socialLinks)
+        body: JSON.stringify(payload)
       })
       const data = await res.json() as any
       if (data.success) {
@@ -487,9 +522,9 @@ export default function Admin() {
           <CardTitle className="text-xl font-display text-foreground">Global Contact & Social Settings</CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSaveSocials} className="space-y-6">
-            <div className="space-y-4">
-              <h3 className="font-semibold text-lg text-foreground border-b border-border pb-2">Contact Information</h3>
+          <div className="space-y-10">
+            <form onSubmit={handleSaveContact} className="space-y-4">
+              <h3 className="font-semibold text-lg text-foreground border-b border-border pb-2">Business Contact Information</h3>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-muted-foreground">Office Address</label>
@@ -507,15 +542,26 @@ export default function Admin() {
                   <label className="text-sm font-medium text-muted-foreground">Email Address</label>
                   <Input type="email" value={socialLinks.email} onChange={e => setSocialLinks({...socialLinks, email: e.target.value})} placeholder="contact@..." className="bg-card border-border text-foreground" />
                 </div>
-                <div className="space-y-2">
+                <div className="space-y-2 md:col-span-2">
                   <label className="text-sm font-medium text-muted-foreground">Working Hours</label>
                   <Input value={socialLinks.workingHours} onChange={e => setSocialLinks({...socialLinks, workingHours: e.target.value})} placeholder="Mon-Fri: 09:00 - 18:00..." className="bg-card border-border text-foreground" />
                 </div>
               </div>
-            </div>
+              {contactStatus.message && (
+                <p className={`text-sm ${contactStatus.isError ? 'text-red-500' : 'text-green-500'}`}>
+                  {contactStatus.message}
+                </p>
+              )}
+              <div className="flex justify-end pt-2">
+                <Button type="submit" disabled={contactStatus.loading} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
+                  {contactStatus.loading ? 'Saving...' : 'Save Business Info'}
+                </Button>
+              </div>
+            </form>
 
-            <div className="space-y-4 pt-4">
+            <form onSubmit={handleSaveSocials} className="space-y-4 pt-4 border-t border-border">
               <h3 className="font-semibold text-lg text-foreground border-b border-border pb-2">Social Media Links</h3>
+              <p className="text-sm text-muted-foreground mb-4">Leave a link completely empty to hide its icon from the footer.</p>
               <div className="grid md:grid-cols-2 gap-6">
                 <div className="space-y-2">
                   <label className="text-sm font-medium text-muted-foreground">Facebook URL</label>
@@ -538,19 +584,18 @@ export default function Admin() {
                   <Input value={socialLinks.tiktok} onChange={e => setSocialLinks({...socialLinks, tiktok: e.target.value})} placeholder="https://tiktok.com/@..." className="bg-card border-border text-foreground" />
                 </div>
               </div>
-            </div>
-            
-            {socialStatus.message && (
-              <p className={`text-sm ${socialStatus.isError ? 'text-red-500' : 'text-green-500'}`}>
-                {socialStatus.message}
-              </p>
-            )}
-            <div className="flex justify-end pt-4">
-              <Button type="submit" disabled={socialStatus.loading} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
-                {socialStatus.loading ? 'Saving...' : 'Save Settings'}
-              </Button>
-            </div>
-          </form>
+              {socialStatus.message && (
+                <p className={`text-sm ${socialStatus.isError ? 'text-red-500' : 'text-green-500'}`}>
+                  {socialStatus.message}
+                </p>
+              )}
+              <div className="flex justify-end pt-2">
+                <Button type="submit" disabled={socialStatus.loading} className="bg-primary hover:bg-primary/90 text-primary-foreground px-8">
+                  {socialStatus.loading ? 'Saving...' : 'Save Social Links'}
+                </Button>
+              </div>
+            </form>
+          </div>
         </CardContent>
       </Card>
     </motion.div>
