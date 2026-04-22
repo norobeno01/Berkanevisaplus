@@ -112,7 +112,7 @@ export default function BlogPost() {
       <section className="py-16 md:py-24 flex-1">
         <div className="container px-4 md:px-6 max-w-4xl mx-auto">
           <Card className="glass-panel border-border">
-            <CardContent className="p-8 md:p-12 prose prose-invert prose-lg max-w-none text-muted-foreground prose-headings:font-display prose-headings:text-foreground prose-a:text-primary hover:prose-a:text-primary/80">
+            <CardContent className="p-8 md:p-12 prose dark:prose-invert prose-lg max-w-none text-muted-foreground prose-headings:font-display prose-headings:text-foreground prose-a:text-primary hover:prose-a:text-primary/80">
               <ReactMarkdown>{post.content}</ReactMarkdown>
             </CardContent>
           </Card>

@@ -14,6 +14,17 @@ export default defineConfig({
     }),
     tsconfigPaths(),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom'],
+          ui: ['lucide-react', 'framer-motion'],
+          markdown: ['react-markdown']
+        }
+      }
+    }
+  },
   server: {
     proxy: {
       '/api': {
