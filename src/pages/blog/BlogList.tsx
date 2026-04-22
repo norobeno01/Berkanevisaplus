@@ -10,33 +10,34 @@ import { blogPosts } from '@/data/blog'
 interface Blog {
   id: string
   title: string
+  titleAr?: string
+  titleFr?: string
   slug: string
   excerpt: string
+  excerptAr?: string
+  excerptFr?: string
   image: string
   category: string
   createdAt: string
 }
 
 export default function BlogList() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [blogs, setBlogs] = useState<Blog[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // We will use the local mock data instead of the API
-    // so it works perfectly on Vercel without needing to seed the DB
-    const formattedBlogs = blogPosts.map(post => ({
-      id: post.id,
-      title: post.title,
-      slug: post.id,
-      excerpt: post.excerpt,
-      image: post.image,
-      category: post.category,
-      createdAt: post.date
-    }))
-    
-    setBlogs(formattedBlogs)
-    setLoading(false)
+    fetch('/api/blogs')
+      .then(res => res.json() as any)
+      .then(data => {
+        if (data.success) {
+          setBlogs(data.data)
+        }
+        setLoading(false)
+      })
+      .catch(() => {
+        setLoading(false)
+      })
   }, [])
 
   return (
@@ -97,12 +98,18 @@ export default function BlogList() {
                       </div>
                     </div>
                     <CardContent className="p-6 flex flex-col h-[calc(100%-12rem)]">
-                      <h3 className="font-display font-bold text-xl text-foreground mb-3 group-hover:text-primary transition-colors line-clamp-2">
-                        {post.title}
-                      </h3>
-                      <p className="text-muted-foreground text-sm mb-6 flex-1 line-clamp-3">
-                        {post.excerpt}
-                      </p>
+                      <div>
+                        <div className="flex items-center text-sm text-muted-foreground mb-3">
+                          <Calendar className="mr-2 h-4 w-4" />
+                          {new Date(post.createdAt).toLocaleDateString()}
+                        </div>
+                        <h2 className="text-2xl font-bold font-display mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                          {i18n.language === 'ar' && post.titleAr ? post.titleAr : i18n.language === 'fr' && post.titleFr ? post.titleFr : post.title}
+                        </h2>
+                        <p className="text-muted-foreground text-sm mb-6 flex-1 line-clamp-3">
+                          {i18n.language === 'ar' && post.excerptAr ? post.excerptAr : i18n.language === 'fr' && post.excerptFr ? post.excerptFr : post.excerpt}
+                        </p>
+                      </div>
                       <div className="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-border">
                         <div className="flex items-center gap-1.5">
                           <Calendar className="h-3.5 w-3.5" />

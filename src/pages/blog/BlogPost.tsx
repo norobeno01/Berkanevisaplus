@@ -12,9 +12,15 @@ import { blogPosts } from '@/data/blog'
 interface Blog {
   id: string
   title: string
+  titleAr?: string
+  titleFr?: string
   slug: string
   excerpt: string
+  excerptAr?: string
+  excerptFr?: string
   content: string
+  contentAr?: string
+  contentFr?: string
   image: string
   category: string
   author: string
@@ -25,28 +31,21 @@ interface Blog {
 }
 
 export default function BlogPost() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { id } = useParams<{ id: string }>()
   const [post, setPost] = useState<Blog | null>(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Find the post locally instead of calling the API
-    const foundPost = blogPosts.find(p => p.id === id)
-    if (foundPost) {
-      setPost({
-        id: foundPost.id,
-        title: foundPost.title,
-        slug: foundPost.id,
-        excerpt: foundPost.excerpt,
-        content: foundPost.content,
-        image: foundPost.image,
-        category: foundPost.category,
-        author: foundPost.author,
-        createdAt: foundPost.date
+    fetch(`/api/blogs/${id}`)
+      .then(res => res.json() as any)
+      .then(data => {
+        if (data.success) {
+          setPost(data.data)
+        }
+        setLoading(false)
       })
-    }
-    setLoading(false)
+      .catch(() => setLoading(false))
   }, [id])
 
   if (loading) {
@@ -67,17 +66,21 @@ export default function BlogPost() {
     )
   }
 
+  const getTitle = () => i18n.language === 'ar' && post?.titleAr ? post.titleAr : i18n.language === 'fr' && post?.titleFr ? post.titleFr : post?.title
+  const getExcerpt = () => i18n.language === 'ar' && post?.excerptAr ? post.excerptAr : i18n.language === 'fr' && post?.excerptFr ? post.excerptFr : post?.excerpt
+  const getContent = () => i18n.language === 'ar' && post?.contentAr ? post.contentAr : i18n.language === 'fr' && post?.contentFr ? post.contentFr : post?.content
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <SEO 
-        title={post.metaTitle || post.title} 
-        description={post.metaDesc || post.excerpt} 
+        title={post.metaTitle || getTitle()} 
+        description={post.metaDesc || getExcerpt()} 
         keywords={post.keywords || `${post.category}, visa, immigration`} 
       />
       {/* Hero Section */}
       <section className="relative w-full py-24 md:py-32 overflow-hidden bg-background">
         <div className="absolute inset-0 z-0 opacity-20">
-          <img src={post.image} alt={post.title} className="w-full h-full object-cover" />
+          <img src={post.image} alt={getTitle()} className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/90 to-background/40" />
         </div>
         
@@ -104,7 +107,7 @@ export default function BlogPost() {
             </div>
             
             <h1 className="text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-tight font-display text-foreground leading-tight">
-              {post.title}
+              {getTitle()}
             </h1>
           </motion.div>
         </div>
@@ -114,11 +117,11 @@ export default function BlogPost() {
       <section className="py-16 md:py-24 flex-1">
         <div className="container px-4 md:px-6 max-w-4xl mx-auto">
           <Card className="glass-panel border-border">
-            <CardContent className="p-8 md:p-12 prose dark:prose-invert prose-lg max-w-none text-muted-foreground prose-headings:font-display prose-headings:text-foreground prose-a:text-primary hover:prose-a:text-primary/80">
-              {post.content.trim().startsWith('<') ? (
-                <div dangerouslySetInnerHTML={{ __html: post.content }} />
+            <CardContent className="p-8 md:p-12 prose dark:prose-invert prose-lg max-w-none text-muted-foreground prose-headings:font-display prose-headings:text-foreground prose-a:text-primary hover:prose-a:text-primary/80" dir={i18n.language === 'ar' ? 'rtl' : 'ltr'}>
+              {getContent()?.trim().startsWith('<') ? (
+                <div dangerouslySetInnerHTML={{ __html: getContent() as string }} />
               ) : (
-                <ReactMarkdown>{post.content}</ReactMarkdown>
+                <ReactMarkdown>{getContent() as string}</ReactMarkdown>
               )}
             </CardContent>
           </Card>

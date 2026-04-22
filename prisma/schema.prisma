@@ -56,10 +56,16 @@ model Document {
 model Blog {
   id          String   @id @default(cuid())
   title       String
+  titleAr     String?
+  titleFr     String?
   slug        String   @unique
   excerpt     String
+  excerptAr   String?
+  excerptFr   String?
   image       String
   content     String
+  contentAr   String?
+  contentFr   String?
   category    String
   author      String
   published   Boolean  @default(true)

@@ -340,6 +340,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Brands / Partners Marquee */}
+      <section className="w-full py-16 bg-foreground/5 border-y border-border overflow-hidden">
+        <div className="container px-4 md:px-6 mb-8 text-center">
+          <h3 className="text-xl md:text-2xl font-display font-bold text-foreground mb-2">
+            {t('home.brands.brandsTitle', 'Partners & Official Bodies')}
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            {t('home.brands.brandsSubtitle', 'We work directly with official application centers and universities globally.')}
+          </p>
+        </div>
+        <div className="relative flex w-full max-w-[100vw] overflow-hidden group">
+          <div className="flex animate-marquee whitespace-nowrap gap-12 items-center w-max">
+            {/* Duplicate list for seamless loop */}
+            {[...Array(2)].map((_, idx) => (
+              <div key={idx} className="flex gap-16 md:gap-24 px-8 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
+                <div className="text-2xl font-bold font-display text-foreground flex items-center gap-2"><Globe2 className="h-6 w-6"/> VFS Global</div>
+                <div className="text-2xl font-bold font-display text-foreground flex items-center gap-2"><ShieldCheck className="h-6 w-6"/> TLScontact</div>
+                <div className="text-2xl font-bold font-display text-foreground flex items-center gap-2"><Briefcase className="h-6 w-6"/> BLS International</div>
+                <div className="text-2xl font-bold font-display text-foreground flex items-center gap-2"><MapPin className="h-6 w-6"/> Campus France</div>
+                <div className="text-2xl font-bold font-display text-foreground flex items-center gap-2"><Plane className="h-6 w-6"/> UK Visas</div>
+                <div className="text-2xl font-bold font-display text-foreground flex items-center gap-2"><CheckCircle2 className="h-6 w-6"/> IRCC Canada</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Trust Badges & Testimonials */}
       <section className="w-full py-24">
         <div className="container px-4 md:px-6">
@@ -422,6 +449,65 @@ export default function Home() {
           </div>
         </div>
       </section>
+      {/* Agency Team Section */}
+      <section className="w-full py-24 bg-background relative overflow-hidden">
+        <div className="absolute inset-0 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
+        <div className="container px-4 md:px-6 relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-gradient mb-4">
+              {t('home.team.teamTitle', 'Our Expert Team')}
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              {t('home.team.teamSubtitle', 'Meet the certified immigration consultants dedicated to your success.')}
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              {
+                name: "Noureddine Benouafa",
+                role: t('home.team.team.ceo', 'CEO & Lead Consultant'),
+                img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80",
+                desc: "15+ years experience in European & Canadian immigration."
+              },
+              {
+                name: "Amina El Fassi",
+                role: t('home.team.team.specialist', 'Senior Visa Specialist'),
+                img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
+                desc: "Expert in Express Entry and Student Visas."
+              },
+              {
+                name: "Youssef Tazi",
+                role: t('home.team.team.coordinator', 'Application Coordinator'),
+                img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80",
+                desc: "Ensures flawless document preparation and translation."
+              }
+            ].map((member, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="group"
+              >
+                <Card className="glass-card border-border overflow-hidden h-full">
+                  <div className="h-64 overflow-hidden relative">
+                    <img src={member.img} alt={member.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+                  </div>
+                  <CardContent className="p-6 text-center relative -mt-12 bg-background/80 backdrop-blur-md mx-4 rounded-xl border border-border shadow-lg">
+                    <h3 className="text-xl font-display font-bold text-foreground mb-1">{member.name}</h3>
+                    <p className="text-primary font-medium text-sm mb-3">{member.role}</p>
+                    <p className="text-muted-foreground text-sm">{member.desc}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
     </div>
   )
 }

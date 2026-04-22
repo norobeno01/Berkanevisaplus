@@ -15,7 +15,14 @@
     "schengenVisas": "Schengen Visas",
     "canadaVisas": "Canada Visas",
     "admin": "Admin",
-    "blog": "Blog"
+    "blog": "Blog",
+    "requirements": "Document Checklist",
+    "downloadPdf": "Download PDF",
+    "noteReq": "Note: Embassy requirements frequently change. This checklist serves as a general guideline. Contact us for an exact profile assessment.",
+    "visaSummary": "Visa Summary",
+    "processingTime": "Processing Time",
+    "visaType": "Visa Type",
+    "officialFees": "Official Fees:"
   },
   "home": {
     "heroTag": "Global Visa & Immigration Experts",
@@ -61,6 +68,17 @@
       "badge": "Trusted by Thousands",
       "title": "Client Success Stories",
       "subtitle": "Don't just take our word for it. Read what our clients have to say about their experience with VisaPlus Berkane."
+    },
+    "brands": {
+      "brandsTitle": "Partners & Official Bodies",
+      "brandsSubtitle": "We work directly with official application centers and universities globally.",
+      "teamTitle": "Our Expert Team",
+      "teamSubtitle": "Meet the certified immigration consultants dedicated to your success.",
+      "team": {
+        "ceo": "CEO & Lead Consultant",
+        "specialist": "Senior Visa Specialist",
+        "coordinator": "Application Coordinator"
+      }
     }
   },
   "footer": {
@@ -153,36 +171,66 @@
   },
   "countryData": {
     "france": {
-      "name": "France",
+      "name": "France (Schengen)",
       "type": "Schengen (Type C & D)",
-      "processingTime": "15 - 30 Days",
-      "fee": "€90 + TLScontact fee",
       "description": "The most requested Schengen destination from Morocco. Ideal for tourism, business, and study (Campus France).",
-      "requirements": [
-        "Valid Passport (6 months validity)",
-        "2 recent biometric photos",
-        "Travel Medical Insurance (€30,000 coverage)",
-        "Proof of accommodation (Hotel or Attestation d'accueil)",
-        "Round-trip flight reservation",
-        "Proof of financial means (3 months bank statements)",
-        "Employment/Business documents"
-      ]
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist Visa (Type C)",
+          "description": "For short stays up to 90 days for tourism or visiting family/friends.",
+          "processingTime": "15 - 30 Days",
+          "fee": "€90 + TLScontact fee",
+          "requirements": [
+            "Valid Passport (issued within last 10 years, valid for 3+ months beyond return date, 2+ blank pages)",
+            "Two recent biometric passport photos (ICAO standard, white background)",
+            "Schengen Visa application form, fully completed and signed via France-Visas",
+            "Travel Medical Insurance (minimum coverage €30,000, valid for entire Schengen area)",
+            "Proof of Accommodation (hotel reservation or host invitation 'Attestation d'accueil')",
+            "Round-trip flight reservation",
+            "Proof of Financial Means (bank statements for last 3 months showing min. 3000 MAD/day)",
+            "Proof of Socio-Economic Status (work certificate, last 3 salary slips, CNSS registration, or commerce registry)",
+            "Family record book (Livret de famille) for married applicants"
+          ]
+        },
+        "student": {
+          "name": "Student Visa (Type D)",
+          "description": "For long stays over 90 days to study at a French university or language school.",
+          "processingTime": "15 - 45 Days",
+          "fee": "€50 (reduced rate for EEF) + TLScontact fee",
+          "requirements": [
+            "Valid Passport",
+            "Long-stay visa application form",
+            "Campus France 'Accord préalable' or Etudes en France (EEF) certificate",
+            "Proof of enrollment in a French educational institution",
+            "Proof of financial resources (minimum €615 per month) via blocked account or guarantor",
+            "Proof of accommodation in France for at least the first 3 months",
+            "Previous academic transcripts and diplomas"
+          ]
+        }
+      }
     },
     "spain": {
-      "name": "Spain",
+      "name": "Spain (Schengen)",
       "type": "Schengen (Type C & D)",
-      "processingTime": "15 - 45 Days",
-      "fee": "€90 + BLS fee",
       "description": "A top choice for summer holidays and family visits. Processed via BLS International.",
-      "requirements": [
-        "Valid Passport",
-        "Visa application form",
-        "Travel Insurance",
-        "Hotel reservation or Invitation letter (Carta de Invitación)",
-        "Flight itinerary",
-        "Financial proof (Bank statements)",
-        "Work certificate & CNSS history"
-      ]
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourist / Family Visit (Type C)",
+          "description": "Short stay visa for tourism or visiting family in Spain.",
+          "processingTime": "15 - 45 Days",
+          "fee": "€90 + BLS fee",
+          "requirements": [
+            "Valid Passport (6 months validity recommended)",
+            "Visa application form completed in Spanish or French",
+            "Travel Medical Insurance (€30,000 coverage)",
+            "Hotel reservation or Invitation letter (Carta de Invitación from Policia Nacional)",
+            "Flight itinerary",
+            "Financial proof (Bank statements for 3 months)",
+            "Work certificate & CNSS history",
+            "Copies of all previous Schengen visas"
+          ]
+        }
+      }
     },
     "italy": {
       "name": "Italy",
@@ -218,47 +266,80 @@
     "canada": {
       "name": "Canada",
       "type": "Visitor, Study & Work Permits",
-      "processingTime": "30 - 90 Days",
-      "fee": "$100 CAD + $85 Biometrics",
       "description": "Whether you want to study, work, or visit, we help you navigate the complex IRCC portal.",
-      "requirements": [
-        "Valid Passport",
-        "Digital photo",
-        "Proof of funds (Bank statements, sponsor letters)",
-        "Letter of explanation / Study plan",
-        "Acceptance letter (for students)",
-        "Ties to home country proof"
-      ]
+      "visaTypes": {
+        "visitor": {
+          "name": "Visitor Visa (TRV)",
+          "description": "For tourism, visiting family, or short business trips to Canada.",
+          "processingTime": "30 - 90 Days",
+          "fee": "$100 CAD + $85 Biometrics",
+          "requirements": [
+            "Valid Passport",
+            "Digital photo (IRCC specifications)",
+            "Proof of funds (Bank statements, property ownership, sponsor letters)",
+            "Letter of explanation detailing the purpose of the trip",
+            "Ties to home country proof (employment letter, family ties, property)",
+            "Travel history (previous visas)"
+          ]
+        },
+        "study": {
+          "name": "Study Permit",
+          "description": "Required for international students to study at Designated Learning Institutions (DLI) in Canada.",
+          "processingTime": "4 - 12 Weeks",
+          "fee": "$150 CAD + $85 Biometrics",
+          "requirements": [
+            "Letter of Acceptance from a Canadian DLI",
+            "Provincial Attestation Letter (PAL) if applicable",
+            "Proof of financial support (tuition + $20,635 CAD for living expenses)",
+            "Letter of explanation / Study plan",
+            "CAQ (Certificat d'acceptation du Québec) if studying in Quebec",
+            "Medical exam and Police certificate (if required)"
+          ]
+        }
+      }
     },
     "usa": {
       "name": "United States",
       "type": "B1/B2 Tourist, F1 Student",
-      "processingTime": "Depends on interview slot",
-      "fee": "$185 USD",
       "description": "Expert assistance with the DS-160 form and rigorous mock interview preparation for the US Embassy.",
-      "requirements": [
-        "Valid Passport",
-        "DS-160 Confirmation Page",
-        "Appointment Confirmation",
-        "US Visa Photo (2x2 inches)",
-        "Proof of ties to Morocco",
-        "Bank statements & Employment proof"
-      ]
+      "visaTypes": {
+        "b1b2": {
+          "name": "B1/B2 Tourist & Business",
+          "description": "Non-immigrant visa for persons traveling to the US temporarily for business (B-1) or for pleasure/medical treatment (B-2).",
+          "processingTime": "Depends on interview slot (often 1-6 months)",
+          "fee": "$185 USD",
+          "requirements": [
+            "Valid Passport (valid for at least 6 months beyond period of stay)",
+            "DS-160 Nonimmigrant Visa Application Confirmation Page",
+            "Appointment Confirmation Page",
+            "US Visa Photo (2x2 inches, white background, no glasses)",
+            "Proof of strong ties to Morocco (employment, property, family)",
+            "Bank statements & financial proof",
+            "Travel itinerary or letter of invitation (if applicable)"
+          ]
+        }
+      }
     },
     "uk": {
       "name": "United Kingdom",
       "type": "Standard Visitor, Student",
-      "processingTime": "15 - 21 Days",
-      "fee": "£115 GBP",
       "description": "Seamless application processing via TLScontact for tourism, business, and study in the UK.",
-      "requirements": [
-        "Valid Passport",
-        "Online Application Form",
-        "Financial evidence (Bank statements)",
-        "Proof of employment or studies",
-        "Accommodation details",
-        "Travel itinerary"
-      ]
+      "visaTypes": {
+        "visitor": {
+          "name": "Standard Visitor Visa",
+          "description": "For tourism, business, study (courses up to 6 months), and other permitted activities.",
+          "processingTime": "15 - 21 Days",
+          "fee": "£115 GBP (up to 6 months)",
+          "requirements": [
+            "Valid Passport",
+            "Online Application Form via Gov.uk",
+            "Financial evidence (Bank statements showing consistent income and savings)",
+            "Proof of employment (letter from employer stating salary, role, and approved leave)",
+            "Accommodation details in the UK",
+            "Detailed travel itinerary and estimated costs"
+          ]
+        }
+      }
     },
     "gulf": {
       "name": "Gulf Countries (UAE, KSA, Qatar)",

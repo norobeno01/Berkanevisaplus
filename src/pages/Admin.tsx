@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { 
   Users, FileCheck, Calendar, Activity, Search, LayoutDashboard, Settings, Mail, CreditCard, ChevronRight, 
   PenTool, Save, Plus, Trash, Image as ImageIcon, Link as LinkIcon, Bold, Italic, List, FolderOpen, MessageSquare, Wallet,
-  Download, Clock, AlertCircle, FileText, CheckCircle2, XCircle, Send, LineChart, Globe, RefreshCcw
+  Download, Clock, AlertCircle, FileText, CheckCircle2, XCircle, Send, LineChart, Globe, RefreshCcw, Edit
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -14,7 +14,8 @@ import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import ReactMarkdown from 'react-markdown'
 import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
-import { blogPosts as initialBlogPosts } from '@/data/blog'
+import { servicesData } from '@/data/services'
+import { countriesData } from '@/data/countries'
 
 import { useAuthStore } from '@/store/authStore'
 
@@ -86,8 +87,9 @@ export default function Admin() {
   const [selectedApp, setSelectedApp] = useState<Application | null>(null)
   
   // Blog State
-  const [blogs, setBlogs] = useState(initialBlogPosts)
+  const [blogs, setBlogs] = useState<any[]>([])
   const [editingBlog, setEditingBlog] = useState<any | null>(null)
+  const [blogLang, setBlogLang] = useState<'en' | 'ar' | 'fr'>('en')
   const [markdownContent, setMarkdownContent] = useState('')
   const [seoSettings, setSeoSettings] = useState({
     siteName: 'VisaPlus',
@@ -119,6 +121,12 @@ export default function Admin() {
           if (data.applications) setApplicationsList(data.applications)
         }
       })
+
+    fetch('/api/blogs')
+      .then(res => res.json() as any)
+      .then(data => {
+        if (data.success) setBlogs(data.data)
+      })
   }, [token])
 
   const stats = [
@@ -136,7 +144,7 @@ export default function Admin() {
   const [seoSuggestions, setSeoSuggestions] = useState<string[]>([])
 
   useEffect(() => {
-    // Calculate simple SEO score
+    // Calculate simple SEO score based on English content for simplicity
     let score = 100
     let suggestions = []
     
@@ -144,22 +152,22 @@ export default function Admin() {
       score -= 20
       suggestions.push("Title is too short. Aim for at least 40 characters.")
     }
-    if (!markdownContent || markdownContent.length < 300) {
+    if (!editingBlog?.content || editingBlog.content.length < 300) {
       score -= 30
       suggestions.push("Content is too thin. Write at least 300 words for better ranking.")
     }
-    if (markdownContent && !markdownContent.includes('<h2>') && !markdownContent.includes('<h3>')) {
+    if (editingBlog?.content && !editingBlog.content.includes('<h2>') && !editingBlog.content.includes('<h3>')) {
       score -= 15
       suggestions.push("Use headings (H2, H3) to structure your content.")
     }
-    if (markdownContent && !markdownContent.includes('<img')) {
+    if (editingBlog?.content && !editingBlog.content.includes('<img')) {
       score -= 10
       suggestions.push("Include images in your content to improve engagement.")
     }
 
     setSeoScore(Math.max(0, score))
     setSeoSuggestions(suggestions)
-  }, [editingBlog?.title, markdownContent])
+  }, [editingBlog?.title, editingBlog?.content])
 
   const renderBlog = () => {
     if (editingBlog) {
@@ -169,11 +177,27 @@ export default function Admin() {
             <Button variant="ghost" onClick={() => setEditingBlog(null)} className="text-muted-foreground hover:text-foreground -ml-4">
               <ChevronRight className="mr-2 h-4 w-4 rotate-180" /> Back to Articles
             </Button>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2" onClick={() => {
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2" onClick={async () => {
               if (editingBlog.id === 'new') {
-                setBlogs([{ ...editingBlog, id: Date.now().toString(), content: markdownContent }, ...blogs])
+                const res = await fetch('/api/blogs', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                  body: JSON.stringify(editingBlog)
+                })
+                const data = await res.json() as any
+                if (data.success) {
+                  setBlogs([data.data, ...blogs])
+                }
               } else {
-                setBlogs(blogs.map(b => b.id === editingBlog.id ? { ...editingBlog, content: markdownContent } : b))
+                const res = await fetch(`/api/blogs/${editingBlog.id}`, {
+                  method: 'PUT',
+                  headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                  body: JSON.stringify(editingBlog)
+                })
+                const data = await res.json() as any
+                if (data.success) {
+                  setBlogs(blogs.map(b => b.id === editingBlog.id ? data.data : b))
+                }
               }
               setEditingBlog(null)
             }}>
@@ -186,10 +210,20 @@ export default function Admin() {
             <div className="space-y-6">
               <Card className="glass-panel border-border">
                 <CardHeader>
+                  <div className="flex gap-2 mb-4">
+                    <Button variant={blogLang === 'en' ? 'default' : 'outline'} size="sm" onClick={() => setBlogLang('en')} className={blogLang === 'en' ? 'bg-primary' : 'glass text-foreground'}>English (Primary)</Button>
+                    <Button variant={blogLang === 'ar' ? 'default' : 'outline'} size="sm" onClick={() => setBlogLang('ar')} className={blogLang === 'ar' ? 'bg-primary' : 'glass text-foreground'}>Arabic (AR)</Button>
+                    <Button variant={blogLang === 'fr' ? 'default' : 'outline'} size="sm" onClick={() => setBlogLang('fr')} className={blogLang === 'fr' ? 'bg-primary' : 'glass text-foreground'}>French (FR)</Button>
+                  </div>
                   <Input 
-                    placeholder="Enter Article Title..." 
-                    value={editingBlog.title}
-                    onChange={(e) => setEditingBlog({...editingBlog, title: e.target.value})}
+                    placeholder={`Enter Article Title (${blogLang.toUpperCase()})...`}
+                    value={blogLang === 'en' ? editingBlog.title : blogLang === 'ar' ? (editingBlog.titleAr || '') : (editingBlog.titleFr || '')}
+                    onChange={(e) => {
+                      if (blogLang === 'en') setEditingBlog({...editingBlog, title: e.target.value})
+                      if (blogLang === 'ar') setEditingBlog({...editingBlog, titleAr: e.target.value})
+                      if (blogLang === 'fr') setEditingBlog({...editingBlog, titleFr: e.target.value})
+                    }}
+                    dir={blogLang === 'ar' ? 'rtl' : 'ltr'}
                     className="bg-card border-border text-foreground text-xl h-14 font-display font-bold" 
                   />
                   <div className="grid grid-cols-2 gap-4 mt-4">
@@ -209,11 +243,15 @@ export default function Admin() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {/* Editor */}
-                  <div className="bg-card text-foreground">
+                  <div className="bg-card text-foreground" dir={blogLang === 'ar' ? 'rtl' : 'ltr'}>
                     <ReactQuill 
                       theme="snow"
-                      value={markdownContent}
-                      onChange={setMarkdownContent}
+                      value={blogLang === 'en' ? editingBlog.content : blogLang === 'ar' ? (editingBlog.contentAr || '') : (editingBlog.contentFr || '')}
+                      onChange={(val) => {
+                        if (blogLang === 'en') setEditingBlog({...editingBlog, content: val})
+                        if (blogLang === 'ar') setEditingBlog({...editingBlog, contentAr: val})
+                        if (blogLang === 'fr') setEditingBlog({...editingBlog, contentFr: val})
+                      }}
                       className="h-[450px] mb-12"
                       modules={{
                         toolbar: [
@@ -263,7 +301,10 @@ export default function Admin() {
                   <CardTitle className="text-lg font-display text-muted-foreground">Live Preview</CardTitle>
                 </CardHeader>
                 <CardContent className="prose dark:prose-invert prose-lg max-w-none text-muted-foreground prose-headings:font-display prose-headings:text-foreground prose-a:text-primary">
-                  {markdownContent ? <div dangerouslySetInnerHTML={{ __html: markdownContent }} /> : <p className="text-muted-foreground italic">Start typing to see preview...</p>}
+                  {blogLang === 'en' && editingBlog.content ? <div dangerouslySetInnerHTML={{ __html: editingBlog.content }} /> : null}
+                  {blogLang === 'ar' && editingBlog.contentAr ? <div dir="rtl" dangerouslySetInnerHTML={{ __html: editingBlog.contentAr }} /> : null}
+                  {blogLang === 'fr' && editingBlog.contentFr ? <div dangerouslySetInnerHTML={{ __html: editingBlog.contentFr }} /> : null}
+                  {!editingBlog.content && !editingBlog.contentAr && !editingBlog.contentFr && <p className="text-muted-foreground italic">Start typing to see preview...</p>}
                 </CardContent>
               </Card>
             </div>
@@ -936,7 +977,7 @@ export default function Admin() {
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
       <div className="flex items-center justify-between mb-8">
         <div>
-          <h1 className="text-3xl font-display font-bold tracking-tight text-foreground">Services & Visas</h1>
+          <h1 className="text-3xl font-display font-bold tracking-tight text-foreground">Services & Destinations</h1>
           <p className="text-muted-foreground mt-1">Manage agency services and destination options.</p>
         </div>
         <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
@@ -944,12 +985,56 @@ export default function Admin() {
         </Button>
       </div>
 
-      <Card className="glass-panel border-border">
-        <CardContent className="p-8 text-center text-muted-foreground border border-dashed border-border rounded-xl bg-foreground/5">
-          <List className="h-12 w-12 mx-auto mb-4 opacity-50" />
-          <p>Service management is active. Use the API endpoints to create and update services and destinations.</p>
-        </CardContent>
-      </Card>
+      <div className="grid md:grid-cols-2 gap-8">
+        {/* Services List */}
+        <Card className="glass-panel border-border h-[600px] flex flex-col">
+          <CardHeader className="border-b border-border bg-foreground/5 shrink-0">
+            <CardTitle className="text-lg font-display text-foreground flex justify-between">
+              Our Services
+              <Badge variant="outline" className="bg-primary/10 text-primary">{servicesData.length}</Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-0 overflow-auto flex-1">
+            <div className="divide-y divide-border">
+              {servicesData.map(s => (
+                <div key={s.id} className="p-4 hover:bg-foreground/5 flex justify-between items-center transition-colors">
+                  <div>
+                    <h3 className="font-semibold text-foreground">{s.title}</h3>
+                    <p className="text-xs text-muted-foreground line-clamp-1">{s.description}</p>
+                  </div>
+                  <Button variant="ghost" size="sm" className="text-primary"><Edit className="h-4 w-4"/></Button>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Destinations List */}
+        <Card className="glass-panel border-border h-[600px] flex flex-col">
+          <CardHeader className="border-b border-border bg-foreground/5 shrink-0">
+            <CardTitle className="text-lg font-display text-foreground flex justify-between">
+              Visa Destinations
+              <Badge variant="outline" className="bg-primary/10 text-primary">{countriesData.length}</Badge>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-0 overflow-auto flex-1">
+            <div className="divide-y divide-border">
+              {countriesData.map(c => (
+                <div key={c.id} className="p-4 hover:bg-foreground/5 flex justify-between items-center transition-colors">
+                  <div className="flex items-center gap-3">
+                    <img src={c.image} alt={c.name} className="w-10 h-10 rounded-md object-cover" />
+                    <div>
+                      <h3 className="font-semibold text-foreground">{c.name}</h3>
+                      <p className="text-xs text-muted-foreground">{c.type}</p>
+                    </div>
+                  </div>
+                  <Button variant="ghost" size="sm" className="text-primary"><Edit className="h-4 w-4"/></Button>
+                </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </motion.div>
   )
 

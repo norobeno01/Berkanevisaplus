@@ -15,7 +15,14 @@
     "schengenVisas": "Visas Schengen",
     "canadaVisas": "Visas Canada",
     "admin": "Admin",
-    "blog": "Blog"
+    "blog": "Blog",
+    "requirements": "Liste des documents",
+    "downloadPdf": "Télécharger PDF",
+    "noteReq": "Remarque : Les exigences de l'ambassade changent fréquemment. Cette liste sert de directive générale. Contactez-nous pour une évaluation exacte de votre profil.",
+    "visaSummary": "Résumé du Visa",
+    "processingTime": "Délai de traitement",
+    "visaType": "Type de Visa",
+    "officialFees": "Frais Officiels :"
   },
   "home": {
     "heroTag": "Experts Mondiaux en Visa et Immigration",
@@ -61,6 +68,17 @@
       "badge": "Approuvé par des milliers",
       "title": "Histoires de Réussite",
       "subtitle": "Ne nous croyez pas sur parole. Lisez ce que nos clients disent de leur expérience avec VisaPlus Berkane."
+    },
+    "brands": {
+      "brandsTitle": "Partenaires et Organismes Officiels",
+      "brandsSubtitle": "Nous travaillons directement avec les centres de demande officiels et les universités à l'échelle mondiale.",
+      "teamTitle": "Notre Équipe d'Experts",
+      "teamSubtitle": "Rencontrez les consultants en immigration certifiés dédiés à votre succès.",
+      "team": {
+        "ceo": "PDG et Consultant Principal",
+        "specialist": "Spécialiste Senior des Visas",
+        "coordinator": "Coordinateur des Demandes"
+      }
     }
   },
   "footer": {
@@ -153,36 +171,66 @@
   },
   "countryData": {
     "france": {
-      "name": "France",
+      "name": "France (Schengen)",
       "type": "Schengen (Type C & D)",
-      "processingTime": "15 - 30 Jours",
-      "fee": "90 € + frais TLScontact",
-      "description": "La destination Schengen la plus demandée depuis le Maroc. Idéale pour le tourisme, les affaires et les études (Campus France).",
-      "requirements": [
-        "Passeport valide (validité de 6 mois)",
-        "2 photos biométriques récentes",
-        "Assurance médicale de voyage (couverture 30 000 €)",
-        "Preuve d'hébergement (Hôtel ou Attestation d'accueil)",
-        "Réservation de vol aller-retour",
-        "Preuve de moyens financiers (relevés bancaires de 3 mois)",
-        "Documents d'emploi/d'affaires"
-      ]
+      "description": "La destination Schengen la plus demandée depuis le Maroc. Idéal pour le tourisme, les affaires et les études (Campus France).",
+      "visaTypes": {
+        "tourist": {
+          "name": "Visa Touristique (Type C)",
+          "description": "Pour les courts séjours jusqu'à 90 jours pour le tourisme ou pour visiter famille/amis.",
+          "processingTime": "15 - 30 Jours",
+          "fee": "90 € + Frais TLScontact",
+          "requirements": [
+            "Passeport valide (délivré dans les 10 dernières années, valide pour 3+ mois au-delà de la date de retour, 2+ pages vierges)",
+            "Deux photos d'identité biométriques récentes (norme OACI, fond blanc)",
+            "Formulaire de demande de visa Schengen, entièrement rempli et signé via France-Visas",
+            "Assurance médicale de voyage (couverture minimale 30 000 €, valide pour tout l'espace Schengen)",
+            "Preuve d'hébergement (réservation d'hôtel ou 'Attestation d'accueil')",
+            "Réservation de vol aller-retour",
+            "Preuve de moyens financiers (relevés bancaires des 3 derniers mois montrant min. 3000 MAD/jour)",
+            "Preuve de statut socio-économique (attestation de travail, 3 dernières fiches de paie, inscription CNSS ou registre de commerce)",
+            "Livret de famille pour les demandeurs mariés"
+          ]
+        },
+        "student": {
+          "name": "Visa Étudiant (Type D)",
+          "description": "Pour les longs séjours de plus de 90 jours pour étudier dans une université française ou une école de langue.",
+          "processingTime": "15 - 45 Jours",
+          "fee": "50 € (tarif réduit pour EEF) + Frais TLScontact",
+          "requirements": [
+            "Passeport valide",
+            "Formulaire de demande de visa de long séjour",
+            "Certificat d'Accord préalable de Campus France ou Etudes en France (EEF)",
+            "Preuve d'inscription dans un établissement d'enseignement français",
+            "Preuve de ressources financières (minimum 615 € par mois) via un compte bloqué ou un garant",
+            "Preuve d'hébergement en France pour au moins les 3 premiers mois",
+            "Relevés de notes académiques précédents et diplômes"
+          ]
+        }
+      }
     },
     "spain": {
-      "name": "Espagne",
+      "name": "Espagne (Schengen)",
       "type": "Schengen (Type C & D)",
-      "processingTime": "15 - 45 Jours",
-      "fee": "90 € + frais BLS",
-      "description": "Un choix de premier ordre pour les vacances d'été et les visites familiales. Traité via BLS International.",
-      "requirements": [
-        "Passeport valide",
-        "Formulaire de demande de visa",
-        "Assurance de voyage",
-        "Réservation d'hôtel ou lettre d'invitation (Carta de Invitación)",
-        "Itinéraire de vol",
-        "Preuve financière (Relevés bancaires)",
-        "Certificat de travail et historique CNSS"
-      ]
+      "description": "Un choix de premier plan pour les vacances d'été et les visites familiales. Traité via BLS International.",
+      "visaTypes": {
+        "tourist": {
+          "name": "Tourisme / Visite Familiale (Type C)",
+          "description": "Visa de court séjour pour le tourisme ou pour visiter de la famille en Espagne.",
+          "processingTime": "15 - 45 Jours",
+          "fee": "90 € + Frais BLS",
+          "requirements": [
+            "Passeport valide (validité de 6 mois recommandée)",
+            "Formulaire de demande de visa rempli en espagnol ou en français",
+            "Assurance médicale de voyage (couverture 30 000 €)",
+            "Réservation d'hôtel ou lettre d'invitation (Carta de Invitación de la Policia Nacional)",
+            "Itinéraire de vol",
+            "Preuve financière (Relevés bancaires pour 3 mois)",
+            "Attestation de travail & historique CNSS",
+            "Copies de tous les visas Schengen précédents"
+          ]
+        }
+      }
     },
     "italy": {
       "name": "Italie",
@@ -217,48 +265,81 @@
     },
     "canada": {
       "name": "Canada",
-      "type": "Permis de visiteur, d'études et de travail",
-      "processingTime": "30 - 90 Jours",
-      "fee": "100 $ CA + 85 $ CA Biométrie",
+      "type": "Visiteur, Études & Travail",
       "description": "Que vous souhaitiez étudier, travailler ou visiter, nous vous aidons à naviguer sur le portail complexe d'IRCC.",
-      "requirements": [
-        "Passeport valide",
-        "Photo numérique",
-        "Preuve de fonds (Relevés bancaires, lettres de parrainage)",
-        "Lettre d'explication / Plan d'études",
-        "Lettre d'acceptation (pour les étudiants)",
-        "Preuve d'attaches au pays d'origine"
-      ]
+      "visaTypes": {
+        "visitor": {
+          "name": "Visa de Visiteur (VRT)",
+          "description": "Pour le tourisme, les visites familiales ou de courts voyages d'affaires au Canada.",
+          "processingTime": "30 - 90 Jours",
+          "fee": "100 $ CAD + 85 $ Biométrie",
+          "requirements": [
+            "Passeport valide",
+            "Photo numérique (spécifications IRCC)",
+            "Preuve de fonds (Relevés bancaires, propriété, lettres de garant)",
+            "Lettre d'explication détaillant le but du voyage",
+            "Preuve d'attaches au pays d'origine (lettre d'emploi, liens familiaux, propriété)",
+            "Historique de voyage (visas précédents)"
+          ]
+        },
+        "study": {
+          "name": "Permis d'Études",
+          "description": "Requis pour les étudiants internationaux pour étudier dans des Établissements d'Enseignement Désignés (EED) au Canada.",
+          "processingTime": "4 - 12 Semaines",
+          "fee": "150 $ CAD + 85 $ Biométrie",
+          "requirements": [
+            "Lettre d'acceptation d'un EED canadien",
+            "Lettre d'Attestation Provinciale (PAL) si applicable",
+            "Preuve de soutien financier (frais de scolarité + 20 635 $ CAD pour frais de subsistance)",
+            "Lettre d'explication / Plan d'études",
+            "CAQ (Certificat d'acceptation du Québec) si vous étudiez au Québec",
+            "Examen médical et certificat de police (si requis)"
+          ]
+        }
+      }
     },
     "usa": {
       "name": "États-Unis",
-      "type": "Touriste B1/B2, Étudiant F1",
-      "processingTime": "Dépend du créneau d'entretien",
-      "fee": "185 $ US",
-      "description": "Assistance spécialisée avec le formulaire DS-160 et préparation rigoureuse aux entretiens simulés pour l'ambassade américaine.",
-      "requirements": [
-        "Passeport valide",
-        "Page de confirmation DS-160",
-        "Confirmation de rendez-vous",
-        "Photo de visa américain (2x2 pouces)",
-        "Preuve d'attaches au Maroc",
-        "Relevés bancaires et preuve d'emploi"
-      ]
+      "type": "B1/B2 Tourisme, F1 Étudiant",
+      "description": "Assistance experte avec le formulaire DS-160 et préparation rigoureuse aux entretiens pour l'Ambassade des États-Unis.",
+      "visaTypes": {
+        "b1b2": {
+          "name": "B1/B2 Tourisme & Affaires",
+          "description": "Visa non-immigrant pour les personnes se rendant aux États-Unis temporairement pour les affaires (B-1) ou pour le plaisir/traitement médical (B-2).",
+          "processingTime": "Dépend de la date d'entretien (souvent 1-6 mois)",
+          "fee": "185 $ USD",
+          "requirements": [
+            "Passeport valide (valide pendant au moins 6 mois au-delà de la période de séjour)",
+            "Page de confirmation de la demande de visa non-immigrant DS-160",
+            "Page de confirmation de rendez-vous",
+            "Photo de visa américain (2x2 pouces, fond blanc, sans lunettes)",
+            "Preuve d'attaches fortes au Maroc (emploi, propriété, famille)",
+            "Relevés bancaires & preuve d'emploi",
+            "Itinéraire de voyage ou lettre d'invitation (si applicable)"
+          ]
+        }
+      }
     },
     "uk": {
       "name": "Royaume-Uni",
-      "type": "Visiteur standard, Étudiant",
-      "processingTime": "15 - 21 Jours",
-      "fee": "115 £ GBP",
-      "description": "Traitement fluide des demandes via TLScontact pour le tourisme, les affaires et les études au Royaume-Uni.",
-      "requirements": [
-        "Passeport valide",
-        "Formulaire de demande en ligne",
-        "Preuves financières (Relevés bancaires)",
-        "Preuve d'emploi ou d'études",
-        "Détails de l'hébergement",
-        "Itinéraire de voyage"
-      ]
+      "type": "Visiteur Standard, Étudiant",
+      "description": "Traitement transparent des demandes via TLScontact pour le tourisme, les affaires et les études au Royaume-Uni.",
+      "visaTypes": {
+        "visitor": {
+          "name": "Visa Visiteur Standard",
+          "description": "Pour le tourisme, les affaires, les études (cours jusqu'à 6 mois) et d'autres activités autorisées.",
+          "processingTime": "15 - 21 Jours",
+          "fee": "115 £ GBP (jusqu'à 6 mois)",
+          "requirements": [
+            "Passeport valide",
+            "Formulaire de demande en ligne via Gov.uk",
+            "Preuve financière (Relevés bancaires montrant un revenu et des économies constants)",
+            "Preuve d'emploi (lettre de l'employeur indiquant le salaire, le rôle et le congé approuvé)",
+            "Détails de l'hébergement au Royaume-Uni",
+            "Itinéraire de voyage détaillé et coûts estimés"
+          ]
+        }
+      }
     },
     "gulf": {
       "name": "Pays du Golfe (EAU, KSA, Qatar)",
