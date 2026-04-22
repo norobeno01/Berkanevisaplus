@@ -37,6 +37,7 @@ export default function Home() {
       text: "The team at VisaPlus Berkane made my Canadian student visa process incredibly smooth. Their attention to detail in document preparation is unmatched. I got my approval in just 3 weeks!",
       name: "Yassine M.",
       type: "Student Visa, Canada",
+      image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80",
       initials: "YM",
       color: "from-primary to-gold-500"
     },
@@ -44,6 +45,7 @@ export default function Home() {
       text: "Excellent service! They handled my Schengen visa for France flawlessly. They translated my documents and prepared me for the TLS appointment. Highly recommended in the Oriental region.",
       name: "Fatima E.",
       type: "Tourist Visa, France",
+      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
       initials: "FE",
       color: "from-purple-500 to-pink-500"
     },
@@ -51,6 +53,7 @@ export default function Home() {
       text: "I was struggling with my Express Entry profile, but VisaPlus helped me maximize my CRS score and handled all the complex paperwork. Thanks to them, I am now a permanent resident.",
       name: "Hassan R.",
       type: "Express Entry, Canada",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
       initials: "HR",
       color: "from-emerald-500 to-teal-500"
     }
@@ -394,7 +397,7 @@ export default function Home() {
             <div className="relative space-y-6">
               <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full pointer-events-none" />
               
-              <div className="relative z-10 overflow-hidden min-h-[350px]">
+              <div className="relative z-10 overflow-hidden h-[450px] sm:h-[400px] md:h-[350px]">
                 {testimonials.map((test, idx) => (
                   <motion.div
                     key={idx}
@@ -409,24 +412,28 @@ export default function Home() {
                     className="absolute inset-0"
                   >
                     <Card className="glass-panel h-full border-border hover:border-gold-500/30 transition-colors shadow-2xl">
-                      <CardContent className="p-10 flex flex-col h-full justify-between">
+                      <CardContent className="p-8 sm:p-10 flex flex-col h-full justify-between">
                         <div>
-                          <div className="flex gap-1 text-gold-500 mb-6">
-                            {[1,2,3,4,5].map(i => <Star key={i} className="h-5 w-5 fill-current" />)}
+                          <div className="flex gap-1 text-gold-500 mb-4 sm:mb-6">
+                            {[1,2,3,4,5].map(i => <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />)}
                           </div>
-                          <blockquote className="text-xl italic font-light leading-relaxed mb-6 text-muted-foreground">
+                          <blockquote className="text-lg sm:text-xl italic font-light leading-relaxed mb-6 text-muted-foreground line-clamp-6 sm:line-clamp-4">
                             "{test.text}"
                           </blockquote>
                         </div>
                         <div className="flex items-center gap-4 mt-auto">
-                          <div className={`w-14 h-14 rounded-full bg-gradient-to-tr ${test.color} p-[2px]`}>
-                            <div className="w-full h-full rounded-full bg-background flex items-center justify-center font-bold text-lg shadow-inner">
-                              {test.initials}
+                          <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr ${test.color} p-[2px] shrink-0`}>
+                            <div className="w-full h-full rounded-full bg-background flex items-center justify-center font-bold text-lg shadow-inner overflow-hidden">
+                              {test.image ? (
+                                <img src={test.image} alt={test.name} className="w-full h-full object-cover" />
+                              ) : (
+                                test.initials
+                              )}
                             </div>
                           </div>
                           <div>
-                            <div className="font-bold text-foreground text-lg">{test.name}</div>
-                            <div className="text-sm text-primary font-medium">{test.type}</div>
+                            <div className="font-bold text-foreground text-base sm:text-lg">{test.name}</div>
+                            <div className="text-xs sm:text-sm text-primary font-medium">{test.type}</div>
                           </div>
                         </div>
                       </CardContent>
@@ -465,21 +472,21 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                name: "Noureddine Benouafa",
+                name: "Mounir Latrache",
                 role: t('home.team.team.ceo', 'CEO & Lead Consultant'),
-                img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80",
+                img: "https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=800&q=80",
                 desc: "15+ years experience in European & Canadian immigration."
               },
               {
                 name: "Amina El Fassi",
                 role: t('home.team.team.specialist', 'Senior Visa Specialist'),
-                img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80",
+                img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80",
                 desc: "Expert in Express Entry and Student Visas."
               },
               {
                 name: "Youssef Tazi",
                 role: t('home.team.team.coordinator', 'Application Coordinator'),
-                img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=800&q=80",
+                img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80",
                 desc: "Ensures flawless document preparation and translation."
               }
             ].map((member, idx) => (
