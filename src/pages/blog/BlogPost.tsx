@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/components/ui/card'
 import ReactMarkdown from 'react-markdown'
 import { useState, useEffect } from 'react'
 import SEO from '@/components/SEO'
+import { blogPosts } from '@/data/blog'
 
 interface Blog {
   id: string
@@ -28,21 +29,28 @@ export default function BlogPost() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch(`/api/blogs/${id}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          setPost(data.data)
-        }
-        setLoading(false)
+    // Find the post locally instead of calling the API
+    const foundPost = blogPosts.find(p => p.id === id)
+    if (foundPost) {
+      setPost({
+        id: foundPost.id,
+        title: foundPost.title,
+        slug: foundPost.id,
+        excerpt: foundPost.excerpt,
+        content: foundPost.content,
+        image: foundPost.image,
+        category: foundPost.category,
+        author: foundPost.author,
+        createdAt: foundPost.date
       })
-      .catch(console.error)
+    }
+    setLoading(false)
   }, [id])
 
   if (loading) {
     return (
       <div className="min-h-[70vh] flex flex-col items-center justify-center bg-background">
-        <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+        <div className="w-12 h-12 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
       </div>
     )
   }

@@ -4,6 +4,7 @@ import { Calendar, User, ArrowRight } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { useState, useEffect } from 'react'
 import SEO from '@/components/SEO'
+import { blogPosts } from '@/data/blog'
 
 interface Blog {
   id: string
@@ -20,15 +21,20 @@ export default function BlogList() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/blogs')
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          setBlogs(data.data)
-        }
-        setLoading(false)
-      })
-      .catch(console.error)
+    // We will use the local mock data instead of the API
+    // so it works perfectly on Vercel without needing to seed the DB
+    const formattedBlogs = blogPosts.map(post => ({
+      id: post.id,
+      title: post.title,
+      slug: post.id,
+      excerpt: post.excerpt,
+      image: post.image,
+      category: post.category,
+      createdAt: post.date
+    }))
+    
+    setBlogs(formattedBlogs)
+    setLoading(false)
   }, [])
 
   return (
