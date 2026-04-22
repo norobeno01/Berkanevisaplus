@@ -5,6 +5,8 @@ import {
   PenTool, Save, Plus, Trash, Image as ImageIcon, Link as LinkIcon, Bold, Italic, List, FolderOpen, MessageSquare, Wallet,
   Download, Clock, AlertCircle, FileText, CheckCircle2, XCircle, Send, LineChart, Globe, RefreshCcw, Edit
 } from 'lucide-react'
+import AdvancedSEOTool from '@/components/admin/AdvancedSEOTool'
+import AdvancedBlogSEO from '@/components/admin/AdvancedBlogSEO'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -159,35 +161,6 @@ export default function Admin() {
     setMarkdownContent(prev => prev + `${prefix}text${suffix}`)
   }
 
-  const [seoScore, setSeoScore] = useState(0)
-  const [seoSuggestions, setSeoSuggestions] = useState<string[]>([])
-
-  useEffect(() => {
-    // Calculate simple SEO score based on English content for simplicity
-    let score = 100
-    let suggestions = []
-    
-    if (!editingBlog?.title || editingBlog.title.length < 10) {
-      score -= 20
-      suggestions.push("Title is too short. Aim for at least 40 characters.")
-    }
-    if (!editingBlog?.content || editingBlog.content.length < 300) {
-      score -= 30
-      suggestions.push("Content is too thin. Write at least 300 words for better ranking.")
-    }
-    if (editingBlog?.content && !editingBlog.content.includes('<h2>') && !editingBlog.content.includes('<h3>')) {
-      score -= 15
-      suggestions.push("Use headings (H2, H3) to structure your content.")
-    }
-    if (editingBlog?.content && !editingBlog.content.includes('<img')) {
-      score -= 10
-      suggestions.push("Include images in your content to improve engagement.")
-    }
-
-    setSeoScore(Math.max(0, score))
-    setSeoSuggestions(suggestions)
-  }, [editingBlog?.title, editingBlog?.content])
-
   const renderBlog = () => {
     if (editingBlog) {
         return (
@@ -286,31 +259,7 @@ export default function Admin() {
                 </CardContent>
               </Card>
 
-              {/* SEO Score Card */}
-              <Card className="glass-panel border-border">
-                <CardHeader>
-                  <CardTitle className="text-lg font-display text-foreground flex justify-between items-center">
-                    SEO Rankability
-                    <Badge className={seoScore >= 80 ? 'bg-green-500/20 text-green-500' : seoScore >= 50 ? 'bg-amber-500/20 text-amber-500' : 'bg-red-500/20 text-red-500'}>
-                      Score: {seoScore}/100
-                    </Badge>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  {seoSuggestions.length === 0 ? (
-                    <p className="text-sm text-green-500 flex items-center gap-2"><CheckCircle2 className="w-4 h-4" /> Excellent! This article is well optimized.</p>
-                  ) : (
-                    <ul className="space-y-2 text-sm text-muted-foreground">
-                      {seoSuggestions.map((s, i) => (
-                        <li key={i} className="flex items-start gap-2 text-amber-500">
-                          <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
-                          <span>{s}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </CardContent>
-              </Card>
+              <AdvancedBlogSEO editingBlog={editingBlog} blogLang={blogLang} />
             </div>
 
             {/* Preview Side */}
@@ -958,100 +907,7 @@ export default function Admin() {
   )
 
   const renderSEO = () => (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h1 className="text-3xl font-display font-bold tracking-tight text-foreground">SEO Management</h1>
-          <p className="text-muted-foreground mt-1">Optimize your site for search engines and manage sitemaps.</p>
-        </div>
-        <Button 
-          onClick={async () => {
-            setSitemapLoading(true)
-            await fetch('/api/seo/ping-google', { method: 'POST', headers: { 'Authorization': `Bearer ${token}` } })
-            setTimeout(() => setSitemapLoading(false), 1000)
-          }}
-          className="bg-green-500 hover:bg-green-600 text-foreground gap-2"
-          disabled={sitemapLoading}
-        >
-          {sitemapLoading ? <RefreshCcw className="h-4 w-4 animate-spin" /> : <Globe className="h-4 w-4" />} 
-          {sitemapLoading ? 'Pinging Google...' : 'Ping Google Sitemap'}
-        </Button>
-      </div>
-
-      <div className="grid lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 space-y-6">
-          <Card className="glass-panel border-border">
-            <CardHeader>
-              <CardTitle className="text-xl font-display text-foreground">Global Meta Settings</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-muted-foreground">Global Site Title</label>
-                <Input 
-                  value={seoSettings.siteName} 
-                  onChange={e => setSeoSettings({...seoSettings, siteName: e.target.value})}
-                  className="bg-card border-border text-foreground" 
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-muted-foreground">Global Description</label>
-                <textarea 
-                  value={seoSettings.siteDesc}
-                  onChange={e => setSeoSettings({...seoSettings, siteDesc: e.target.value})}
-                  className="flex min-h-[100px] w-full rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="text-sm font-medium text-muted-foreground">Default Keywords (comma separated)</label>
-                <Input 
-                  value={seoSettings.keywords}
-                  onChange={e => setSeoSettings({...seoSettings, keywords: e.target.value})}
-                  className="bg-card border-border text-foreground" 
-                />
-              </div>
-              <div className="pt-4 flex justify-end">
-                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
-                  <Save className="h-4 w-4" /> Save Global Settings
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="space-y-6">
-          <Card className="glass-panel border-border">
-            <CardHeader>
-              <CardTitle className="text-lg font-display text-foreground">Indexation Status</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="p-4 rounded-lg bg-card border border-border space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Sitemap URL</span>
-                  <a href="/api/seo/sitemap.xml" target="_blank" className="text-sm text-primary hover:underline">View XML</a>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Robots.txt</span>
-                  <a href="/api/seo/robots.txt" target="_blank" className="text-sm text-primary hover:underline">View File</a>
-                </div>
-                <div className="pt-2 border-t border-border flex justify-between items-center">
-                  <span className="text-sm text-muted-foreground">Google Status</span>
-                  <Badge className="bg-green-500/10 text-green-400 border-green-500/20">Indexed</Badge>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="glass-panel border-border bg-gradient-to-br from-primary/10 to-transparent">
-            <CardContent className="p-6">
-              <LineChart className="h-8 w-8 text-primary mb-4" />
-              <h3 className="font-medium text-foreground mb-2">SEO Health Score</h3>
-              <div className="text-3xl font-bold text-foreground mb-2">92<span className="text-lg text-muted-foreground">/100</span></div>
-              <p className="text-sm text-muted-foreground">Your website is well-optimized. All pages have meta tags and sitemaps are active.</p>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </motion.div>
+    <AdvancedSEOTool seoSettings={seoSettings} setSeoSettings={setSeoSettings} token={token} />
   )
 
   const renderServices = () => (
