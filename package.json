@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "client:dev": "vite --host",
-    "build": "tsc -b && vite build",
+    "postinstall": "prisma generate",
+    "build": "prisma generate && tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "check": "tsc --noEmit",
