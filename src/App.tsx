@@ -265,13 +265,81 @@ function GlobalTracker() {
   return null
 }
 
+function SecurityGate({ children }: { children: React.ReactNode }) {
+  const [isBlocked, setIsBlocked] = useState(false)
+
+  useEffect(() => {
+    try {
+      const VISITS_LIMIT = 5
+      const TIME_WINDOW_MS = 60000 // 1 minute
+      const BLOCK_TIME_MS = 15 * 60000 // 15 minutes
+
+      // Parse cookies
+      const cookies = document.cookie.split('; ').reduce((acc, current) => {
+        const [name, value] = current.split('=')
+        acc[name] = value
+        return acc
+      }, {} as Record<string, string>)
+
+      const now = Date.now()
+
+      // Check if currently blocked
+      if (cookies['security_block'] && parseInt(cookies['security_block']) > now) {
+        setIsBlocked(true)
+        return
+      }
+
+      let visitCount = 1
+      let firstVisitTime = now
+
+      if (cookies['visit_data']) {
+        const data = JSON.parse(decodeURIComponent(cookies['visit_data']))
+        if (now - data.firstVisitTime < TIME_WINDOW_MS) {
+          visitCount = data.visitCount + 1
+          firstVisitTime = data.firstVisitTime
+        }
+      }
+
+      if (visitCount > VISITS_LIMIT) {
+        // Block the user
+        document.cookie = `security_block=${now + BLOCK_TIME_MS}; path=/; max-age=${BLOCK_TIME_MS / 1000}`
+        setIsBlocked(true)
+      } else {
+        // Update visit data
+        const dataStr = encodeURIComponent(JSON.stringify({ visitCount, firstVisitTime }))
+        document.cookie = `visit_data=${dataStr}; path=/; max-age=${TIME_WINDOW_MS / 1000}`
+      }
+    } catch (err) {
+      console.error('Security check failed:', err)
+    }
+  }, [])
+
+  if (isBlocked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background text-foreground flex-col gap-6 p-4 text-center">
+        <div className="text-red-500 text-7xl">🛡️</div>
+        <h1 className="text-4xl md:text-5xl font-bold font-display">Access Blocked</h1>
+        <p className="text-muted-foreground max-w-lg text-lg">
+          Our security systems have detected an unusually high number of requests from your device in a short period of time.
+        </p>
+        <p className="text-sm text-muted-foreground mt-4">
+          Your access has been temporarily restricted to protect our services. Please wait 15 minutes before trying again.
+        </p>
+      </div>
+    )
+  }
+
+  return <>{children}</>
+}
+
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="e-visaschengen-theme">
-      <Router>
-        <GlobalTracker />
-        <TrackPageViews />
-        <Layout>
+      <SecurityGate>
+        <Router>
+          <GlobalTracker />
+          <TrackPageViews />
+          <Layout>
           <ScrollToTop />
           <Suspense fallback={<PageLoader />}>
             <Routes>
@@ -302,6 +370,7 @@ function App() {
           <ScrollUpButton />
         </Layout>
       </Router>
+      </SecurityGate>
     </ThemeProvider>
   )
 }
