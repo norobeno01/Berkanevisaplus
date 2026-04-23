@@ -77,7 +77,7 @@ function Layout({ children }: { children: React.ReactNode }) {
   }, [i18n.language])
 
   return (
-    <div className={`min-h-screen bg-background font-sans antialiased flex flex-col relative`}>
+    <div className={`min-h-screen overflow-x-hidden bg-background font-sans antialiased flex flex-col relative`}>
       <AnimatedBackground />
       <header className="sticky top-0 z-50 w-full border-b border-border glass-panel">
         <div className="container flex h-16 items-center justify-between">

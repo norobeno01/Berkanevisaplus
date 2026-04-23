@@ -9,7 +9,7 @@ const KNOWLEDGE_BASE = [
   { keywords: ['canada', 'express entry'], response: 'Canadian visas require comprehensive documentation. We assist with Express Entry, Study Permits, and Visitor Visas. Processing times vary significantly.' },
   { keywords: ['time', 'how long', 'duration'], response: 'Processing times vary by embassy. Schengen is usually 2-4 weeks, USA can be several months for appointments, and Canada takes 1-3 months.' },
   { keywords: ['hello', 'hi', 'hey'], response: 'Hello! I am the E-Visa Schengen AI assistant. How can I help you with your visa or immigration questions today?' },
-  { keywords: ['contact', 'phone', 'address', 'where'], response: 'You can reach us at contact@e-visaschengen.com or call +212 5XX XX XX XX. Our office is located in Berkane, Morocco.' }
+  { keywords: ['contact', 'phone', 'address', 'where'], response: 'You can reach us at evisaschengen@gmail.com or call +2126600490490. Our office is located in Berkane, Morocco.' }
 ]
 
 router.post('/', async (c) => {

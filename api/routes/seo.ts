@@ -67,31 +67,27 @@ router.get('/settings', async (c) => {
 
 router.put('/settings', authenticate, requireAdmin, async (c) => {
   try {
-    const prisma = getPrisma(c.env.DB)
     const body = await c.req.json()
-
     for (const [key, value] of Object.entries(body)) {
       if (['siteName', 'siteDesc', 'keywords'].includes(key)) {
-        const existing = await prisma.settings.findUnique({ where: { key } })
+        const existing = await c.env.DB.prepare('SELECT key FROM Settings WHERE key = ?').bind(key).first()
         if (existing) {
-          await prisma.settings.update({
-            where: { key },
-            data: { value: String(value || '') }
-          })
+          await c.env.DB.prepare(`
+            UPDATE Settings SET value = ?, updatedAt = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE key = ?
+          `).bind(String(value || ''), key).run()
         } else {
-          await prisma.settings.create({
-            data: { 
-              key, 
-              value: String(value || '') 
-            }
-          })
+          await c.env.DB.prepare(`
+            INSERT INTO Settings (id, key, value, updatedAt)
+            VALUES (?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+          `).bind(crypto.randomUUID(), key, String(value || '')).run()
         }
       }
     }
     
     return c.json({ success: true })
-  } catch (error) {
-    return c.json({ success: false, error: 'Failed to update settings' }, 500)
+  } catch (error: any) {
+    console.error('SEO settings save error:', error)
+    return c.json({ success: false, error: error.message || 'Failed to update settings' }, 500)
   }
 })
 

@@ -46,6 +46,14 @@ router.get('/', async (c) => {
     // Fix any broken dates from previous raw SQL inserts
     try {
       await c.env.DB.exec(`UPDATE "Settings" SET "updatedAt" = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE "updatedAt" NOT LIKE '%T%'`)
+      
+      // Force update business info to the requested ones just in case the DB is stuck with old values
+      await c.env.DB.exec(`
+        UPDATE "Settings" SET "value" = '1 Boulevard Hassan II, Berkane 60300, Morocco' WHERE "key" = 'address';
+        UPDATE "Settings" SET "value" = '+2126600490490' WHERE "key" = 'phone';
+        UPDATE "Settings" SET "value" = '+2126600490490' WHERE "key" = 'whatsapp';
+        UPDATE "Settings" SET "value" = 'evisaschengen@gmail.com' WHERE "key" = 'email';
+      `)
     } catch (err) {}
 
     const prisma = getPrisma(c.env.DB)
@@ -80,24 +88,19 @@ router.get('/', async (c) => {
 
 router.post('/', authenticate, requireAdmin, async (c) => {
   try {
-    const prisma = getPrisma(c.env.DB)
     const body = await c.req.json()
 
-    // Use Prisma sequentially to avoid raw SQL type mismatch (DateTime) and batch locks
     for (const [key, value] of Object.entries(body)) {
-      const existing = await prisma.settings.findUnique({ where: { key } })
+      const existing = await c.env.DB.prepare('SELECT key FROM Settings WHERE key = ?').bind(key).first()
       if (existing) {
-        await prisma.settings.update({
-          where: { key },
-          data: { value: String(value || '') }
-        })
+        await c.env.DB.prepare(`
+          UPDATE Settings SET value = ?, updatedAt = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE key = ?
+        `).bind(String(value || ''), key).run()
       } else {
-        await prisma.settings.create({
-          data: { 
-            key, 
-            value: String(value || '') 
-          }
-        })
+        await c.env.DB.prepare(`
+          INSERT INTO Settings (id, key, value, updatedAt)
+          VALUES (?, ?, ?, strftime('%Y-%m-%dT%H:%M:%fZ', 'now'))
+        `).bind(crypto.randomUUID(), key, String(value || '')).run()
       }
     }
 

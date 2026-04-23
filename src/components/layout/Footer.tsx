@@ -25,9 +25,9 @@ export default function Footer() {
     linkedin: "https://linkedin.com/company/e-visaschengen",
     x: "https://x.com/e-visaschengen",
     tiktok: "https://tiktok.com/@e-visaschengen",
-    address: "123 Boulevard Mohammed V, Berkane 60300, Morocco",
-    phone: "+212 536 61 23 45",
-    email: "contact@e-visaschengen.com",
+    address: "1 Boulevard Hassan II, Berkane 60300, Morocco",
+    phone: "+2126600490490",
+    email: "evisaschengen@gmail.com",
     workingHours: "Mon-Fri: 09:00 - 18:00\nSat: 09:00 - 13:00"
   })
 

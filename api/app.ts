@@ -45,33 +45,45 @@ app.onError((err, c) => {
 })
 
 /**
- * 404 handler & SPA Fallback
+ * SPA Fallback & Static Assets
  */
-app.notFound(async (c) => {
-  // If it's an API route, return JSON 404
+app.get('*', async (c) => {
+  // Ignore API routes
   if (c.req.path.startsWith('/api/')) {
     return c.json({ success: false, error: 'API not found' }, 404)
   }
 
-  // If we have ASSETS binding, serve static files or SPA fallback
   if (c.env?.ASSETS) {
     try {
       // 1. Try to serve the exact asset (e.g. /assets/index.js)
-      const response = await c.env.ASSETS.fetch(c.req.raw)
-      if (response.status < 400) {
-        return response
+      const assetResponse = await c.env.ASSETS.fetch(c.req.raw)
+      if (assetResponse.status < 400) {
+        return assetResponse
       }
-
+      
       // 2. If asset not found (like /admin), serve index.html for SPA routing
       const url = new URL(c.req.url)
       url.pathname = '/index.html'
-      return await c.env.ASSETS.fetch(new Request(url.toString(), c.req.raw))
+      const response = await c.env.ASSETS.fetch(new Request(url.toString(), c.req.raw))
+      
+      // Ensure we return 200 OK for SPA fallback
+      return new Response(response.body, {
+        status: 200,
+        headers: response.headers
+      })
     } catch (e) {
-      console.error(e)
+      console.error('SPA Fallback error:', e)
     }
   }
 
   return c.json({ success: false, error: 'Page not found' }, 404)
+})
+
+/**
+ * 404 handler for unknown methods or unmatched APIs
+ */
+app.notFound((c) => {
+  return c.json({ success: false, error: 'Not found' }, 404)
 })
 
 export default app

@@ -313,7 +313,7 @@ export default function Apply() {
 
                   <div className="space-y-2">
                     <label className="text-xs font-medium text-muted-foreground flex items-center gap-2"><Phone className="h-3 w-3"/> {t('apply.phone')}</label>
-                    <Input required type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="bg-card border-border text-foreground" placeholder="+212 600 000 000" />
+                    <Input required type="tel" value={formData.phone} onChange={e => setFormData({...formData, phone: e.target.value})} className="bg-card border-border text-foreground" placeholder="+2126600490490" />
                   </div>
 
                   <div className="space-y-2">

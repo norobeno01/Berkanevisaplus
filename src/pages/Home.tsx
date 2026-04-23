@@ -233,7 +233,7 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {countriesData.map((country, idx) => {
+            {countriesData.slice(0, 7).map((country, idx) => {
               // Highlight the first two as featured (larger)
               const isFeatured = idx === 0 || idx === 1
               return (
@@ -388,9 +388,9 @@ export default function Home() {
               
               <div className="flex flex-wrap gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
                 {/* Mock logos of embassies/partners */}
-                <div className="h-12 w-28 sm:w-32 glass rounded-lg flex items-center justify-center font-display font-bold text-lg sm:text-xl shrink-0">VFS Global</div>
-                <div className="h-12 w-28 sm:w-32 glass rounded-lg flex items-center justify-center font-display font-bold text-lg sm:text-xl shrink-0">TLScontact</div>
-                <div className="h-12 w-28 sm:w-32 glass rounded-lg flex items-center justify-center font-display font-bold text-lg sm:text-xl shrink-0">BLS</div>
+                <div className="h-12 flex-1 min-w-[100px] max-w-[140px] glass rounded-lg flex items-center justify-center font-display font-bold text-sm sm:text-xl">VFS Global</div>
+                <div className="h-12 flex-1 min-w-[100px] max-w-[140px] glass rounded-lg flex items-center justify-center font-display font-bold text-sm sm:text-xl">TLScontact</div>
+                <div className="h-12 flex-1 min-w-[100px] max-w-[140px] glass rounded-lg flex items-center justify-center font-display font-bold text-sm sm:text-xl">BLS</div>
               </div>
             </div>
 

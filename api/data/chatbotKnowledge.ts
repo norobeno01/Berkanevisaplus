@@ -83,10 +83,10 @@ export const knowledgeBase = [
     id: "contact_info",
     keywords: ["contact", "phone", "whatsapp", "email", "where", "location", "address", "téléphone", "adresse", "où", "teléfono", "dirección", "dónde", "اتصال", "هاتف", "واتساب", "أين", "عنوان"],
     responses: {
-      en: "You can reach us at our office in Berkane, Morocco. Call or WhatsApp us at +212 600 000 000, or email contact@e-visaschengen.com. Our working hours are Mon-Fri, 9:00 AM - 6:00 PM.",
-      fr: "Vous pouvez nous trouver à Berkane, Maroc. Appelez ou WhatsApp au +212 600 000 000, ou email contact@e-visaschengen.com. Lundi-Vendredi, 9h00 - 18h00.",
-      ar: "يمكنك الوصول إلينا في مكتبنا في بركان، المغرب. اتصل أو راسلنا عبر واتساب على 000 000 600 212+، أو عبر البريد contact@e-visaschengen.com. (الاثنين-الجمعة، 9ص-6م).",
-      es: "Puede encontrarnos en Berkane, Marruecos. Llame o WhatsApp al +212 600 000 000, o email contact@e-visaschengen.com. Lunes-Viernes, 9:00 AM - 6:00 PM."
+      en: "You can reach us at our office in Berkane, Morocco. Call or WhatsApp us at +2126600490490, or email evisaschengen@gmail.com. Our working hours are Mon-Fri, 9:00 AM - 6:00 PM.",
+      fr: "Vous pouvez nous trouver à Berkane, Maroc. Appelez ou WhatsApp au +2126600490490, ou email evisaschengen@gmail.com. Lundi-Vendredi, 9h00 - 18h00.",
+      ar: "يمكنك الوصول إلينا في مكتبنا في بركان، المغرب. اتصل أو راسلنا عبر واتساب على 000 000 600 212+، أو عبر البريد evisaschengen@gmail.com. (الاثنين-الجمعة، 9ص-6م).",
+      es: "Puede encontrarnos en Berkane, Marruecos. Llame o WhatsApp al +2126600490490, o email evisaschengen@gmail.com. Lunes-Viernes, 9:00 AM - 6:00 PM."
     }
   },
   {

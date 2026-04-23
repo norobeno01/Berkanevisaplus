@@ -9,9 +9,9 @@ import { useState, useEffect } from 'react'
 export default function Contact() {
   const { t } = useTranslation()
   const [settings, setSettings] = useState({
-    phone: "+212 536 61 23 45",
-    email: "contact@e-visaschengen.com",
-    whatsapp: "+212 600 11 22 33",
+    phone: "+2126600490490",
+    email: "evisaschengen@gmail.com",
+    whatsapp: "+2126600490490",
     workingHours: "Mon-Fri: 09:00 - 18:00\nSat: 09:00 - 13:00"
   })
 

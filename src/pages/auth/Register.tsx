@@ -99,7 +99,7 @@ export default function Register() {
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   className="bg-card border-border text-foreground placeholder:text-muted-foreground"
-                  placeholder="+212 600 000 000"
+                  placeholder="+2126600490490"
                 />
               </div>
               <div className="space-y-2">
