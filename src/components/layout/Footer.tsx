@@ -129,7 +129,9 @@ export default function Footer() {
             <ul className="space-y-4 text-sm text-muted-foreground">
               <li className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 text-gold-400 shrink-0 mt-0.5" />
-                <span>{socialLinks.address}</span>
+                <a href="https://maps.app.goo.gl/XvEZZsZBv2foYHXs6" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                  {socialLinks.address}
+                </a>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 text-gold-400 shrink-0" />

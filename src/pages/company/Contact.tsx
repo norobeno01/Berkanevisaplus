@@ -159,15 +159,23 @@ export default function Contact() {
               </div>
 
               {/* Map */}
-              <div className="rounded-2xl overflow-hidden border border-border h-[300px] relative">
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3278.431268641916!2d-2.3274205!3d34.9221764!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd7828105e1355db%3A0xbdf9ce9b8e217278!2sBerkane%2C%20Morocco!5e0!3m2!1sen!2sma!4v1700000000000!5m2!1sen!2sma" 
-                  className="absolute inset-0 w-full h-full border-0"
-                  allowFullScreen={false} 
-                  loading="lazy" 
+              <div className="rounded-2xl overflow-hidden border border-border h-[300px] relative group">
+                <iframe
+                  src="https://maps.google.com/maps?q=34.9306518,-2.3422273&hl=en&z=18&output=embed"
+                  className="absolute inset-0 w-full h-full border-0 grayscale-[0.3] contrast-[1.1] opacity-90 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+                  allowFullScreen={false}
+                  loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   title="Office Location Berkane"
                 />
+                <div className="absolute bottom-4 right-4 z-10">
+                  <a href="https://maps.app.goo.gl/XvEZZsZBv2foYHXs6" target="_blank" rel="noopener noreferrer">
+                    <Button variant="default" className="shadow-lg shadow-black/50 bg-primary hover:bg-primary/90 text-primary-foreground gap-2 font-semibold">
+                      <MapPin className="h-4 w-4" />
+                      {t('contact.getDirections', 'Get Directions')}
+                    </Button>
+                  </a>
+                </div>
               </div>
             </motion.div>
           </div>
