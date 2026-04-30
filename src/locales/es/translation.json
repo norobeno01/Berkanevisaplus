@@ -17,6 +17,15 @@
     "admin": "Administración",
     "blog": "Blog"
   },
+  "visas": {
+    "originCountry": "País de origen",
+    "searchOrigin": "Buscar país de origen...",
+    "selectOrigin": "Seleccionar origen...",
+    "loadingDocs": "Cargando requisitos...",
+    "matchedRule": "Mostrando requisitos adaptados a tu país de origen.",
+    "fallbackRule": "Mostrando requisitos generales (aún no hay una regla específica).",
+    "officialSources": "Fuentes oficiales"
+  },
   "home": {
     "heroTag": "Expertos Globales en Visas e Inmigración",
     "heroTitle": "Tu Puerta al Mundo",

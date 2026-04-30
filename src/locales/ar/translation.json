@@ -28,6 +28,15 @@
     "changeCountry": "تغيير الوجهة",
     "destination": "الوجهة"
   },
+  "visas": {
+    "originCountry": "بلد الأصل",
+    "searchOrigin": "ابحث عن بلد الأصل...",
+    "selectOrigin": "اختر بلد الأصل...",
+    "loadingDocs": "جارٍ تحميل المتطلبات...",
+    "matchedRule": "عرض المتطلبات المناسبة لبلدك الأصلي.",
+    "fallbackRule": "عرض المتطلبات العامة (لا توجد قاعدة مخصصة بعد).",
+    "officialSources": "المصادر الرسمية"
+  },
   "home": {
     "heroTag": "خبراء التأشيرات والهجرة العالمية",
     "heroTitle": "بوابتك إلى العالم",

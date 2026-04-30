@@ -87,8 +87,8 @@ export default function Services() {
             className="mt-16 text-center"
           >
             <Button asChild size="lg" className="h-14 px-8 text-lg bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_20px_rgba(37,99,235,0.3)]">
-              <Link to="/apply">
-                {t('common.applyNow', 'Apply Now')} <ArrowRight className="ml-2 h-5 w-5" />
+              <Link to="/contact">
+                {t('common.contact', 'Contact')} <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
           </motion.div>

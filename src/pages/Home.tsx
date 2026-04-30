@@ -107,7 +107,7 @@ export default function Home() {
                 className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto px-4 sm:px-0"
               >
                 <Button asChild size="lg" className="h-14 px-8 text-base lg:text-lg bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_30px_rgba(37,99,235,0.4)] border border-primary/50 w-full sm:w-auto rounded-xl">
-                  <Link to="/apply">{t('home.bookConsultation')}</Link>
+                  <Link to="/contact">{t('common.contact')}</Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="h-14 px-8 text-base lg:text-lg glass hover:bg-foreground/5 border-border w-full sm:w-auto rounded-xl">
                   <a href="#destinations">{t('home.exploreVisas')}</a>

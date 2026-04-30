@@ -23,13 +23,11 @@ const Admin = lazy(() => import('./pages/Admin'))
 const Visas = lazy(() => import('./pages/visas/Visas'))
 const Contact = lazy(() => import('./pages/company/Contact'))
 const About = lazy(() => import('./pages/company/About'))
-const Services = lazy(() => import('./pages/company/Services'))
 const Privacy = lazy(() => import('./pages/company/Privacy'))
 const BlogList = lazy(() => import('./pages/blog/BlogList'))
 const BlogPost = lazy(() => import('./pages/blog/BlogPost'))
 const Login = lazy(() => import('./pages/auth/Login'))
 const Register = lazy(() => import('./pages/auth/Register'))
-const Apply = lazy(() => import('./pages/Apply'))
 
 // Loading Spinner for Suspense Fallback
 const PageLoader = () => (
@@ -88,7 +86,6 @@ function Layout({ children }: { children: React.ReactNode }) {
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
             <Link to="/" className="transition-colors hover:text-foreground">{t('common.home')}</Link>
-            <Link to="/services" className="transition-colors hover:text-foreground">{t('common.services', 'Services')}</Link>
             <Link to="/visas" className="transition-colors hover:text-foreground">{t('common.visas', 'Visas')}</Link>
             <Link to="/blog" className="transition-colors hover:text-foreground">{t('common.blog', 'Blog')}</Link>
             <Link to="/contact" className="transition-colors hover:text-foreground">{t('common.contact', 'Contact')}</Link>
@@ -120,7 +117,7 @@ function Layout({ children }: { children: React.ReactNode }) {
             </DropdownMenu>
 
             <Button asChild className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground">
-              <Link to="/apply">{t('common.applyNow')}</Link>
+              <Link to="/contact">{t('common.contact')}</Link>
             </Button>
             
             {isAuthenticated ? (
@@ -142,7 +139,6 @@ function Layout({ children }: { children: React.ReactNode }) {
         {isMenuOpen && (
           <div className="md:hidden border-t border-border p-4 flex flex-col gap-4 bg-background">
             <Link to="/" onClick={() => setIsMenuOpen(false)}>{t('common.home')}</Link>
-            <Link to="/services" onClick={() => setIsMenuOpen(false)}>{t('common.services', 'Services')}</Link>
             <Link to="/visas" onClick={() => setIsMenuOpen(false)}>{t('common.visas', 'Visas')}</Link>
             <Link to="/blog" onClick={() => setIsMenuOpen(false)}>{t('common.blog', 'Blog')}</Link>
             <Link to="/contact" onClick={() => setIsMenuOpen(false)}>{t('common.contact', 'Contact')}</Link>
@@ -159,7 +155,7 @@ function Layout({ children }: { children: React.ReactNode }) {
                 </Button>
               )}
               <Button asChild className="w-full bg-primary hover:bg-primary/90">
-                <Link to="/apply" onClick={() => setIsMenuOpen(false)}>{t('common.applyNow')}</Link>
+                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>{t('common.contact')}</Link>
               </Button>
             </div>
           </div>
@@ -347,11 +343,11 @@ function App() {
               <Route path="/visas" element={<Visas />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/about" element={<About />} />
-              <Route path="/services" element={<Services />} />
+              <Route path="/services" element={<Navigate to="/" replace />} />
               <Route path="/blog" element={<BlogList />} />
               <Route path="/blog/:id" element={<BlogPost />} />
               <Route path="/privacy" element={<Privacy />} />
-              <Route path="/apply" element={<Apply />} />
+              <Route path="/apply" element={<Navigate to="/" replace />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/portal" element={

@@ -10,17 +10,95 @@ import { Input } from "@/components/ui/input"
 import { countriesData } from '@/data/countries'
 import SEO from '@/components/SEO'
 
+type SourceLink = {
+  title: string
+  url: string
+}
+
 export default function Visas() {
   const { t, i18n } = useTranslation()
   const location = useLocation()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedCountryId, setSelectedCountryId] = useState<string | null>(null)
+  const [activeVisaTypeId, setActiveVisaTypeId] = useState<string | null>(null)
+  const [topOrigins, setTopOrigins] = useState<string[]>([])
+  const [originCode, setOriginCode] = useState<string>('')
+  const [originSearch, setOriginSearch] = useState('')
+  const [ruleDocuments, setRuleDocuments] = useState<string[] | null>(null)
+  const [ruleSources, setRuleSources] = useState<SourceLink[]>([])
+  const [ruleMatched, setRuleMatched] = useState(false)
+  const [ruleLoading, setRuleLoading] = useState(false)
 
   useEffect(() => {
     if (location.state?.countryId) {
       setSelectedCountryId(location.state.countryId)
     }
   }, [location.state])
+
+  useEffect(() => {
+    if (selectedCountryId) {
+      const country = countriesData.find(c => c.id === selectedCountryId)
+      if (country?.visaTypes?.[0]?.id) {
+        setActiveVisaTypeId(country.visaTypes[0].id)
+      }
+    } else {
+      setActiveVisaTypeId(null)
+    }
+  }, [selectedCountryId])
+
+  useEffect(() => {
+    fetch('/api/origins')
+      .then(res => res.json() as any)
+      .then(data => {
+        if (data?.success && data?.data?.top) {
+          setTopOrigins(data.data.top)
+          setOriginCode(prev => prev || String(data.data.top?.[0] || '').toUpperCase())
+        }
+      })
+      .catch(() => {})
+  }, [])
+
+  const allOriginCountries = useMemo(() => {
+    try {
+      const supportedValuesOf = (Intl as any).supportedValuesOf
+      const codes: string[] = supportedValuesOf ? supportedValuesOf('region') : []
+      const displayNames = new (Intl as any).DisplayNames([i18n.language], { type: 'region' })
+      return (codes || [])
+        .filter((code: string) => /^[A-Z]{2}$/.test(code))
+        .map((code: string) => ({ code, name: displayNames.of(code) || code }))
+        .sort((a: any, b: any) => String(a.name).localeCompare(String(b.name)))
+    } catch {
+      return []
+    }
+  }, [i18n.language])
+
+  const filteredOriginCountries = useMemo(() => {
+    const term = originSearch.trim().toLowerCase()
+    if (!term) return allOriginCountries
+    return allOriginCountries.filter(c => c.name.toLowerCase().includes(term) || c.code.toLowerCase().includes(term))
+  }, [originSearch, allOriginCountries])
+
+  useEffect(() => {
+    if (!selectedCountryId || !activeVisaTypeId || !originCode) return
+
+    setRuleLoading(true)
+    setRuleDocuments(null)
+    setRuleSources([])
+    setRuleMatched(false)
+
+    const url = `/api/document-rules?destinationId=${encodeURIComponent(selectedCountryId)}&visaTypeId=${encodeURIComponent(activeVisaTypeId)}&origin=${encodeURIComponent(originCode)}`
+    fetch(url)
+      .then(res => res.json() as any)
+      .then(data => {
+        if (data?.success) {
+          setRuleMatched(Boolean(data?.data?.matched))
+          setRuleDocuments(data?.data?.documents ?? null)
+          setRuleSources(Array.isArray(data?.data?.sources) ? data.data.sources : [])
+        }
+      })
+      .catch(() => {})
+      .finally(() => setRuleLoading(false))
+  }, [selectedCountryId, activeVisaTypeId, originCode])
 
   const filteredCountries = useMemo(() => {
     if (!searchTerm) return countriesData
@@ -139,7 +217,7 @@ export default function Visas() {
                   <ArrowLeft className={`h-4 w-4 ${i18n.language === 'ar' ? 'ml-2 rotate-180' : 'mr-2'}`} /> {t('common.changeCountry', 'Change Destination')}
                 </Button>
 
-                <Tabs defaultValue={selectedCountry.visaTypes[0].id} className="w-full">
+                <Tabs value={activeVisaTypeId || selectedCountry.visaTypes[0].id} onValueChange={setActiveVisaTypeId} className="w-full">
                   <TabsList className="mb-8 bg-card border border-border w-full flex-wrap h-auto p-1 justify-start">
                     {selectedCountry.visaTypes.map(visa => (
                       <TabsTrigger key={visa.id} value={visa.id} className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
@@ -154,6 +232,7 @@ export default function Visas() {
                     const processingTime = t(`countryData.${selectedCountry.id}.visaTypes.${visa.id}.processingTime`, visa.processingTime)
                     const fee = t(`countryData.${selectedCountry.id}.visaTypes.${visa.id}.fee`, visa.fee)
                     const requirements = t(`countryData.${selectedCountry.id}.visaTypes.${visa.id}.requirements`, { returnObjects: true, defaultValue: visa.requirements }) as string[]
+                    const documentsToShow = visa.id === activeVisaTypeId && ruleDocuments ? ruleDocuments : requirements
 
                     return (
                       <TabsContent key={visa.id} value={visa.id}>
@@ -169,16 +248,84 @@ export default function Visas() {
                                 </Button>
                               </div>
                               <Card className="glass-card border-border">
+                                <CardContent className="p-6 space-y-4">
+                                  <div className="flex flex-col gap-3">
+                                    <div className="flex flex-wrap items-center justify-between gap-3">
+                                      <p className="font-semibold text-foreground">{t('visas.originCountry', 'Origin Country')}</p>
+                                      <div className="flex flex-wrap gap-2">
+                                        {topOrigins.map(code => (
+                                          <Button
+                                            key={code}
+                                            type="button"
+                                            size="sm"
+                                            variant={originCode === code ? 'default' : 'outline'}
+                                            className={originCode === code ? '' : 'glass border-border'}
+                                            onClick={() => setOriginCode(code)}
+                                          >
+                                            {code}
+                                          </Button>
+                                        ))}
+                                      </div>
+                                    </div>
+                                    <div className="grid sm:grid-cols-2 gap-3">
+                                      <Input
+                                        value={originSearch}
+                                        onChange={e => setOriginSearch(e.target.value)}
+                                        placeholder={t('visas.searchOrigin', 'Search origin country...')}
+                                        className="bg-card/50 backdrop-blur-md border-border"
+                                      />
+                                      <select
+                                        value={originCode}
+                                        onChange={e => setOriginCode(e.target.value)}
+                                        className="h-10 rounded-md border border-border bg-card/50 px-3 text-sm text-foreground shadow-sm backdrop-blur-md focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                                      >
+                                        <option value="" disabled>
+                                          {t('visas.selectOrigin', 'Select origin...')}
+                                        </option>
+                                        {filteredOriginCountries.map(o => (
+                                          <option key={o.code} value={o.code}>
+                                            {o.name} ({o.code})
+                                          </option>
+                                        ))}
+                                      </select>
+                                    </div>
+                                    {visa.id === activeVisaTypeId && (
+                                      <div className="text-sm text-muted-foreground">
+                                        {ruleLoading
+                                          ? t('visas.loadingDocs', 'Loading requirements...')
+                                          : ruleMatched
+                                            ? t('visas.matchedRule', 'Showing tailored requirements for your origin country.')
+                                            : t('visas.fallbackRule', 'Showing general requirements (no tailored rule found yet).')}
+                                      </div>
+                                    )}
+                                  </div>
+                                </CardContent>
+                              </Card>
+                              <Card className="glass-card border-border">
                                 <CardContent className="p-6">
                                   <p className="text-muted-foreground mb-6 font-medium">{visaDesc}</p>
                                   <ul className="space-y-4">
-                                    {requirements.map((req, idx) => (
+                                    {documentsToShow.map((req, idx) => (
                                       <li key={idx} className="flex items-start gap-3">
                                         <CheckCircle2 className="h-5 w-5 text-gold-500 shrink-0 mt-0.5" />
                                         <span className="text-muted-foreground leading-relaxed">{req}</span>
                                       </li>
                                     ))}
                                   </ul>
+                                  {visa.id === activeVisaTypeId && ruleSources.length > 0 && (
+                                    <div className="mt-8 pt-6 border-t border-border">
+                                      <p className="font-semibold text-foreground mb-3">{t('visas.officialSources', 'Official sources')}</p>
+                                      <ul className="space-y-2">
+                                        {ruleSources.map((s, idx) => (
+                                          <li key={idx}>
+                                            <a href={s.url} target="_blank" rel="noopener noreferrer" className="text-sm text-primary hover:underline break-words">
+                                              {s.title}
+                                            </a>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  )}
                                   <div className="mt-6 p-4 rounded-lg bg-primary/10 border border-primary/20 flex gap-3">
                                     <AlertCircle className="h-5 w-5 text-primary shrink-0" />
                                     <p className="text-sm text-primary-foreground/90">
@@ -234,7 +381,7 @@ export default function Visas() {
                                     <span className="font-semibold text-foreground">{fee}</span>
                                   </div>
                                   <Button asChild className="w-full h-12 text-lg shadow-[0_0_20px_rgba(37,99,235,0.2)] bg-primary hover:bg-primary/90 text-primary-foreground">
-                                    <Link to="/apply">{t('common.applyNow', 'Apply Now')}</Link>
+                                    <Link to="/contact">{t('common.contact', 'Contact')}</Link>
                                   </Button>
                                 </div>
                                 

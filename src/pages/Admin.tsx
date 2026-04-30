@@ -85,7 +85,7 @@ export default function Admin() {
   const [usersList, setUsersList] = useState<any[]>([])
   const [appointmentsList, setAppointmentsList] = useState<any[]>([])
   const [applicationsList, setApplicationsList] = useState<any[]>([])
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'applications' | 'crm' | 'documents' | 'calendar' | 'financial' | 'communications' | 'blog' | 'settings' | 'seo' | 'services'>('dashboard')
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'applications' | 'crm' | 'documents' | 'calendar' | 'financial' | 'communications' | 'blog' | 'settings' | 'seo' | 'services' | 'docRules'>('dashboard')
   const [selectedApp, setSelectedApp] = useState<Application | null>(null)
   
   // Blog State
@@ -99,6 +99,56 @@ export default function Admin() {
     keywords: 'visa, immigration, travel, schengen'
   })
   const [sitemapLoading, setSitemapLoading] = useState(false)
+  const [docRulesList, setDocRulesList] = useState<any[]>([])
+  const [docRulesLoading, setDocRulesLoading] = useState(false)
+  const [docRulesMessage, setDocRulesMessage] = useState({ message: '', isError: false })
+  const [docRuleForm, setDocRuleForm] = useState({
+    id: '',
+    destinationId: '',
+    visaTypeId: '',
+    originCountryCode: '',
+    documentsText: '',
+    sourcesText: '',
+    active: true,
+    lastVerifiedAt: ''
+  })
+  const [originsTopCodes, setOriginsTopCodes] = useState('')
+  const [originsLoading, setOriginsLoading] = useState(false)
+  const [originsMessage, setOriginsMessage] = useState({ message: '', isError: false })
+
+  useEffect(() => {
+    if (!token) return
+    if (activeTab !== 'docRules') return
+
+    setDocRulesLoading(true)
+    setDocRulesMessage({ message: '', isError: false })
+
+    fetch('/api/document-rules/all', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+      .then(res => res.json() as any)
+      .then(data => {
+        if (data.success) setDocRulesList(data.data || [])
+        else setDocRulesMessage({ message: 'Failed to load rules', isError: true })
+      })
+      .catch(() => setDocRulesMessage({ message: 'Failed to load rules', isError: true }))
+      .finally(() => setDocRulesLoading(false))
+
+    setOriginsLoading(true)
+    setOriginsMessage({ message: '', isError: false })
+    fetch('/api/origins/all', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    })
+      .then(res => res.json() as any)
+      .then(data => {
+        if (data.success && Array.isArray(data.data)) {
+          const top = data.data.filter((r: any) => r.isTop === 1 && r.active === 1).map((r: any) => r.code)
+          setOriginsTopCodes(top.join(','))
+        }
+      })
+      .catch(() => setOriginsMessage({ message: 'Failed to load origins', isError: true }))
+      .finally(() => setOriginsLoading(false))
+  }, [activeTab, token])
 
   useEffect(() => {
     if (!token) return
@@ -1080,6 +1130,354 @@ export default function Admin() {
     </motion.div>
   )
 
+  const renderDocRules = () => {
+    const destinations = countriesData.map(c => ({ id: c.id, name: c.name, visaTypes: c.visaTypes }))
+    const selectedDest = destinations.find(d => d.id === docRuleForm.destinationId) || null
+    const visaTypeOptions = selectedDest ? selectedDest.visaTypes.map(v => ({ id: v.id, name: v.name })) : []
+
+    const parseLines = (value: string) =>
+      value
+        .split('\n')
+        .map(v => v.trim())
+        .filter(Boolean)
+
+    const parseSources = (value: string) =>
+      parseLines(value)
+        .map(line => {
+          const [title, url] = line.split('|').map(v => v.trim())
+          if (!title || !url) return null
+          return { title, url }
+        })
+        .filter(Boolean)
+
+    const handleSaveTopOrigins = async () => {
+      setOriginsLoading(true)
+      setOriginsMessage({ message: '', isError: false })
+      try {
+        const topCodes = originsTopCodes
+          .split(',')
+          .map(s => s.trim().toUpperCase())
+          .filter(Boolean)
+        const res = await fetch('/api/origins', {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify({ topCodes })
+        })
+        const data = await res.json() as any
+        if (data.success) {
+          setOriginsMessage({ message: 'Top origins updated', isError: false })
+        } else {
+          setOriginsMessage({ message: data.error || 'Failed to update origins', isError: true })
+        }
+      } catch (e) {
+        setOriginsMessage({ message: 'Failed to update origins', isError: true })
+      } finally {
+        setOriginsLoading(false)
+      }
+    }
+
+    const handleSaveRule = async () => {
+      setDocRulesLoading(true)
+      setDocRulesMessage({ message: '', isError: false })
+      try {
+        const payload = {
+          destinationId: docRuleForm.destinationId,
+          visaTypeId: docRuleForm.visaTypeId,
+          originCountryCode: docRuleForm.originCountryCode,
+          documents: parseLines(docRuleForm.documentsText),
+          sources: parseSources(docRuleForm.sourcesText),
+          active: docRuleForm.active,
+          lastVerifiedAt: docRuleForm.lastVerifiedAt || new Date().toISOString()
+        }
+
+        const url = docRuleForm.id ? `/api/document-rules/${docRuleForm.id}` : '/api/document-rules'
+        const method = docRuleForm.id ? 'PUT' : 'POST'
+
+        const res = await fetch(url, {
+          method,
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+          body: JSON.stringify(payload)
+        })
+        const data = await res.json() as any
+        if (!data.success) {
+          setDocRulesMessage({ message: data.error || 'Failed to save rule', isError: true })
+          return
+        }
+
+        const reload = await fetch('/api/document-rules/all', { headers: { 'Authorization': `Bearer ${token}` } })
+        const reloadData = await reload.json() as any
+        if (reloadData.success) {
+          setDocRulesList(reloadData.data || [])
+          setDocRulesMessage({ message: 'Rule saved', isError: false })
+          setDocRuleForm({
+            id: '',
+            destinationId: '',
+            visaTypeId: '',
+            originCountryCode: '',
+            documentsText: '',
+            sourcesText: '',
+            active: true,
+            lastVerifiedAt: ''
+          })
+        } else {
+          setDocRulesMessage({ message: 'Rule saved but reload failed', isError: true })
+        }
+      } catch (e) {
+        setDocRulesMessage({ message: 'Failed to save rule', isError: true })
+      } finally {
+        setDocRulesLoading(false)
+      }
+    }
+
+    const handleRefresh = async () => {
+      setDocRulesLoading(true)
+      setDocRulesMessage({ message: '', isError: false })
+      try {
+        const res = await fetch('/api/document-rules/all', { headers: { 'Authorization': `Bearer ${token}` } })
+        const data = await res.json() as any
+        if (data.success) setDocRulesList(data.data || [])
+        else setDocRulesMessage({ message: data.error || 'Failed to load rules', isError: true })
+      } catch (e) {
+        setDocRulesMessage({ message: 'Failed to load rules', isError: true })
+      } finally {
+        setDocRulesLoading(false)
+      }
+    }
+
+    const handleEditRule = (r: any) => {
+      const docs = (() => {
+        try { return JSON.parse(r.documents || '[]') } catch { return [] }
+      })()
+      const sources = (() => {
+        try { return JSON.parse(r.sources || '[]') } catch { return [] }
+      })()
+      setDocRuleForm({
+        id: r.id,
+        destinationId: r.destinationId || '',
+        visaTypeId: r.visaTypeId || '',
+        originCountryCode: r.originCountryCode || '',
+        documentsText: Array.isArray(docs) ? docs.join('\n') : '',
+        sourcesText: Array.isArray(sources) ? sources.map((s: any) => `${s.title} | ${s.url}`).join('\n') : '',
+        active: r.active === 1,
+        lastVerifiedAt: r.lastVerifiedAt || ''
+      })
+    }
+
+    const handleDeleteRule = async (id: string) => {
+      setDocRulesLoading(true)
+      setDocRulesMessage({ message: '', isError: false })
+      try {
+        const res = await fetch(`/api/document-rules/${id}`, {
+          method: 'DELETE',
+          headers: { 'Authorization': `Bearer ${token}` }
+        })
+        const data = await res.json() as any
+        if (!data.success) {
+          setDocRulesMessage({ message: data.error || 'Failed to delete rule', isError: true })
+          return
+        }
+        setDocRulesList(prev => prev.filter(r => r.id !== id))
+        setDocRulesMessage({ message: 'Rule deleted', isError: false })
+      } catch (e) {
+        setDocRulesMessage({ message: 'Failed to delete rule', isError: true })
+      } finally {
+        setDocRulesLoading(false)
+      }
+    }
+
+    return (
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h1 className="text-3xl font-display font-bold tracking-tight text-foreground">Documents Rules</h1>
+            <p className="text-muted-foreground mt-1">Manage requirements by destination, visa type, and origin country.</p>
+          </div>
+          <Button
+            variant="outline"
+            className="glass text-foreground border-border hover:bg-foreground/5 gap-2"
+            onClick={handleRefresh}
+            disabled={docRulesLoading}
+          >
+            <RefreshCcw className="h-4 w-4" /> Refresh
+          </Button>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-1 space-y-6">
+            <Card className="glass-panel border-border">
+              <CardHeader>
+                <CardTitle className="text-lg font-display text-foreground">Top Origins</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Input
+                  value={originsTopCodes}
+                  onChange={e => setOriginsTopCodes(e.target.value)}
+                  placeholder="MA,DZ,TN,EG..."
+                  className="bg-card border-border text-foreground"
+                />
+                {originsMessage.message && (
+                  <p className={`text-sm ${originsMessage.isError ? 'text-red-500' : 'text-green-500'}`}>{originsMessage.message}</p>
+                )}
+                <Button
+                  onClick={handleSaveTopOrigins}
+                  disabled={originsLoading}
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                >
+                  {originsLoading ? 'Saving...' : 'Save Top Origins'}
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="glass-panel border-border">
+              <CardHeader>
+                <CardTitle className="text-lg font-display text-foreground">{docRuleForm.id ? 'Edit Rule' : 'New Rule'}</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Destination</label>
+                  <select
+                    value={docRuleForm.destinationId}
+                    onChange={e => setDocRuleForm(prev => ({ ...prev, destinationId: e.target.value, visaTypeId: '' }))}
+                    className="h-10 w-full rounded-md border border-border bg-card px-3 text-sm text-foreground"
+                  >
+                    <option value="">Select destination</option>
+                    <option value="*">Any destination (*)</option>
+                    {destinations.map(d => (
+                      <option key={d.id} value={d.id}>{d.name}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Visa Type</label>
+                  <select
+                    value={docRuleForm.visaTypeId}
+                    onChange={e => setDocRuleForm(prev => ({ ...prev, visaTypeId: e.target.value }))}
+                    className="h-10 w-full rounded-md border border-border bg-card px-3 text-sm text-foreground"
+                  >
+                    <option value="">Select visa type</option>
+                    <option value="*">Any visa type (*)</option>
+                    {visaTypeOptions.map(v => (
+                      <option key={v.id} value={v.id}>{v.name}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Origin (ISO code)</label>
+                  <Input
+                    value={docRuleForm.originCountryCode}
+                    onChange={e => setDocRuleForm(prev => ({ ...prev, originCountryCode: e.target.value.toUpperCase() }))}
+                    placeholder="MA or *"
+                    className="bg-card border-border text-foreground"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Documents (one per line)</label>
+                  <textarea
+                    value={docRuleForm.documentsText}
+                    onChange={e => setDocRuleForm(prev => ({ ...prev, documentsText: e.target.value }))}
+                    className="w-full min-h-[140px] rounded-md bg-card border border-border p-3 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                    placeholder="Passport\nBank statement\nTravel insurance"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Official sources (Title | URL, one per line)</label>
+                  <textarea
+                    value={docRuleForm.sourcesText}
+                    onChange={e => setDocRuleForm(prev => ({ ...prev, sourcesText: e.target.value }))}
+                    className="w-full min-h-[120px] rounded-md bg-card border border-border p-3 text-sm text-foreground focus:outline-none focus:ring-1 focus:ring-primary"
+                    placeholder="France-Visas | https://france-visas.gouv.fr/"
+                  />
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <label className="text-sm font-medium text-muted-foreground">Active</label>
+                  <input
+                    type="checkbox"
+                    checked={docRuleForm.active}
+                    onChange={e => setDocRuleForm(prev => ({ ...prev, active: e.target.checked }))}
+                    className="h-4 w-4"
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-muted-foreground">Last verified (ISO)</label>
+                  <Input
+                    value={docRuleForm.lastVerifiedAt}
+                    onChange={e => setDocRuleForm(prev => ({ ...prev, lastVerifiedAt: e.target.value }))}
+                    placeholder={new Date().toISOString()}
+                    className="bg-card border-border text-foreground"
+                  />
+                </div>
+
+                {docRulesMessage.message && (
+                  <p className={`text-sm ${docRulesMessage.isError ? 'text-red-500' : 'text-green-500'}`}>{docRulesMessage.message}</p>
+                )}
+
+                <Button
+                  onClick={handleSaveRule}
+                  disabled={docRulesLoading || !docRuleForm.destinationId || !docRuleForm.visaTypeId || !docRuleForm.originCountryCode}
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                >
+                  {docRulesLoading ? 'Saving...' : 'Save Rule'}
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="lg:col-span-2 space-y-6">
+            <Card className="glass-panel border-border">
+              <CardHeader>
+                <CardTitle className="text-lg font-display text-foreground">Rules</CardTitle>
+              </CardHeader>
+              <CardContent className="p-0 overflow-x-auto">
+                <table className="w-full text-left text-sm text-muted-foreground">
+                  <thead className="bg-foreground/5 border-b border-border">
+                    <tr>
+                      <th className="p-4 font-medium text-muted-foreground">Destination</th>
+                      <th className="p-4 font-medium text-muted-foreground">Visa</th>
+                      <th className="p-4 font-medium text-muted-foreground">Origin</th>
+                      <th className="p-4 font-medium text-muted-foreground">Active</th>
+                      <th className="p-4 font-medium text-muted-foreground text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {(docRulesList || []).map((r: any, i: number) => (
+                      <tr key={r.id} className={`border-b border-border hover:bg-foreground/5 transition-colors ${i === docRulesList.length - 1 ? 'border-b-0' : ''}`}>
+                        <td className="p-4 text-foreground">{r.destinationId}</td>
+                        <td className="p-4">{r.visaTypeId}</td>
+                        <td className="p-4">{r.originCountryCode}</td>
+                        <td className="p-4">
+                          <Badge variant="outline" className={r.active === 1 ? 'border-green-500/50 text-green-400 bg-green-500/10' : 'border-red-500/50 text-red-400 bg-red-500/10'}>
+                            {r.active === 1 ? 'Yes' : 'No'}
+                          </Badge>
+                        </td>
+                        <td className="p-4 text-right flex justify-end gap-2">
+                          <Button variant="ghost" size="sm" className="h-8 text-primary hover:bg-primary/10" onClick={() => handleEditRule(r)}>
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button variant="ghost" size="sm" className="h-8 text-red-400 hover:bg-red-400/10" onClick={() => handleDeleteRule(r.id)}>
+                            <Trash className="h-4 w-4" />
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                    {!docRulesList?.length && (
+                      <tr><td colSpan={5} className="text-center p-6 text-muted-foreground">{docRulesLoading ? 'Loading...' : 'No rules found'}</td></tr>
+                    )}
+                  </tbody>
+                </table>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+      </motion.div>
+    )
+  }
+
   return (
     <div className="flex h-full min-h-[calc(100vh-4rem)] bg-background">
       {/* Sidebar */}
@@ -1151,6 +1549,13 @@ export default function Admin() {
             className={`w-full justify-start ${(activeTab as any) === 'services' ? 'bg-primary/10 text-primary hover:bg-primary/20' : 'text-muted-foreground hover:text-foreground hover:bg-foreground/5'}`}
           >
             <List className="mr-3 h-4 w-4" /> Services & Visas
+          </Button>
+          <Button 
+            variant="ghost" 
+            onClick={() => {setActiveTab('docRules'); setSelectedApp(null);}}
+            className={`w-full justify-start ${activeTab === 'docRules' ? 'bg-primary/10 text-primary hover:bg-primary/20' : 'text-muted-foreground hover:text-foreground hover:bg-foreground/5'}`}
+          >
+            <FileText className="mr-3 h-4 w-4" /> Documents Rules
           </Button>
           <Button 
             variant="ghost" 
@@ -1437,6 +1842,8 @@ export default function Admin() {
         ) : activeTab === 'settings' ? (
           /* Settings View */
           renderSettings()
+        ) : activeTab === 'docRules' ? (
+          renderDocRules()
         ) : activeTab === 'seo' ? (
           /* SEO View */
           renderSEO()

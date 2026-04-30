@@ -28,6 +28,15 @@
     "changeCountry": "Change Destination",
     "destination": "Destination"
   },
+  "visas": {
+    "originCountry": "Origin Country",
+    "searchOrigin": "Search origin country...",
+    "selectOrigin": "Select origin...",
+    "loadingDocs": "Loading requirements...",
+    "matchedRule": "Showing tailored requirements for your origin country.",
+    "fallbackRule": "Showing general requirements (no tailored rule found yet).",
+    "officialSources": "Official sources"
+  },
   "home": {
     "heroTag": "Global Visa & Immigration Experts",
     "heroTitle": "Your Gateway to the World",

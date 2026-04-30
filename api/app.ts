@@ -11,6 +11,8 @@ import appointmentsRoutes from './routes/appointments'
 import blogsRoutes from './routes/blogs'
 import chatRoutes from './routes/chat'
 import settingsRoutes from './routes/settings'
+import originsRoutes from './routes/origins'
+import documentRulesRoutes from './routes/documentRules'
 
 const app = new Hono<{ Bindings: { DB: D1Database, ASSETS: any } }>()
 
@@ -30,6 +32,8 @@ app.route('/api/appointments', appointmentsRoutes)
 app.route('/api/blogs', blogsRoutes)
 app.route('/api/chat', chatRoutes)
 app.route('/api/settings', settingsRoutes)
+app.route('/api/origins', originsRoutes)
+app.route('/api/document-rules', documentRulesRoutes)
 
 /**
  * health

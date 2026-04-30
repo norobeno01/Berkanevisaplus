@@ -28,6 +28,15 @@
     "changeCountry": "Changer de destination",
     "destination": "Destination"
   },
+  "visas": {
+    "originCountry": "Pays d'origine",
+    "searchOrigin": "Rechercher le pays d'origine...",
+    "selectOrigin": "Sélectionner l'origine...",
+    "loadingDocs": "Chargement des exigences...",
+    "matchedRule": "Affichage des exigences adaptées à votre pays d'origine.",
+    "fallbackRule": "Affichage des exigences générales (aucune règle spécifique trouvée).",
+    "officialSources": "Sources officielles"
+  },
   "home": {
     "heroTag": "Experts Mondiaux en Visa et Immigration",
     "heroTitle": "Votre Passerelle vers le Monde",
