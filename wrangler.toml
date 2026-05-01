@@ -1,4 +1,4 @@
-name = "visaplus-api"
+name = "berkanevisaplus"
 main = "api/app.ts"
 compatibility_date = "2024-04-22"
 compatibility_flags = ["nodejs_compat"]
