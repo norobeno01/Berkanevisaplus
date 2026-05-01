@@ -10,14 +10,11 @@ const router = new Hono<{ Bindings: Bindings }>()
 const TOP_ORIGINS_SEED = ['MA', 'DZ', 'TN', 'LY', 'MR', 'EG', 'TR', 'AE', 'SA', 'QA']
 
 async function ensureOriginsTable(db: D1Database) {
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS "OriginCountries" (
-      "code" TEXT NOT NULL PRIMARY KEY,
-      "isTop" INTEGER NOT NULL DEFAULT 0,
-      "active" INTEGER NOT NULL DEFAULT 1,
-      "updatedAt" TEXT NOT NULL
-    );
-  `)
+  await db
+  .prepare(
+    'CREATE TABLE IF NOT EXISTS "OriginCountries" ("code" TEXT NOT NULL PRIMARY KEY, "isTop" INTEGER NOT NULL DEFAULT 0, "active" INTEGER NOT NULL DEFAULT 1, "updatedAt" TEXT NOT NULL)'
+  )
+  .run()
 
   const row = await db.prepare('SELECT COUNT(1) as c FROM "OriginCountries"').first<{ c: number }>()
   if ((row?.c ?? 0) === 0) {
