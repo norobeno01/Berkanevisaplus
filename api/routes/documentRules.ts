@@ -25,21 +25,17 @@ type RuleRow = {
 const router = new Hono<{ Bindings: Bindings }>()
 
 async function ensureRulesTable(db: D1Database) {
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS "DocumentRules" (
-      "id" TEXT NOT NULL PRIMARY KEY,
-      "destinationId" TEXT NOT NULL,
-      "visaTypeId" TEXT NOT NULL,
-      "originCountryCode" TEXT NOT NULL,
-      "documents" TEXT NOT NULL,
-      "sources" TEXT NOT NULL,
-      "lastVerifiedAt" TEXT NOT NULL,
-      "active" INTEGER NOT NULL DEFAULT 1,
-      "updatedAt" TEXT NOT NULL
-    );
-    CREATE UNIQUE INDEX IF NOT EXISTS "DocumentRules_key" ON "DocumentRules"("destinationId","visaTypeId","originCountryCode");
-  `)
+  await db
+  .prepare(
+    'CREATE TABLE IF NOT EXISTS "DocumentRules" ("id" TEXT NOT NULL PRIMARY KEY, "destinationId" TEXT NOT NULL, "visaTypeId" TEXT NOT NULL, "originCountryCode" TEXT NOT NULL, "documents" TEXT NOT NULL, "sources" TEXT NOT NULL, "lastVerifiedAt" TEXT NOT NULL, "active" INTEGER NOT NULL DEFAULT 1, "updatedAt" TEXT NOT NULL)'
+  )
+  .run()
 
+await db
+  .prepare(
+    'CREATE UNIQUE INDEX IF NOT EXISTS "DocumentRules_key" ON "DocumentRules"("destinationId","visaTypeId","originCountryCode")'
+  )
+  .run()
   const row = await db.prepare('SELECT COUNT(1) as c FROM "DocumentRules"').first<{ c: number }>()
   if ((row?.c ?? 0) === 0) {
     await seedDefaultSources(db)
