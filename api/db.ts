@@ -5,6 +5,9 @@ import { PrismaD1 } from '@prisma/adapter-d1'
 let prisma: PrismaClient | null = null
 
 export const getPrisma = (db: any) => {
+  if (!db) {
+    throw new Error('Database binding "DB" is missing')
+  }
   if (!prisma) {
     const adapter = new PrismaD1(db)
     prisma = new PrismaClient({ adapter })

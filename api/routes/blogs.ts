@@ -5,6 +5,29 @@ import { BLOG_SEED_VERSION, blogSeedV1 } from '../seed/blogSeedV1'
 
 const router = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
+function asApiBlog(p: any, idx: number) {
+  const createdAt = new Date(Date.now() - idx * 86400000).toISOString()
+  return {
+    id: `seed-${idx}`,
+    title: p.title,
+    titleAr: p.titleAr,
+    titleFr: p.titleFr,
+    slug: p.slug,
+    excerpt: p.excerpt,
+    excerptAr: p.excerptAr,
+    excerptFr: p.excerptFr,
+    image: p.image,
+    content: p.content,
+    contentAr: p.contentAr,
+    contentFr: p.contentFr,
+    category: p.category,
+    author: p.author,
+    published: true,
+    createdAt,
+    updatedAt: createdAt
+  }
+}
+
 async function ensureSettingsSchema(db: D1Database) {
   try {
     await db.prepare('SELECT key FROM Settings LIMIT 1').first()
@@ -126,6 +149,9 @@ async function seedBlogsIfEmpty(prisma: any) {
 
 router.get('/', async (c) => {
   try {
+    if (!c.env?.DB) {
+      return c.json({ success: true, data: blogSeedV1.map(asApiBlog), warning: 'DB binding missing; serving static seeded content only' })
+    }
     await ensureSettingsSchema(c.env.DB)
     await ensureBlogSchema(c.env.DB)
     const prisma = getPrisma(c.env.DB)
@@ -136,12 +162,21 @@ router.get('/', async (c) => {
     })
     return c.json({ success: true, data: blogs })
   } catch (error) {
-    return c.json({ success: false, error: 'Failed to load blogs' }, 500)
+    const details = error instanceof Error ? error.message : String(error)
+    return c.json({ success: false, error: 'Failed to load blogs', details }, 500)
   }
 })
 
 router.get('/:slug', async (c) => {
   try {
+    if (!c.env?.DB) {
+      const slug = c.req.param('slug')
+      const idx = blogSeedV1.findIndex(p => p.slug === slug)
+      if (idx === -1) {
+        return c.json({ success: false, error: 'Blog not found' }, 404)
+      }
+      return c.json({ success: true, data: asApiBlog(blogSeedV1[idx], idx) })
+    }
     const prisma = getPrisma(c.env.DB)
     const slug = c.req.param('slug')
     const blog = await prisma.blog.findUnique({
@@ -152,12 +187,16 @@ router.get('/:slug', async (c) => {
     }
     return c.json({ success: true, data: blog })
   } catch (error) {
-    return c.json({ success: false, error: 'Failed to load blog' }, 500)
+    const details = error instanceof Error ? error.message : String(error)
+    return c.json({ success: false, error: 'Failed to load blog', details }, 500)
   }
 })
 
 router.post('/', authenticate, requireAdmin, async (c) => {
   try {
+    if (!c.env?.DB) {
+      return c.json({ success: false, error: 'Database binding "DB" is missing' }, 500)
+    }
     const prisma = getPrisma(c.env.DB)
     const body = await c.req.json()
     const { title, titleAr, titleFr, content, contentAr, contentFr, excerpt, excerptAr, excerptFr, image, category } = body
@@ -182,12 +221,16 @@ router.post('/', authenticate, requireAdmin, async (c) => {
     return c.json({ success: true, data: blog })
   } catch (error) {
     console.error(error)
-    return c.json({ success: false, error: 'Failed to create blog' }, 500)
+    const details = error instanceof Error ? error.message : String(error)
+    return c.json({ success: false, error: 'Failed to create blog', details }, 500)
   }
 })
 
 router.put('/:id', authenticate, requireAdmin, async (c) => {
   try {
+    if (!c.env?.DB) {
+      return c.json({ success: false, error: 'Database binding "DB" is missing' }, 500)
+    }
     const prisma = getPrisma(c.env.DB)
     const id = c.req.param('id')
     const body = await c.req.json()
@@ -199,12 +242,16 @@ router.put('/:id', authenticate, requireAdmin, async (c) => {
 
     return c.json({ success: true, data: blog })
   } catch (error) {
-    return c.json({ success: false, error: 'Failed to update blog' }, 500)
+    const details = error instanceof Error ? error.message : String(error)
+    return c.json({ success: false, error: 'Failed to update blog', details }, 500)
   }
 })
 
 router.delete('/:id', authenticate, requireAdmin, async (c) => {
   try {
+    if (!c.env?.DB) {
+      return c.json({ success: false, error: 'Database binding "DB" is missing' }, 500)
+    }
     const prisma = getPrisma(c.env.DB)
     const id = c.req.param('id')
 
@@ -214,7 +261,8 @@ router.delete('/:id', authenticate, requireAdmin, async (c) => {
 
     return c.json({ success: true })
   } catch (error) {
-    return c.json({ success: false, error: 'Failed to delete blog' }, 500)
+    const details = error instanceof Error ? error.message : String(error)
+    return c.json({ success: false, error: 'Failed to delete blog', details }, 500)
   }
 })
 
