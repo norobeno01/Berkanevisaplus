@@ -1,12 +1,18 @@
 import { useTranslation } from 'react-i18next'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { Calendar, ArrowRight } from 'lucide-react'
+import { Calendar, ArrowRight, Plane, FileText } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 
 import SEO from '@/components/SEO'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
+
+const HERO_IMAGES = {
+  main: "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=airport%20departure%20board%20with%20travel%20documents%20and%20passport%20on%20a%20modern%20desk%2C%20soft%20cinematic%20light%2C%20photorealistic%2C%20high%20detail%2C%20clean%20composition%2C%20no%20text%2C%20no%20watermark&image_size=landscape_16_9",
+  front: "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=hands%20holding%20passport%20and%20visa%20supporting%20documents%2C%20studio%20lighting%2C%20neutral%20background%2C%20photorealistic%2C%20high%20detail%2C%20no%20text%2C%20no%20watermark&image_size=portrait_4_3",
+  top: "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=document%20checklist%20and%20paperclips%20on%20minimal%20desk%2C%20stamp%20concept%2C%20soft%20light%2C%20photorealistic%2C%20high%20detail%2C%20no%20text%2C%20no%20watermark&image_size=square_hd"
+}
 
 type Blog = {
   id: string
@@ -26,6 +32,10 @@ export default function Home() {
   const { t, i18n } = useTranslation()
   const [blogs, setBlogs] = useState<Blog[]>([])
   const [blogsLoading, setBlogsLoading] = useState(true)
+
+  const { scrollYProgress } = useScroll()
+  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 100])
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
 
   useEffect(() => {
     fetch('/api/blogs')
@@ -53,33 +63,104 @@ export default function Home() {
         description="Guides, updates, and checklists on visa procedures and immigration pathways."
       />
 
-      <section className="relative w-full py-24 md:py-32 overflow-hidden border-b border-border">
-        <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/40 via-background to-background" />
-        <div className="container px-4 md:px-6 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl mx-auto space-y-6"
-          >
-            <div className="inline-flex items-center rounded-full border border-border bg-foreground/5 px-3 py-1 text-sm font-medium backdrop-blur-md text-gold-400">
-              {t('homeBlog.heroTag', 'Visa & Immigration Blog')}
-            </div>
-            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl font-display text-gradient">
-              {t('homeBlog.heroTitle', 'Visa & Immigration Blog')}
-            </h1>
-            <p className="text-lg text-muted-foreground font-light">
-              {t('homeBlog.heroSubtitle', 'Guides, updates, and checklists to help you understand visa procedures and immigration pathways.')}
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Button asChild size="lg" className="h-12 px-8 bg-primary hover:bg-primary/90 text-primary-foreground">
-                <a href="#latest">{t('homeBlog.ctaReadLatest', 'Read Latest Articles')}</a>
-              </Button>
-              <Button asChild size="lg" variant="outline" className="h-12 px-8 glass border-border text-foreground hover:bg-foreground/5">
-                <Link to="/visas">{t('homeBlog.ctaExploreVisas', 'Explore Visa Requirements')}</Link>
-              </Button>
-            </div>
-          </motion.div>
+      <section className="relative w-full min-h-[90vh] flex items-center justify-center overflow-hidden border-b border-border">
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/25 rounded-full blur-[100px] animate-pulse-slow" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold-500/15 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '1.5s' }} />
         </div>
+
+        <motion.div style={{ y: heroY, opacity: heroOpacity }} className="container px-4 md:px-6 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-14 items-center min-h-[70vh] pb-12 lg:pb-0">
+            <div className="flex flex-col space-y-6 lg:space-y-8 text-center lg:text-left pt-20 lg:pt-0 items-center lg:items-start">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+                className="space-y-4 lg:space-y-6 max-w-2xl"
+              >
+                <div className="inline-flex items-center rounded-full border border-border bg-foreground/5 px-3 py-1.5 text-xs sm:text-sm font-medium backdrop-blur-md text-gold-400 w-fit mx-auto lg:mx-0 shadow-xl">
+                  <FileText className="mr-2 h-4 w-4" />
+                  {t('homeBlog.heroTag', 'Visa & Immigration Blog')}
+                </div>
+                <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl text-gradient leading-tight font-display">
+                  {t('homeBlog.heroTitle', 'Visa & Immigration Blog')}
+                </h1>
+                <p className="text-base sm:text-lg text-muted-foreground lg:text-xl font-light leading-relaxed max-w-lg mx-auto lg:mx-0">
+                  {t('homeBlog.heroSubtitle', 'Guides, updates, and checklists to help you understand visa procedures and immigration pathways.')}
+                </p>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.25 }}
+                className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto px-4 sm:px-0"
+              >
+                <Button asChild size="lg" className="h-14 px-8 text-base bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_30px_rgba(37,99,235,0.35)] border border-primary/40 w-full sm:w-auto rounded-xl">
+                  <a href="#latest">{t('homeBlog.ctaReadLatest', 'Read Latest Articles')}</a>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="h-14 px-8 text-base glass hover:bg-foreground/5 border-border w-full sm:w-auto rounded-xl">
+                  <Link to="/visas">{t('homeBlog.ctaExploreVisas', 'Explore Visa Requirements')}</Link>
+                </Button>
+              </motion.div>
+            </div>
+
+            <div className="relative h-[380px] sm:h-[500px] lg:h-[600px] w-full perspective-1000 mt-8 lg:mt-0">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, rotateY: -12, rotateX: 8 }}
+                animate={{ opacity: 1, scale: 1, rotateY: 0, rotateX: 0 }}
+                transition={{ duration: 1.2, ease: 'easeOut' }}
+                className="absolute right-0 top-1/2 -translate-y-1/2 w-[85%] h-[260px] sm:h-[350px] lg:h-[400px] rounded-3xl overflow-hidden border border-border shadow-[0_0_50px_rgba(0,0,0,0.5)] z-10"
+              >
+                <div className="absolute inset-0 bg-gradient-to-tr from-primary/25 to-transparent z-10" />
+                <img src={HERO_IMAGES.main} alt="Blog hero" className="w-full h-full object-cover" />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20, y: 50, rotateZ: -6 }}
+                animate={{ opacity: 1, x: 0, y: [-10, 10, -10], rotateZ: 0 }}
+                transition={{
+                  opacity: { duration: 0.9, delay: 0.35 },
+                  x: { duration: 0.9, delay: 0.35, ease: 'easeOut' },
+                  rotateZ: { duration: 0.9, delay: 0.35, ease: 'easeOut' },
+                  y: { duration: 6, repeat: Infinity, ease: 'easeInOut' }
+                }}
+                className="absolute left-0 bottom-4 lg:bottom-10 w-[160px] sm:w-[220px] lg:w-[250px] h-[220px] sm:h-[280px] lg:h-[320px] rounded-2xl overflow-hidden border border-border shadow-[0_30px_60px_rgba(0,0,0,0.8)] z-20"
+              >
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
+                <img src={HERO_IMAGES.front} alt="Visa documents" loading="lazy" className="w-full h-full object-cover" />
+                <div className="absolute bottom-3 left-3 z-20">
+                  <div className="bg-foreground/5 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold text-foreground border border-border shadow-lg">
+                    Visa Guides
+                  </div>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: -20, y: -30, rotateZ: 8 }}
+                animate={{ opacity: 1, x: 0, y: [10, -10, 10], rotateZ: 0 }}
+                transition={{
+                  opacity: { duration: 0.9, delay: 0.55 },
+                  x: { duration: 0.9, delay: 0.55, ease: 'easeOut' },
+                  rotateZ: { duration: 0.9, delay: 0.55, ease: 'easeOut' },
+                  y: { duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 1 }
+                }}
+                className="absolute right-4 lg:right-10 top-0 w-[110px] sm:w-[150px] lg:w-[200px] h-[110px] sm:h-[150px] lg:h-[200px] rounded-2xl overflow-hidden border border-border shadow-[0_20px_50px_rgba(0,0,0,0.6)] z-30"
+              >
+                <img src={HERO_IMAGES.top} alt="Checklist" loading="lazy" className="w-full h-full object-cover" />
+                <div className="absolute inset-0 flex items-center justify-center bg-background/20">
+                  <motion.div
+                    animate={{ rotate: [0, 10, 0, -10, 0] }}
+                    transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-full glass flex items-center justify-center text-foreground shadow-lg backdrop-blur-md border border-border"
+                  >
+                    <Plane className="h-5 w-5 rotate-45" />
+                  </motion.div>
+                </div>
+              </motion.div>
+            </div>
+          </div>
+        </motion.div>
       </section>
 
       <section className="py-16 md:py-24">
