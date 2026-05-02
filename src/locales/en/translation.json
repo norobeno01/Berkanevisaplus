@@ -93,13 +93,32 @@
         "coordinator": "Application Coordinator"
       }
     },
+    "team": {
+      "teamTitle": "Our Expert Team",
+      "teamSubtitle": "Meet the specialists dedicated to your success.",
+      "members": {
+        "leadConsultant": "Lead Consultant",
+        "visaSpecialist": "Visa Specialist",
+        "caseCoordinator": "Case Coordinator"
+      },
+      "roles": {
+        "leadConsultant": "Schengen & Canada Guidance",
+        "visaSpecialist": "Document Preparation",
+        "caseCoordinator": "Follow-up & Scheduling"
+      },
+      "descriptions": {
+        "leadConsultant": "Guides your case strategy and eligibility from start to finish.",
+        "visaSpecialist": "Prepares your documents to match official requirements and formats.",
+        "caseCoordinator": "Keeps your application on track with clear updates and next steps."
+      }
+    },
     "visas": {
       "title": "Select Your Destination",
       "subtitle": "Choose from over 20+ global destinations and discover the exact visa types and requirements."
     }
   },
   "footer": {
-    "description": "Your trusted partner for Schengen and North American visas, based in Berkane, Morocco. We turn complex immigration procedures into a seamless journey.",
+    "description": "Your trusted partner for Schengen and North American visas. We turn complex immigration procedures into a seamless journey.",
     "quickLinks": "Quick Links",
     "topDestinations": "Top Destinations",
     "contactInfo": "Contact Info",
@@ -110,9 +129,9 @@
   "about": {
     "tag": "Our Story",
     "title": "About E-Visa Schengen",
-    "subtitle": "The leading visa assistance agency in the Oriental region, dedicated to making your international travel dreams a reality.",
+    "subtitle": "A trusted visa assistance agency dedicated to making your international travel dreams a reality.",
     "whoWeAre": "Who We Are",
-    "p1": "Founded in Berkane, E-Visa Schengen has grown to become the most trusted immigration and visa consultancy in Eastern Morocco. We specialize in Schengen and Canadian visa applications, offering tailored solutions for tourists, students, and professionals.",
+    "p1": "Founded with a mission to simplify visa and immigration procedures, E-Visa Schengen has grown to become a trusted visa consultancy. We specialize in Schengen and Canadian visa applications, offering tailored solutions for tourists, students, and professionals.",
     "p2": "Navigating embassy requirements can be daunting. Our mission is to provide transparent, accurate, and professional guidance to ensure the highest possible success rate for our clients.",
     "stats": {
       "years": "Years Experience",
@@ -123,7 +142,7 @@
   },
   "contact": {
     "title": "Get in Touch",
-    "subtitle": "Our experts are ready to assist you with your visa application. Visit our office in Berkane or contact us online.",
+    "subtitle": "Our experts are ready to assist you with your visa application. Contact us online.",
     "formTitle": "Send us a message",
     "firstName": "First Name",
     "lastName": "Last Name",
@@ -1261,7 +1280,7 @@
   },
   "servicesPage": {
     "title": "Our Services | E-Visa Schengen",
-    "description": "Comprehensive visa and immigration services in Morocco.",
+    "description": "Comprehensive visa and immigration services.",
     "heroSubtitle": "From profile assessment to final visa delivery, we offer a comprehensive suite of services designed to maximize your approval chances."
   },
   "servicesData": {

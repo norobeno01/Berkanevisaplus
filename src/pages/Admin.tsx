@@ -1484,7 +1484,7 @@ export default function Admin() {
       <aside className="hidden w-64 border-r border-border bg-card/50 backdrop-blur-xl md:block p-4 space-y-6 shrink-0">
         <div className="px-2 mb-8">
           <h3 className="font-display font-bold text-lg text-foreground">Agency Admin</h3>
-          <p className="text-xs text-muted-foreground">Berkane Branch</p>
+          <p className="text-xs text-muted-foreground">Main Branch</p>
         </div>
         <nav className="space-y-2">
           <Button 

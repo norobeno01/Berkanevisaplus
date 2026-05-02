@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useLocation } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { Globe, Menu, X, LogOut, User } from 'lucide-react'
+import { Globe, Menu, X, LogOut } from 'lucide-react'
 import { useState, useEffect, Suspense, lazy } from 'react'
 
 import { Button } from '@/components/ui/button'
@@ -124,11 +124,7 @@ function Layout({ children }: { children: React.ReactNode }) {
               <Button variant="ghost" onClick={logout} className="hidden md:flex text-red-400 hover:text-red-300 hover:bg-red-400/10">
                 <LogOut className="h-4 w-4 mr-2" /> Logout
               </Button>
-            ) : (
-              <Button asChild className="hidden md:flex bg-primary hover:bg-primary/90 text-primary-foreground">
-                <Link to="/login"><User className="h-4 w-4 mr-2" /> Login</Link>
-              </Button>
-            )}
+            ) : null}
 
             <Button variant="ghost" size="icon" className="md:hidden text-foreground" onClick={() => setIsMenuOpen(!isMenuOpen)}>
               {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -149,11 +145,7 @@ function Layout({ children }: { children: React.ReactNode }) {
                 <Button variant="outline" onClick={() => { logout(); setIsMenuOpen(false); }} className="w-full border-red-500/50 text-red-400 hover:text-red-300 hover:bg-red-400/10">
                   <LogOut className="h-4 w-4 mr-2" /> Logout
                 </Button>
-              ) : (
-                <Button asChild variant="outline" className="w-full glass text-foreground hover:bg-foreground/5">
-                  <Link to="/login" onClick={() => setIsMenuOpen(false)}><User className="h-4 w-4 mr-2" /> Login</Link>
-                </Button>
-              )}
+              ) : null}
               <Button asChild className="w-full bg-primary hover:bg-primary/90">
                 <Link to="/contact" onClick={() => setIsMenuOpen(false)}>{t('common.contact')}</Link>
               </Button>

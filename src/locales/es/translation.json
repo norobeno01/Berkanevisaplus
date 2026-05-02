@@ -70,10 +70,29 @@
       "badge": "Confiado por Miles",
       "title": "Historias de Éxito",
       "subtitle": "No te quedes solo con nuestra palabra. Lee lo que dicen nuestros clientes sobre su experiencia con E-Visa Schengen."
+    },
+    "team": {
+      "teamTitle": "Nuestro equipo de expertos",
+      "teamSubtitle": "Conoce a los especialistas dedicados a tu éxito.",
+      "members": {
+        "leadConsultant": "Consultor principal",
+        "visaSpecialist": "Especialista en visas",
+        "caseCoordinator": "Coordinador de casos"
+      },
+      "roles": {
+        "leadConsultant": "Asesoría Schengen y Canadá",
+        "visaSpecialist": "Preparación de documentos",
+        "caseCoordinator": "Seguimiento y agenda"
+      },
+      "descriptions": {
+        "leadConsultant": "Guía tu estrategia y elegibilidad de principio a fin.",
+        "visaSpecialist": "Prepara tus documentos según los requisitos y formatos oficiales.",
+        "caseCoordinator": "Mantiene tu solicitud en curso con actualizaciones claras y próximos pasos."
+      }
     }
   },
   "footer": {
-    "description": "Tu socio de confianza para visas Schengen y de América del Norte, con sede en Berkane, Marruecos. Transformamos complejos procedimientos de inmigración en un viaje fluido.",
+    "description": "Tu socio de confianza para visas Schengen y de América del Norte. Transformamos complejos procedimientos de inmigración en un viaje fluido.",
     "quickLinks": "Enlaces Rápidos",
     "topDestinations": "Destinos Principales",
     "contactInfo": "Información de Contacto",
@@ -84,9 +103,9 @@
   "about": {
     "tag": "Nuestra Historia",
     "title": "Acerca de E-Visa Schengen",
-    "subtitle": "La principal agencia de asistencia de visas en la región Oriental, dedicada a hacer realidad tus sueños de viajes internacionales.",
+    "subtitle": "Una agencia de asistencia de visas de confianza, dedicada a hacer realidad tus sueños de viaje internacional.",
     "whoWeAre": "Quiénes Somos",
-    "p1": "Fundada en Berkane, E-Visa Schengen ha crecido hasta convertirse en la consultora de inmigración y visas más confiable del este de Marruecos. Nos especializamos en solicitudes de visas Schengen y canadienses, ofreciendo soluciones a medida para turistas, estudiantes y profesionales.",
+    "p1": "Fundada con la misión de simplificar los trámites de visas e inmigración, E-Visa Schengen se ha convertido en una consultora de confianza. Nos especializamos en solicitudes de visas Schengen y canadienses, ofreciendo soluciones a medida para turistas, estudiantes y profesionales.",
     "p2": "Navegar por los requisitos de la embajada puede ser abrumador. Nuestra misión es brindar orientación transparente, precisa y profesional para garantizar la tasa de éxito más alta posible para nuestros clientes.",
     "stats": {
       "years": "Años de Experiencia",
@@ -97,7 +116,7 @@
   },
   "contact": {
     "title": "Ponerse en Contacto",
-    "subtitle": "Nuestros expertos están listos para ayudarte con tu solicitud de visa. Visita nuestra oficina en Berkane o contáctanos en línea.",
+    "subtitle": "Nuestros expertos están listos para ayudarte con tu solicitud de visa. Contáctanos en línea.",
     "formTitle": "Envíanos un mensaje",
     "firstName": "Nombre",
     "lastName": "Apellido",
@@ -285,7 +304,7 @@
   },
   "servicesPage": {
     "title": "Nuestros Servicios | E-Visa Schengen",
-    "description": "Servicios integrales de visas e inmigración en Marruecos.",
+    "description": "Servicios integrales de visas e inmigración.",
     "heroSubtitle": "Desde la evaluación del perfil hasta la entrega final de la visa, ofrecemos un conjunto completo de servicios diseñados para maximizar sus posibilidades de aprobación."
   },
   "servicesData": {

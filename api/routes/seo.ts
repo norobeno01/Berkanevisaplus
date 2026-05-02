@@ -15,7 +15,7 @@ router.get('/settings', async (c) => {
       try {
         const old = await c.env.DB.prepare('SELECT siteName, siteDesc, keywords FROM Settings LIMIT 1').first()
         if (old) oldSeo = old as any
-      } catch (err) {}
+      } catch (err) { void err }
 
       await c.env.DB.exec(`
         CREATE TABLE IF NOT EXISTS "Settings_new" (
@@ -43,7 +43,7 @@ router.get('/settings', async (c) => {
 
     try {
       await c.env.DB.exec(`UPDATE "Settings" SET "updatedAt" = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE "updatedAt" NOT LIKE '%T%'`)
-    } catch (err) {}
+    } catch (err) { void err }
 
     const prisma = getPrisma(c.env.DB)
     const settings = await prisma.settings.findMany()
