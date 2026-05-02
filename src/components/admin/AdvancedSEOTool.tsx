@@ -22,7 +22,7 @@ export default function AdvancedSEOTool({ seoSettings, setSeoSettings, token }: 
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify(seoSettings)
       })
-    } catch (e) {}
+    } catch (e) { void e }
     setSaveLoading(false)
   }
 

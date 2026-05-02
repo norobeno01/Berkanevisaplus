@@ -93,13 +93,32 @@
         "coordinator": "Coordinateur des Demandes"
       }
     },
+    "team": {
+      "teamTitle": "Notre Équipe d'Experts",
+      "teamSubtitle": "Rencontrez les spécialistes dédiés à votre succès.",
+      "members": {
+        "leadConsultant": "Consultant principal",
+        "visaSpecialist": "Spécialiste des visas",
+        "caseCoordinator": "Coordinateur de dossier"
+      },
+      "roles": {
+        "leadConsultant": "Accompagnement Schengen & Canada",
+        "visaSpecialist": "Préparation des documents",
+        "caseCoordinator": "Suivi & planification"
+      },
+      "descriptions": {
+        "leadConsultant": "Vous accompagne sur la stratégie et l’éligibilité de votre dossier du début à la fin.",
+        "visaSpecialist": "Prépare vos documents selon les exigences et les formats officiels.",
+        "caseCoordinator": "Assure le suivi de votre demande avec des étapes claires et des mises à jour."
+      }
+    },
     "visas": {
       "title": "Sélectionnez votre destination",
       "subtitle": "Choisissez parmi plus de 20 destinations mondiales et découvrez les types de visas et les exigences exactes."
     }
   },
   "footer": {
-    "description": "Votre partenaire de confiance pour les visas Schengen et Nord-Américains, basé à Berkane, Maroc. Nous transformons des procédures d'immigration complexes en un parcours fluide.",
+    "description": "Votre partenaire de confiance pour les visas Schengen et Nord-Américains. Nous transformons des procédures d'immigration complexes en un parcours fluide.",
     "quickLinks": "Liens Rapides",
     "topDestinations": "Destinations Phares",
     "contactInfo": "Coordonnées",
@@ -110,9 +129,9 @@
   "about": {
     "tag": "Notre Histoire",
     "title": "À Propos de E-Visa Schengen",
-    "subtitle": "La principale agence d'assistance visa dans la région de l'Oriental, dédiée à faire de vos rêves de voyage international une réalité.",
+    "subtitle": "Une agence d'assistance visa de confiance, dédiée à réaliser vos projets de voyage international.",
     "whoWeAre": "Qui Sommes-Nous",
-    "p1": "Fondée à Berkane, E-Visa Schengen est devenue le cabinet de conseil en immigration et visa le plus fiable de l'Est du Maroc. Nous nous spécialisons dans les demandes de visa Schengen et Canadien, offrant des solutions sur mesure pour les touristes, les étudiants et les professionnels.",
+    "p1": "Fondée avec la mission de simplifier les démarches de visa et d’immigration, E-Visa Schengen est devenue une agence de conseil de confiance. Nous nous spécialisons dans les demandes de visa Schengen et Canadien, offrant des solutions sur mesure pour les touristes, les étudiants et les professionnels.",
     "p2": "Naviguer dans les exigences des ambassades peut être intimidant. Notre mission est de fournir des conseils transparents, précis et professionnels pour assurer le taux de réussite le plus élevé possible pour nos clients.",
     "stats": {
       "years": "Années d'Expérience",
@@ -123,7 +142,7 @@
   },
   "contact": {
     "title": "Contactez-Nous",
-    "subtitle": "Nos experts sont prêts à vous aider dans votre demande de visa. Visitez notre bureau à Berkane ou contactez-nous en ligne.",
+    "subtitle": "Nos experts sont prêts à vous aider dans votre demande de visa. Contactez-nous en ligne.",
     "formTitle": "Envoyez-nous un message",
     "firstName": "Prénom",
     "lastName": "Nom",
@@ -1261,7 +1280,7 @@
   },
   "servicesPage": {
     "title": "Nos Services | E-Visa Schengen",
-    "description": "Services complets de visas et d'immigration au Maroc.",
+    "description": "Services complets de visas et d'immigration.",
     "heroSubtitle": "De l'évaluation du profil à la délivrance finale du visa, nous proposons une suite complète de services conçus pour maximiser vos chances d'approbation."
   },
   "servicesData": {

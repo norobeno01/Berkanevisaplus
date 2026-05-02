@@ -472,22 +472,22 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                name: "Mounir Latrache",
-                role: t('home.team.team.ceo', 'CEO & Lead Consultant'),
-                img: "https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=800&q=80",
-                desc: "15+ years experience in European & Canadian immigration."
+                name: t('home.team.members.leadConsultant', 'Lead Consultant'),
+                role: t('home.team.roles.leadConsultant', 'Schengen & Canada Guidance'),
+                img: "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=professional%20studio%20portrait%2C%20male%20immigration%20consultant%2C%20business%20attire%2C%20neutral%20background%2C%20soft%20lighting%2C%20photorealistic%2C%20high%20detail%2C%20clean%20composition%2C%20no%20text%2C%20no%20watermark&image_size=portrait_4_3",
+                desc: t('home.team.descriptions.leadConsultant', 'Guides your case strategy and eligibility from start to finish.')
               },
               {
-                name: "Amina El Fassi",
-                role: t('home.team.team.specialist', 'Senior Visa Specialist'),
-                img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80",
-                desc: "Expert in Express Entry and Student Visas."
+                name: t('home.team.members.visaSpecialist', 'Visa Specialist'),
+                role: t('home.team.roles.visaSpecialist', 'Document Preparation'),
+                img: "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=professional%20studio%20portrait%2C%20female%20visa%20specialist%2C%20business%20casual%2C%20neutral%20background%2C%20soft%20lighting%2C%20photorealistic%2C%20high%20detail%2C%20clean%20composition%2C%20no%20text%2C%20no%20watermark&image_size=portrait_4_3",
+                desc: t('home.team.descriptions.visaSpecialist', 'Prepares your documents to match official requirements and formats.')
               },
               {
-                name: "Youssef Tazi",
-                role: t('home.team.team.coordinator', 'Application Coordinator'),
-                img: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=800&q=80",
-                desc: "Ensures flawless document preparation and translation."
+                name: t('home.team.members.caseCoordinator', 'Case Coordinator'),
+                role: t('home.team.roles.caseCoordinator', 'Follow-up & Scheduling'),
+                img: "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=professional%20studio%20portrait%2C%20male%20case%20coordinator%2C%20smart%20casual%2C%20neutral%20background%2C%20soft%20lighting%2C%20photorealistic%2C%20high%20detail%2C%20clean%20composition%2C%20no%20text%2C%20no%20watermark&image_size=portrait_4_3",
+                desc: t('home.team.descriptions.caseCoordinator', 'Keeps your application on track with clear updates and next steps.')
               }
             ].map((member, idx) => (
               <motion.div

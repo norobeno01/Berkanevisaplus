@@ -12,7 +12,7 @@ interface SEOProps {
 export default function SEO({ 
   title = 'E-Visa Schengen - Expert Visa & Immigration Services', 
   description = 'Your trusted partner for Schengen Visas, Canadian Study Permits, and global immigration services. Expert consulting for a seamless journey.',
-  keywords = 'visa, immigration, schengen, travel, study permit, canada express entry, visa berkane',
+  keywords = 'visa, immigration, schengen, travel, study permit, canada express entry',
   url = 'https://e-visaschengen.com',
   image = 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1200&q=80'
 }: SEOProps) {
@@ -20,40 +20,16 @@ export default function SEO({
   const fullTitle = title.includes('E-Visa Schengen') ? title : `${title} | E-Visa Schengen`
   const currentLang = i18n.language || 'en'
 
-  // LocalBusiness Schema JSON-LD (Essential for Local SEO/GEO in Berkane, Morocco)
-  const localBusinessSchema = {
+  const organizationSchema = {
     "@context": "https://schema.org",
-    "@type": "LegalService",
-    "name": "E-Visa Schengen Agency",
-    "image": image,
-    "@id": url,
+    "@type": "Organization",
+    "name": "E-Visa Schengen",
     "url": url,
-    "telephone": "+212600000000",
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Avenue Mohammed V",
-      "addressLocality": "Berkane",
-      "postalCode": "70300",
-      "addressCountry": "MA"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 34.9202,
-      "longitude": -2.3188
-    },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": [
-        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday"
-      ],
-      "opens": "09:00",
-      "closes": "18:00"
-    },
+    "logo": image,
     "sameAs": [
       "https://www.facebook.com/e-visaschengen",
       "https://www.instagram.com/e-visaschengen"
-    ],
-    "priceRange": "$$"
+    ]
   }
 
   return (
@@ -90,7 +66,7 @@ export default function SEO({
 
       {/* JSON-LD Schema for Local SEO */}
       <script type="application/ld+json">
-        {JSON.stringify(localBusinessSchema)}
+        {JSON.stringify(organizationSchema)}
       </script>
     </Helmet>
   )

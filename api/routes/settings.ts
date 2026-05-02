@@ -16,7 +16,7 @@ router.get('/', async (c) => {
       try {
         const old = await c.env.DB.prepare('SELECT siteName, siteDesc, keywords FROM Settings LIMIT 1').first()
         if (old) oldSeo = old as any
-      } catch (err) {}
+      } catch (err) { void err }
 
       // Execute migration
       await c.env.DB.exec(`
@@ -47,14 +47,11 @@ router.get('/', async (c) => {
     try {
       await c.env.DB.exec(`UPDATE "Settings" SET "updatedAt" = strftime('%Y-%m-%dT%H:%M:%fZ', 'now') WHERE "updatedAt" NOT LIKE '%T%'`)
       
-      // Force update business info to the requested ones just in case the DB is stuck with old values
       await c.env.DB.exec(`
-        UPDATE "Settings" SET "value" = '1 Boulevard Hassan II, Berkane 60300, Morocco' WHERE "key" = 'address';
-        UPDATE "Settings" SET "value" = '+2126600490490' WHERE "key" = 'phone';
-        UPDATE "Settings" SET "value" = '+2126600490490' WHERE "key" = 'whatsapp';
+        UPDATE "Settings" SET "value" = '' WHERE "key" IN ('address', 'phone', 'whatsapp', 'workingHours');
         UPDATE "Settings" SET "value" = 'evisaschengen@gmail.com' WHERE "key" = 'email';
       `)
-    } catch (err) {}
+    } catch (err) { void err }
 
     const prisma = getPrisma(c.env.DB)
     const settings = await prisma.settings.findMany()
@@ -71,11 +68,11 @@ router.get('/', async (c) => {
         linkedin: config.linkedin || '',
         x: config.x || '',
         tiktok: config.tiktok || '',
-        address: config.address || '',
-        phone: config.phone || '',
+        address: '',
+        phone: '',
         email: config.email || '',
-        whatsapp: config.whatsapp || '',
-        workingHours: config.workingHours || '',
+        whatsapp: '',
+        workingHours: '',
         metaPixel: config.metaPixel || '',
         googleAnalytics: config.googleAnalytics || '',
         googleTagManager: config.googleTagManager || ''
