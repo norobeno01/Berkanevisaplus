@@ -1,520 +1,242 @@
 import { useTranslation } from 'react-i18next'
-import { motion, useScroll, useTransform } from 'framer-motion'
-import { useRef, useState } from 'react'
-import { Plane, GraduationCap, Briefcase, MapPin, CheckCircle2, Globe2, ArrowRight, ShieldCheck, FileCheck, Calendar, MessageSquare, Star, ChevronLeft, ChevronRight } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { countriesData } from '@/data/countries'
+import { Calendar, ArrowRight } from 'lucide-react'
+import { useEffect, useMemo, useState } from 'react'
+
 import SEO from '@/components/SEO'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+
+type Blog = {
+  id: string
+  title: string
+  titleAr?: string
+  titleFr?: string
+  slug: string
+  excerpt: string
+  excerptAr?: string
+  excerptFr?: string
+  image: string
+  category: string
+  createdAt: string
+}
 
 export default function Home() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
+  const [blogs, setBlogs] = useState<Blog[]>([])
+  const [blogsLoading, setBlogsLoading] = useState(true)
 
-  const { scrollYProgress } = useScroll()
-  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 100])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
-  
-  const [activeTestimonial, setActiveTestimonial] = useState(0)
+  useEffect(() => {
+    fetch('/api/blogs')
+      .then(res => res.json() as any)
+      .then(data => {
+        if (data?.success && Array.isArray(data.data)) {
+          setBlogs(data.data)
+        }
+        setBlogsLoading(false)
+      })
+      .catch(() => setBlogsLoading(false))
+  }, [])
 
-  const stats = [
-    { value: "12,000+", label: t('home.stats.approved') },
-    { value: "98%", label: t('home.stats.successRate') },
-    { value: "40+", label: t('home.stats.countries') },
-    { value: "24/7", label: t('home.stats.support') },
-  ]
+  const featured = blogs[0]
+  const latest = useMemo(() => blogs.slice(0, 9), [blogs])
+  const categories = useMemo(() => Array.from(new Set(blogs.map(b => b.category).filter(Boolean))).sort((a, b) => a.localeCompare(b)), [blogs])
 
-  const processSteps = [
-    { title: t('home.process.step1.title'), desc: t('home.process.step1.desc'), icon: <MessageSquare className="h-6 w-6" /> },
-    { title: t('home.process.step2.title'), desc: t('home.process.step2.desc'), icon: <FileCheck className="h-6 w-6" /> },
-    { title: t('home.process.step3.title'), desc: t('home.process.step3.desc'), icon: <Briefcase className="h-6 w-6" /> },
-    { title: t('home.process.step4.title'), desc: t('home.process.step4.desc'), icon: <Globe2 className="h-6 w-6" /> },
-    { title: t('home.process.step5.title'), desc: t('home.process.step5.desc'), icon: <Plane className="h-6 w-6" /> },
-  ]
-
-  const testimonials = [
-    {
-      text: "The team at E-Visa Schengen made my Canadian student visa process incredibly smooth. Their attention to detail in document preparation is unmatched. I got my approval in just 3 weeks!",
-      name: "Yassine M.",
-      type: "Student Visa, Canada",
-      image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=200&q=80",
-      initials: "YM",
-      color: "from-primary to-gold-500"
-    },
-    {
-      text: "Excellent service! They handled my Schengen visa for France flawlessly. They translated my documents and prepared me for the TLS appointment. Highly recommended in the Oriental region.",
-      name: "Fatima E.",
-      type: "Tourist Visa, France",
-      image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80",
-      initials: "FE",
-      color: "from-purple-500 to-pink-500"
-    },
-    {
-      text: "I was struggling with my Express Entry profile, but E-Visa Schengen helped me maximize my CRS score and handled all the complex paperwork. Thanks to them, I am now a permanent resident.",
-      name: "Hassan R.",
-      type: "Express Entry, Canada",
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80",
-      initials: "HR",
-      color: "from-emerald-500 to-teal-500"
-    }
-  ]
-
-  const nextTestimonial = () => setActiveTestimonial((prev) => (prev + 1) % testimonials.length)
-  const prevTestimonial = () => setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+  const getTitle = (p: Blog) => i18n.language === 'ar' && p.titleAr ? p.titleAr : i18n.language === 'fr' && p.titleFr ? p.titleFr : p.title
+  const getExcerpt = (p: Blog) => i18n.language === 'ar' && p.excerptAr ? p.excerptAr : i18n.language === 'fr' && p.excerptFr ? p.excerptFr : p.excerpt
 
   return (
-    <div className="flex flex-col min-h-screen">
-      <SEO 
-        title="E-Visa Schengen - Expert Visa & Immigration Services" 
-        description="Your trusted partner for Schengen Visas, Canadian Study Permits, and global immigration services." 
+    <div className="flex flex-col min-h-screen bg-background">
+      <SEO
+        title="Visa & Immigration Blog | E-Visa Schengen"
+        description="Guides, updates, and checklists on visa procedures and immigration pathways."
       />
-      {/* Hero Section */}
-      <section className="relative w-full min-h-[90vh] flex items-center justify-center overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/30 rounded-full blur-[100px] animate-pulse-slow" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gold-500/20 rounded-full blur-[100px] animate-pulse-slow" style={{ animationDelay: '1.5s' }} />
-        </div>
 
-        <motion.div 
-          style={{ y: heroY, opacity: heroOpacity }}
-          className="container px-4 md:px-6 relative z-10"
-        >
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center min-h-[70vh] pb-12 lg:pb-0">
-            <div className="flex flex-col space-y-6 lg:space-y-8 text-center lg:text-left pt-20 lg:pt-0 items-center lg:items-start">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                className="space-y-4 lg:space-y-6 max-w-2xl"
-              >
-                <div className="inline-flex items-center rounded-full border border-border bg-foreground/5 px-3 py-1.5 text-xs sm:text-sm font-medium backdrop-blur-md text-gold-400 w-fit mx-auto lg:mx-0 shadow-xl">
-                  <Globe2 className="mr-2 h-4 w-4" />
-                  {t('home.heroTag')}
-                </div>
-                <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-gradient leading-tight">
-                  {t('home.heroTitle')}
-                </h1>
-                <p className="text-base sm:text-lg text-muted-foreground lg:text-xl font-light leading-relaxed max-w-lg mx-auto lg:mx-0">
-                  {t('home.heroSubtitle')}
-                </p>
-              </motion.div>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto px-4 sm:px-0"
-              >
-                <Button asChild size="lg" className="h-14 px-8 text-base lg:text-lg bg-primary hover:bg-primary/90 text-primary-foreground shadow-[0_0_30px_rgba(37,99,235,0.4)] border border-primary/50 w-full sm:w-auto rounded-xl">
-                  <Link to="/contact">{t('common.contact')}</Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="h-14 px-8 text-base lg:text-lg glass hover:bg-foreground/5 border-border w-full sm:w-auto rounded-xl">
-                  <a href="#destinations">{t('home.exploreVisas')}</a>
-                </Button>
-              </motion.div>
+      <section className="relative w-full py-24 md:py-32 overflow-hidden border-b border-border">
+        <div className="absolute inset-0 z-0 opacity-20 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-primary/40 via-background to-background" />
+        <div className="container px-4 md:px-6 relative z-10 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="max-w-3xl mx-auto space-y-6"
+          >
+            <div className="inline-flex items-center rounded-full border border-border bg-foreground/5 px-3 py-1 text-sm font-medium backdrop-blur-md text-gold-400">
+              {t('homeBlog.heroTag', 'Visa & Immigration Blog')}
             </div>
-
-            {/* 3D Floating Images Composition - Now Visible and Optimized for Mobile */}
-            <div className="relative h-[380px] sm:h-[500px] lg:h-[600px] w-full perspective-1000 mt-8 lg:mt-0">
-              {/* Main Background Image */}
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8, rotateY: -15, rotateX: 10 }}
-                animate={{ opacity: 1, scale: 1, rotateY: 0, rotateX: 0 }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
-                className="absolute right-0 top-1/2 -translate-y-1/2 w-[85%] lg:w-[85%] h-[260px] sm:h-[350px] lg:h-[400px] rounded-3xl overflow-hidden border border-border shadow-[0_0_50px_rgba(0,0,0,0.5)] z-10"
-              >
-                <div className="absolute inset-0 bg-gradient-to-tr from-primary/30 to-transparent z-10" />
-                <img 
-                  src="https://images.unsplash.com/photo-1499856871958-5b9627545d1a?auto=format&fit=crop&w=1200&q=80" 
-                  alt="Paris" 
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-
-              {/* Floating Front Image (Canada) */}
-              <motion.div
-                initial={{ opacity: 0, x: 20, y: 50, rotateZ: -5 }}
-                animate={{ 
-                  opacity: 1, 
-                  x: 0, 
-                  y: [-10, 10, -10], // Floating animation
-                  rotateZ: 0
-                }}
-                transition={{ 
-                  opacity: { duration: 1, delay: 0.4 },
-                  x: { duration: 1, delay: 0.4, ease: "easeOut" },
-                  rotateZ: { duration: 1, delay: 0.4, ease: "easeOut" },
-                  y: { duration: 6, repeat: Infinity, ease: "easeInOut" }
-                }}
-                className="absolute left-0 bottom-4 lg:bottom-10 w-[160px] sm:w-[220px] lg:w-[250px] h-[220px] sm:h-[280px] lg:h-[320px] rounded-2xl overflow-hidden border border-border shadow-[0_30px_60px_rgba(0,0,0,0.8)] z-20"
-              >
-                <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent z-10" />
-                <img 
-                  src="https://images.unsplash.com/photo-1503614472-8c93d56e92ce?auto=format&fit=crop&w=600&q=80" 
-                  alt="Canada" 
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute bottom-3 left-3 z-20">
-                  <div className="bg-foreground/5 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] sm:text-xs font-bold text-foreground border border-border shadow-lg">
-                    Canada Migration
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Floating Top Image (Spain) */}
-              <motion.div
-                initial={{ opacity: 0, x: -20, y: -30, rotateZ: 5 }}
-                animate={{ 
-                  opacity: 1, 
-                  x: 0, 
-                  y: [10, -10, 10], // Floating animation (opposite phase)
-                  rotateZ: 0
-                }}
-                transition={{ 
-                  opacity: { duration: 1, delay: 0.6 },
-                  x: { duration: 1, delay: 0.6, ease: "easeOut" },
-                  rotateZ: { duration: 1, delay: 0.6, ease: "easeOut" },
-                  y: { duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1 }
-                }}
-                className="absolute right-4 lg:right-10 top-0 w-[110px] sm:w-[150px] lg:w-[200px] h-[110px] sm:h-[150px] lg:h-[200px] rounded-2xl overflow-hidden border border-border shadow-[0_20px_50px_rgba(0,0,0,0.6)] z-30"
-              >
-                <img 
-                  src="https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=500&q=80" 
-                  alt="Spain" 
-                  loading="lazy"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-background/20">
-                  <div className="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full glass flex items-center justify-center text-foreground shadow-lg backdrop-blur-md border border-border">
-                    <Plane className="h-4 w-4 lg:h-5 lg:w-5 rotate-45" />
-                  </div>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Live Stats */}
-      <section className="relative z-20 mt-8 lg:-mt-20 px-4">
-        <div className="container">
-          <div className="glass-card rounded-2xl p-6 lg:p-8 shadow-[0_20px_60px_rgba(0,0,0,0.4)] border border-border">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8 divide-x-0 md:divide-x divide-white/10">
-              {stats.map((stat, idx) => (
-                <motion.div 
-                  key={idx}
-                  initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                  whileInView={{ opacity: 1, scale: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1, type: "spring", stiffness: 100 }}
-                  className="flex flex-col items-center justify-center text-center px-2 sm:px-4"
-                >
-                  <div className="text-3xl sm:text-4xl font-display font-bold text-gradient-gold mb-1 sm:mb-2 drop-shadow-md">{stat.value}</div>
-                  <div className="text-[10px] sm:text-xs md:text-sm text-muted-foreground uppercase tracking-wider font-semibold">{stat.label}</div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Bento Grid - Visa Destinations */}
-      <section id="destinations" className="w-full py-24 overflow-hidden">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-gradient">
-              {t('home.destinations.title')}
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl">
-              {t('home.destinations.subtitle')}
+            <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl font-display text-gradient">
+              {t('homeBlog.heroTitle', 'Visa & Immigration Blog')}
+            </h1>
+            <p className="text-lg text-muted-foreground font-light">
+              {t('homeBlog.heroSubtitle', 'Guides, updates, and checklists to help you understand visa procedures and immigration pathways.')}
             </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <Button asChild size="lg" className="h-12 px-8 bg-primary hover:bg-primary/90 text-primary-foreground">
+                <a href="#latest">{t('homeBlog.ctaReadLatest', 'Read Latest Articles')}</a>
+              </Button>
+              <Button asChild size="lg" variant="outline" className="h-12 px-8 glass border-border text-foreground hover:bg-foreground/5">
+                <Link to="/visas">{t('homeBlog.ctaExploreVisas', 'Explore Visa Requirements')}</Link>
+              </Button>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="py-16 md:py-24">
+        <div className="container px-4 md:px-6">
+          <div className="flex items-end justify-between gap-6 mb-8">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+              {t('homeBlog.featuredTitle', 'Featured Article')}
+            </h2>
+            <Button asChild variant="outline" className="glass border-border text-foreground hover:bg-foreground/5">
+              <Link to="/blog">{t('homeBlog.viewAll', 'View All Articles')}</Link>
+            </Button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {countriesData.slice(0, 7).map((country, idx) => {
-              // Highlight the first two as featured (larger)
-              const isFeatured = idx === 0 || idx === 1
-              return (
-                <motion.div 
-                  key={country.id}
-                  className={`${isFeatured ? 'md:col-span-2 md:row-span-2 min-h-[300px]' : 'min-h-[200px]'} group relative overflow-hidden rounded-3xl border border-border glass-card`}
-                  whileHover={{ scale: 0.99 }}
+          {blogsLoading ? (
+            <div className="flex justify-center items-center min-h-[180px]">
+              <div className="w-10 h-10 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+            </div>
+          ) : featured ? (
+            <Link to={`/blog/${featured.slug}`} className="block">
+              <Card className="glass-card border-border overflow-hidden group">
+                <div className="grid lg:grid-cols-2">
+                  <div className="relative h-64 lg:h-auto overflow-hidden">
+                    <div className="absolute inset-0 bg-background/20 group-hover:bg-transparent transition-colors z-10" />
+                    <img src={featured.image} alt={featured.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                  </div>
+                  <CardContent className="p-8 flex flex-col justify-between">
+                    <div className="space-y-4">
+                      <div className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+                        <Calendar className="h-4 w-4" />
+                        {new Date(featured.createdAt).toLocaleDateString()}
+                      </div>
+                      <h3 className="text-3xl font-display font-bold text-foreground group-hover:text-primary transition-colors">
+                        {getTitle(featured)}
+                      </h3>
+                      <p className="text-muted-foreground leading-relaxed">
+                        {getExcerpt(featured)}
+                      </p>
+                    </div>
+                    <div className="mt-6 flex items-center gap-2 text-primary group-hover:text-gold-400 transition-colors font-medium">
+                      {t('blogPage.readMore', 'Read More')} <ArrowRight className="h-4 w-4" />
+                    </div>
+                  </CardContent>
+                </div>
+              </Card>
+            </Link>
+          ) : (
+            <div className="text-muted-foreground">{t('blogPage.postNotFoundDesc', 'No articles found.')}</div>
+          )}
+        </div>
+      </section>
+
+      <section id="latest" className="py-16 md:py-24 border-t border-border">
+        <div className="container px-4 md:px-6">
+          <div className="flex items-end justify-between gap-6 mb-8">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground">
+              {t('homeBlog.latestTitle', 'Latest Articles')}
+            </h2>
+            <Button asChild variant="outline" className="glass border-border text-foreground hover:bg-foreground/5">
+              <Link to="/blog">{t('homeBlog.viewAll', 'View All Articles')}</Link>
+            </Button>
+          </div>
+
+          {blogsLoading ? (
+            <div className="flex justify-center items-center min-h-[180px]">
+              <div className="w-10 h-10 border-4 border-primary/30 border-t-primary rounded-full animate-spin" />
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {latest.map((post, idx) => (
+                <motion.div
+                  key={post.id}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
-                  transition={{ delay: idx * 0.1 }}
+                  transition={{ delay: idx * 0.05 }}
                 >
-                  <Link to="/visas" state={{ countryId: country.id }} className="block w-full h-full">
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent z-10" />
-                    <img src={country.image} alt={t(`countryData.${country.id}.name`, country.name)} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                    <div className={`absolute bottom-0 left-0 z-20 w-full ${isFeatured ? 'p-8' : 'p-6'}`}>
-                      <h3 className={`${isFeatured ? 'text-3xl' : 'text-2xl'} font-display font-bold text-foreground mb-2`}>{t(`countryData.${country.id}.name`, country.name)}</h3>
-                      {isFeatured && (
-                        <>
-                          <p className="text-muted-foreground mb-4 max-w-md line-clamp-2">{t(`countryData.${country.id}.description`, country.description)}</p>
-                          <Button variant="outline" className="glass border-border text-foreground hover:bg-foreground/5 group-hover:border-gold-500 transition-colors pointer-events-none">
-                            {t('common.viewRequirements')} <ArrowRight className="ml-2 h-4 w-4" />
-                          </Button>
-                        </>
-                      )}
-                      {!isFeatured && (
-                        <p className="text-muted-foreground text-sm mb-1">{t(`countryData.${country.id}.type`, country.type)}</p>
-                      )}
-                    </div>
-                  </Link>
-                </motion.div>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* How It Works */}
-      <section id="process" className="w-full py-32 relative overflow-hidden">
-        <div className="absolute inset-0 bg-card/30" />
-        <div className="container px-4 md:px-6 relative z-10">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            className="text-center mb-24"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-gradient mb-4">
-              {t('home.process.title')}
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              {t('home.process.subtitle')}
-            </p>
-          </motion.div>
-
-          <div className="relative mt-12 lg:mt-24">
-            {/* Connecting Animated Line (Desktop) */}
-            <div className="absolute top-10 left-[10%] w-[80%] h-1 bg-foreground/5 hidden lg:block rounded-full overflow-hidden">
-              <motion.div 
-                className="h-full bg-gradient-to-r from-primary via-gold-500 to-primary"
-                initial={{ width: "0%" }}
-                whileInView={{ width: "100%" }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-              />
-            </div>
-
-            {/* Connecting Animated Line (Mobile) */}
-            <div className="absolute top-0 bottom-0 left-[39px] sm:left-[49px] w-1 bg-foreground/5 lg:hidden rounded-full overflow-hidden">
-              <motion.div 
-                className="w-full bg-gradient-to-b from-primary via-gold-500 to-primary"
-                initial={{ height: "0%" }}
-                whileInView={{ height: "100%" }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 2, ease: "easeInOut" }}
-              />
-            </div>
-            
-            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 lg:gap-4 relative z-10">
-              {processSteps.map((step, idx) => (
-                <motion.div 
-                  key={idx}
-                  initial={{ opacity: 0, x: -40, y: 0 }}
-                  whileInView={{ opacity: 1, x: 0, y: 0 }}
-                  viewport={{ once: true, margin: "-50px" }}
-                  transition={{ delay: idx * 0.2, type: "spring", stiffness: 50 }}
-                  className="relative flex flex-row lg:flex-col items-center lg:text-center group gap-6 lg:gap-0"
-                >
-                  <motion.div 
-                    whileHover={{ scale: 1.1, rotate: 5 }}
-                    className="w-20 h-20 shrink-0 sm:w-24 sm:h-24 lg:w-20 lg:h-20 rounded-2xl glass flex items-center justify-center lg:mb-6 text-foreground group-hover:text-gold-400 group-hover:border-gold-500/50 transition-all duration-300 shadow-xl relative bg-card border border-border"
-                  >
-                    {step.icon}
-                    {/* Step Number Badge */}
-                    <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-primary flex items-center justify-center text-sm font-bold shadow-lg border-2 border-background">
-                      {idx + 1}
-                    </div>
-                  </motion.div>
-                  <div className="flex flex-col">
-                    <h3 className="text-xl sm:text-2xl lg:text-xl font-bold mb-2">{step.title}</h3>
-                    <p className="text-muted-foreground text-sm sm:text-base lg:text-sm leading-relaxed max-w-[250px]">{step.desc}</p>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Brands / Partners Marquee */}
-      <section className="w-full py-16 bg-foreground/5 border-y border-border overflow-hidden">
-        <div className="container px-4 md:px-6 mb-8 text-center">
-          <h3 className="text-xl md:text-2xl font-display font-bold text-foreground mb-2">
-            {t('home.brands.brandsTitle', 'Partners & Official Bodies')}
-          </h3>
-          <p className="text-sm text-muted-foreground">
-            {t('home.brands.brandsSubtitle', 'We work directly with official application centers and universities globally.')}
-          </p>
-        </div>
-        <div className="relative flex w-full max-w-[100vw] overflow-hidden group">
-          <div className="flex animate-marquee whitespace-nowrap gap-12 items-center w-max">
-            {/* Duplicate list for seamless loop */}
-            {[...Array(2)].map((_, idx) => (
-              <div key={idx} className="flex gap-16 md:gap-24 px-8 items-center opacity-60 grayscale hover:grayscale-0 transition-all duration-300">
-                <div className="text-2xl font-bold font-display text-foreground flex items-center gap-2"><Globe2 className="h-6 w-6"/> VFS Global</div>
-                <div className="text-2xl font-bold font-display text-foreground flex items-center gap-2"><ShieldCheck className="h-6 w-6"/> TLScontact</div>
-                <div className="text-2xl font-bold font-display text-foreground flex items-center gap-2"><Briefcase className="h-6 w-6"/> BLS International</div>
-                <div className="text-2xl font-bold font-display text-foreground flex items-center gap-2"><MapPin className="h-6 w-6"/> Campus France</div>
-                <div className="text-2xl font-bold font-display text-foreground flex items-center gap-2"><Plane className="h-6 w-6"/> UK Visas</div>
-                <div className="text-2xl font-bold font-display text-foreground flex items-center gap-2"><CheckCircle2 className="h-6 w-6"/> IRCC Canada</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Badges & Testimonials */}
-      <section className="w-full py-24 overflow-hidden">
-        <div className="container px-4 md:px-6">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8">
-              <div className="inline-flex items-center rounded-full border border-border bg-foreground/5 px-3 py-1 text-sm font-medium backdrop-blur-md text-primary">
-                <ShieldCheck className="mr-2 h-4 w-4" />
-                {t('home.testimonials.badge')}
-              </div>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-gradient">
-                {t('home.testimonials.title')}
-              </h2>
-              <p className="text-muted-foreground text-lg">
-                {t('home.testimonials.subtitle')}
-              </p>
-              
-              <div className="flex flex-wrap gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
-                {/* Mock logos of embassies/partners */}
-                <div className="h-12 flex-1 min-w-[100px] max-w-[140px] glass rounded-lg flex items-center justify-center font-display font-bold text-sm sm:text-xl">VFS Global</div>
-                <div className="h-12 flex-1 min-w-[100px] max-w-[140px] glass rounded-lg flex items-center justify-center font-display font-bold text-sm sm:text-xl">TLScontact</div>
-                <div className="h-12 flex-1 min-w-[100px] max-w-[140px] glass rounded-lg flex items-center justify-center font-display font-bold text-sm sm:text-xl">BLS</div>
-              </div>
-            </div>
-
-            <div className="relative space-y-6">
-              <div className="absolute inset-0 bg-primary/20 blur-[100px] rounded-full pointer-events-none" />
-              
-              <div className="relative z-10 overflow-hidden h-[450px] sm:h-[400px] md:h-[350px]">
-                {testimonials.map((test, idx) => (
-                  <motion.div
-                    key={idx}
-                    initial={{ opacity: 0, x: 100, scale: 0.9 }}
-                    animate={{ 
-                      opacity: idx === activeTestimonial ? 1 : 0, 
-                      x: idx === activeTestimonial ? 0 : (idx > activeTestimonial ? 100 : -100),
-                      scale: idx === activeTestimonial ? 1 : 0.9,
-                      pointerEvents: idx === activeTestimonial ? 'auto' : 'none'
-                    }}
-                    transition={{ duration: 0.5, type: "spring", stiffness: 100 }}
-                    className="absolute inset-0"
-                  >
-                    <Card className="glass-panel h-full border-border hover:border-gold-500/30 transition-colors shadow-2xl">
-                      <CardContent className="p-6 sm:p-10 flex flex-col h-full justify-between">
-                        <div>
-                          <div className="flex gap-1 text-gold-500 mb-4 sm:mb-6">
-                            {[1,2,3,4,5].map(i => <Star key={i} className="h-4 w-4 sm:h-5 sm:w-5 fill-current" />)}
-                          </div>
-                          <blockquote className="text-base sm:text-xl italic font-light leading-relaxed mb-6 text-muted-foreground line-clamp-6 sm:line-clamp-4">
-                            "{test.text}"
-                          </blockquote>
+                  <Link to={`/blog/${post.slug}`} className="block h-full">
+                    <Card className="glass-card border-border h-full flex flex-col overflow-hidden group">
+                      <div className="h-48 overflow-hidden relative">
+                        <div className="absolute inset-0 bg-background/20 group-hover:bg-transparent transition-colors z-10" />
+                        <img src={post.image} alt={post.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                        <div className="absolute top-4 left-4 z-20">
+                          <span className="bg-primary/90 backdrop-blur-sm text-primary-foreground text-xs font-bold px-3 py-1 rounded-full">
+                            {post.category}
+                          </span>
                         </div>
-                        <div className="flex items-center gap-4 mt-auto">
-                          <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-tr ${test.color} p-[2px] shrink-0`}>
-                            <div className="w-full h-full rounded-full bg-background flex items-center justify-center font-bold text-lg shadow-inner overflow-hidden">
-                              {test.image ? (
-                                <img src={test.image} alt={test.name} className="w-full h-full object-cover" />
-                              ) : (
-                                test.initials
-                              )}
-                            </div>
+                      </div>
+                      <CardContent className="p-6 flex flex-col flex-1">
+                        <div className="flex items-center text-sm text-muted-foreground mb-3">
+                          <Calendar className="mr-2 h-4 w-4" />
+                          {new Date(post.createdAt).toLocaleDateString()}
+                        </div>
+                        <h3 className="text-2xl font-bold font-display mb-3 line-clamp-2 group-hover:text-primary transition-colors">
+                          {getTitle(post)}
+                        </h3>
+                        <p className="text-muted-foreground text-sm mb-6 flex-1 line-clamp-3">
+                          {getExcerpt(post)}
+                        </p>
+                        <div className="flex items-center justify-between text-xs text-muted-foreground pt-4 border-t border-border mt-auto">
+                          <div className="flex items-center gap-1.5">
+                            <Calendar className="h-3.5 w-3.5" />
+                            {new Date(post.createdAt).toLocaleDateString()}
                           </div>
-                          <div>
-                            <div className="font-bold text-foreground text-base sm:text-lg">{test.name}</div>
-                            <div className="text-xs sm:text-sm text-primary font-medium">{test.type}</div>
+                          <div className="flex items-center gap-1.5 text-primary group-hover:text-gold-400 transition-colors font-medium">
+                            {t('blogPage.readMore', 'Read More')} <ArrowRight className="h-3 w-3" />
                           </div>
                         </div>
                       </CardContent>
                     </Card>
-                  </motion.div>
-                ))}
-              </div>
-
-              {/* Carousel Controls */}
-              <div className="flex justify-end gap-3 mt-4 relative z-20">
-                <Button variant="outline" size="icon" onClick={prevTestimonial} className="rounded-full h-12 w-12 glass border-border text-foreground hover:bg-foreground/5 hover:text-gold-400">
-                  <ChevronLeft className="h-6 w-6" />
-                </Button>
-                <Button variant="outline" size="icon" onClick={nextTestimonial} className="rounded-full h-12 w-12 glass border-border text-foreground hover:bg-foreground/5 hover:text-gold-400">
-                  <ChevronRight className="h-6 w-6" />
-                </Button>
-              </div>
-
+                  </Link>
+                </motion.div>
+              ))}
             </div>
-          </div>
+          )}
         </div>
       </section>
-      {/* Agency Team Section */}
-      <section className="w-full py-24 bg-background relative overflow-hidden">
-        <div className="absolute inset-0 bg-primary/5 blur-[120px] rounded-full pointer-events-none" />
-        <div className="container px-4 md:px-6 relative z-10">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold tracking-tighter text-gradient mb-4">
-              {t('home.team.teamTitle', 'Our Expert Team')}
-            </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-              {t('home.team.teamSubtitle', 'Meet the certified immigration consultants dedicated to your success.')}
-            </p>
-          </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                name: t('home.team.members.leadConsultant', 'Lead Consultant'),
-                role: t('home.team.roles.leadConsultant', 'Schengen & Canada Guidance'),
-                img: "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=professional%20studio%20portrait%2C%20male%20immigration%20consultant%2C%20business%20attire%2C%20neutral%20background%2C%20soft%20lighting%2C%20photorealistic%2C%20high%20detail%2C%20clean%20composition%2C%20no%20text%2C%20no%20watermark&image_size=portrait_4_3",
-                desc: t('home.team.descriptions.leadConsultant', 'Guides your case strategy and eligibility from start to finish.')
-              },
-              {
-                name: t('home.team.members.visaSpecialist', 'Visa Specialist'),
-                role: t('home.team.roles.visaSpecialist', 'Document Preparation'),
-                img: "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=professional%20studio%20portrait%2C%20female%20visa%20specialist%2C%20business%20casual%2C%20neutral%20background%2C%20soft%20lighting%2C%20photorealistic%2C%20high%20detail%2C%20clean%20composition%2C%20no%20text%2C%20no%20watermark&image_size=portrait_4_3",
-                desc: t('home.team.descriptions.visaSpecialist', 'Prepares your documents to match official requirements and formats.')
-              },
-              {
-                name: t('home.team.members.caseCoordinator', 'Case Coordinator'),
-                role: t('home.team.roles.caseCoordinator', 'Follow-up & Scheduling'),
-                img: "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=professional%20studio%20portrait%2C%20male%20case%20coordinator%2C%20smart%20casual%2C%20neutral%20background%2C%20soft%20lighting%2C%20photorealistic%2C%20high%20detail%2C%20clean%20composition%2C%20no%20text%2C%20no%20watermark&image_size=portrait_4_3",
-                desc: t('home.team.descriptions.caseCoordinator', 'Keeps your application on track with clear updates and next steps.')
-              }
-            ].map((member, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="group"
+      <section className="py-16 md:py-24 border-t border-border">
+        <div className="container px-4 md:px-6">
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-foreground mb-8">
+            {t('homeBlog.categoriesTitle', 'Browse by Category')}
+          </h2>
+          <div className="flex flex-wrap gap-2">
+            {categories.map(cat => (
+              <Link
+                key={cat}
+                to={`/blog?category=${encodeURIComponent(cat)}`}
+                className="px-3 py-1.5 rounded-full text-sm border border-border text-muted-foreground hover:text-foreground hover:bg-foreground/5 transition-colors"
               >
-                <Card className="glass-card border-border overflow-hidden h-full">
-                  <div className="h-64 overflow-hidden relative">
-                    <img src={member.img} alt={member.name} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
-                  </div>
-                  <CardContent className="p-6 text-center relative -mt-12 bg-background/80 backdrop-blur-md mx-4 rounded-xl border border-border shadow-lg">
-                    <h3 className="text-xl font-display font-bold text-foreground mb-1">{member.name}</h3>
-                    <p className="text-primary font-medium text-sm mb-3">{member.role}</p>
-                    <p className="text-muted-foreground text-sm">{member.desc}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                {cat}
+              </Link>
             ))}
           </div>
         </div>
       </section>
 
+      <section className="py-16 md:py-24 border-t border-border">
+        <div className="container px-4 md:px-6">
+          <Card className="glass-panel border-border overflow-hidden">
+            <CardContent className="p-8 md:p-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+              <div className="space-y-2">
+                <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
+                  {t('homeBlog.ctaExploreVisas', 'Explore Visa Requirements')}
+                </h2>
+                <p className="text-muted-foreground">
+                  {t('home.visas.subtitle', 'Select your destination country and discover the exact visa types and document requirements.')}
+                </p>
+              </div>
+              <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                <Link to="/visas">
+                  {t('homeBlog.ctaExploreVisas', 'Explore Visa Requirements')} <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
     </div>
   )
 }

@@ -103,10 +103,10 @@
   "about": {
     "tag": "Nuestra Historia",
     "title": "Acerca de E-Visa Schengen",
-    "subtitle": "Una agencia de asistencia de visas de confianza, dedicada a hacer realidad tus sueños de viaje internacional.",
+    "subtitle": "Artículos prácticos y actualizaciones para ayudarte a entender visas e inmigración con claridad.",
     "whoWeAre": "Quiénes Somos",
-    "p1": "Fundada con la misión de simplificar los trámites de visas e inmigración, E-Visa Schengen se ha convertido en una consultora de confianza. Nos especializamos en solicitudes de visas Schengen y canadienses, ofreciendo soluciones a medida para turistas, estudiantes y profesionales.",
-    "p2": "Navegar por los requisitos de la embajada puede ser abrumador. Nuestra misión es brindar orientación transparente, precisa y profesional para garantizar la tasa de éxito más alta posible para nuestros clientes.",
+    "p1": "Publicamos guías claras y actualizadas sobre trámites de visa, documentos requeridos y errores comunes que causan rechazos.",
+    "p2": "Nuestro objetivo es convertir requisitos complejos en listas simples para que prepares tu solicitud con confianza y evites retrasos.",
     "stats": {
       "years": "Años de Experiencia",
       "clients": "Clientes Felices",
@@ -417,5 +417,20 @@
     "backToBlog": "Back to Blog",
     "author": "Author",
     "publishedOn": "Published on"
+  },
+  "homeBlog": {
+    "heroTag": "Blog de Visas e Inmigración",
+    "heroTitle": "Blog de Visas e Inmigración",
+    "heroSubtitle": "Guías, actualizaciones y listas para entender trámites de visas y rutas de inmigración.",
+    "ctaReadLatest": "Leer los últimos artículos",
+    "ctaExploreVisas": "Ver requisitos de visa",
+    "featuredTitle": "Artículo destacado",
+    "latestTitle": "Últimos artículos",
+    "viewAll": "Ver todos los artículos",
+    "categoriesTitle": "Explorar por categoría"
+  },
+  "blogFilters": {
+    "searchPlaceholder": "Buscar artículos...",
+    "allCategories": "Todas las categorías"
   }
 }
