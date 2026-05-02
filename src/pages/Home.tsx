@@ -9,9 +9,9 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
 const HERO_IMAGES = {
-  main: "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=airport%20departure%20board%20with%20travel%20documents%20and%20passport%20on%20a%20modern%20desk%2C%20soft%20cinematic%20light%2C%20photorealistic%2C%20high%20detail%2C%20clean%20composition%2C%20no%20text%2C%20no%20watermark&image_size=landscape_16_9",
-  front: "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=hands%20holding%20passport%20and%20visa%20supporting%20documents%2C%20studio%20lighting%2C%20neutral%20background%2C%20photorealistic%2C%20high%20detail%2C%20no%20text%2C%20no%20watermark&image_size=portrait_4_3",
-  top: "https://coresg-normal.trae.ai/api/ide/v1/text_to_image?prompt=document%20checklist%20and%20paperclips%20on%20minimal%20desk%2C%20stamp%20concept%2C%20soft%20light%2C%20photorealistic%2C%20high%20detail%2C%20no%20text%2C%20no%20watermark&image_size=square_hd"
+  main: "https://images.unsplash.com/photo-1506812574058-fc75fa93fead?auto=format&fit=crop&w=1400&q=80",
+  front: "https://images.unsplash.com/photo-1529070538774-1843cb3265df?auto=format&fit=crop&w=900&q=80",
+  top: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?auto=format&fit=crop&w=900&q=80"
 }
 
 type Blog = {
