@@ -129,10 +129,10 @@
   "about": {
     "tag": "Notre Histoire",
     "title": "À Propos de E-Visa Schengen",
-    "subtitle": "Une agence d'assistance visa de confiance, dédiée à réaliser vos projets de voyage international.",
+    "subtitle": "Des articles pratiques et des mises à jour pour vous aider à comprendre les visas et l’immigration.",
     "whoWeAre": "Qui Sommes-Nous",
-    "p1": "Fondée avec la mission de simplifier les démarches de visa et d’immigration, E-Visa Schengen est devenue une agence de conseil de confiance. Nous nous spécialisons dans les demandes de visa Schengen et Canadien, offrant des solutions sur mesure pour les touristes, les étudiants et les professionnels.",
-    "p2": "Naviguer dans les exigences des ambassades peut être intimidant. Notre mission est de fournir des conseils transparents, précis et professionnels pour assurer le taux de réussite le plus élevé possible pour nos clients.",
+    "p1": "Nous publions des guides clairs et à jour sur les démarches de visa, les documents requis et les erreurs fréquentes qui causent des refus.",
+    "p2": "Notre objectif est de transformer des exigences complexes en check-lists simples, pour préparer votre dossier avec confiance et éviter les retards.",
     "stats": {
       "years": "Années d'Expérience",
       "clients": "Clients Satisfaits",
@@ -1393,5 +1393,20 @@
     "backToBlog": "Back to Blog",
     "author": "Author",
     "publishedOn": "Published on"
+  },
+  "homeBlog": {
+    "heroTag": "Blog Visa & Immigration",
+    "heroTitle": "Blog Visa & Immigration",
+    "heroSubtitle": "Guides, mises à jour et check-lists pour comprendre les démarches de visa et les parcours d’immigration.",
+    "ctaReadLatest": "Lire les derniers articles",
+    "ctaExploreVisas": "Voir les exigences de visa",
+    "featuredTitle": "Article à la une",
+    "latestTitle": "Derniers articles",
+    "viewAll": "Voir tous les articles",
+    "categoriesTitle": "Parcourir par catégorie"
+  },
+  "blogFilters": {
+    "searchPlaceholder": "Rechercher un article...",
+    "allCategories": "Toutes les catégories"
   }
 }
