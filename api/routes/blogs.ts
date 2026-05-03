@@ -44,57 +44,32 @@ async function ensureSettingsSchema(db: D1Database) {
     void e
   }
 
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS "Settings_new" (
-        "id" TEXT NOT NULL PRIMARY KEY,
-        "key" TEXT NOT NULL,
-        "value" TEXT NOT NULL,
-        "updatedAt" DATETIME NOT NULL
-    );
-    CREATE UNIQUE INDEX IF NOT EXISTS "Settings_key_key" ON "Settings_new"("key");
-    INSERT OR IGNORE INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('siteName', 'siteName', '${oldSeo.siteName.replace(/'/g, "''")}', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
-    INSERT OR IGNORE INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('siteDesc', 'siteDesc', '${oldSeo.siteDesc.replace(/'/g, "''")}', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
-    INSERT OR IGNORE INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('keywords', 'keywords', '${oldSeo.keywords.replace(/'/g, "''")}', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
-    INSERT OR IGNORE INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('facebook', 'facebook', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
-    INSERT OR IGNORE INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('instagram', 'instagram', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
-    INSERT OR IGNORE INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('linkedin', 'linkedin', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
-    INSERT OR IGNORE INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('x', 'x', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
-    INSERT OR IGNORE INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('tiktok', 'tiktok', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
-    INSERT OR IGNORE INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('metaPixel', 'metaPixel', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
-    INSERT OR IGNORE INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('googleAnalytics', 'googleAnalytics', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
-    INSERT OR IGNORE INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('googleTagManager', 'googleTagManager', '', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
-    INSERT OR IGNORE INTO "Settings_new" ("id", "key", "value", "updatedAt") VALUES ('email', 'email', 'evisaschengen@gmail.com', strftime('%Y-%m-%dT%H:%M:%fZ', 'now'));
-    DROP TABLE IF EXISTS "Settings";
-    ALTER TABLE "Settings_new" RENAME TO "Settings";
-  `)
+  await db.exec(`CREATE TABLE IF NOT EXISTS "Settings_new" ("id" TEXT NOT NULL PRIMARY KEY, "key" TEXT NOT NULL, "value" TEXT NOT NULL, "updatedAt" DATETIME NOT NULL);`)
+  await db.exec(`CREATE UNIQUE INDEX IF NOT EXISTS "Settings_key_key" ON "Settings_new"("key");`)
+
+  const siteName = oldSeo.siteName.replace(/'/g, "''")
+  const siteDesc = oldSeo.siteDesc.replace(/'/g, "''")
+  const keywords = oldSeo.keywords.replace(/'/g, "''")
+  await db.exec(`INSERT OR IGNORE INTO "Settings_new" ("id","key","value","updatedAt") VALUES ('siteName','siteName','${siteName}',strftime('%Y-%m-%dT%H:%M:%fZ','now'));`)
+  await db.exec(`INSERT OR IGNORE INTO "Settings_new" ("id","key","value","updatedAt") VALUES ('siteDesc','siteDesc','${siteDesc}',strftime('%Y-%m-%dT%H:%M:%fZ','now'));`)
+  await db.exec(`INSERT OR IGNORE INTO "Settings_new" ("id","key","value","updatedAt") VALUES ('keywords','keywords','${keywords}',strftime('%Y-%m-%dT%H:%M:%fZ','now'));`)
+  await db.exec(`INSERT OR IGNORE INTO "Settings_new" ("id","key","value","updatedAt") VALUES ('facebook','facebook','',strftime('%Y-%m-%dT%H:%M:%fZ','now'));`)
+  await db.exec(`INSERT OR IGNORE INTO "Settings_new" ("id","key","value","updatedAt") VALUES ('instagram','instagram','',strftime('%Y-%m-%dT%H:%M:%fZ','now'));`)
+  await db.exec(`INSERT OR IGNORE INTO "Settings_new" ("id","key","value","updatedAt") VALUES ('linkedin','linkedin','',strftime('%Y-%m-%dT%H:%M:%fZ','now'));`)
+  await db.exec(`INSERT OR IGNORE INTO "Settings_new" ("id","key","value","updatedAt") VALUES ('x','x','',strftime('%Y-%m-%dT%H:%M:%fZ','now'));`)
+  await db.exec(`INSERT OR IGNORE INTO "Settings_new" ("id","key","value","updatedAt") VALUES ('tiktok','tiktok','',strftime('%Y-%m-%dT%H:%M:%fZ','now'));`)
+  await db.exec(`INSERT OR IGNORE INTO "Settings_new" ("id","key","value","updatedAt") VALUES ('metaPixel','metaPixel','',strftime('%Y-%m-%dT%H:%M:%fZ','now'));`)
+  await db.exec(`INSERT OR IGNORE INTO "Settings_new" ("id","key","value","updatedAt") VALUES ('googleAnalytics','googleAnalytics','',strftime('%Y-%m-%dT%H:%M:%fZ','now'));`)
+  await db.exec(`INSERT OR IGNORE INTO "Settings_new" ("id","key","value","updatedAt") VALUES ('googleTagManager','googleTagManager','',strftime('%Y-%m-%dT%H:%M:%fZ','now'));`)
+  await db.exec(`INSERT OR IGNORE INTO "Settings_new" ("id","key","value","updatedAt") VALUES ('email','email','evisaschengen@gmail.com',strftime('%Y-%m-%dT%H:%M:%fZ','now'));`)
+
+  await db.exec(`DROP TABLE IF EXISTS "Settings";`)
+  await db.exec(`ALTER TABLE "Settings_new" RENAME TO "Settings";`)
 }
 
 async function ensureBlogSchema(db: D1Database) {
-  await db.exec(`
-    CREATE TABLE IF NOT EXISTS "Blog" (
-        "id" TEXT NOT NULL PRIMARY KEY,
-        "title" TEXT NOT NULL,
-        "titleAr" TEXT,
-        "titleFr" TEXT,
-        "slug" TEXT NOT NULL,
-        "excerpt" TEXT NOT NULL,
-        "excerptAr" TEXT,
-        "excerptFr" TEXT,
-        "image" TEXT NOT NULL,
-        "content" TEXT NOT NULL,
-        "contentAr" TEXT,
-        "contentFr" TEXT,
-        "category" TEXT NOT NULL,
-        "author" TEXT NOT NULL,
-        "published" BOOLEAN NOT NULL DEFAULT true,
-        "metaTitle" TEXT,
-        "metaDesc" TEXT,
-        "keywords" TEXT,
-        "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-        "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
-    );
-    CREATE UNIQUE INDEX IF NOT EXISTS "Blog_slug_key" ON "Blog"("slug");
-  `)
+  await db.exec(`CREATE TABLE IF NOT EXISTS "Blog" ("id" TEXT NOT NULL PRIMARY KEY,"title" TEXT NOT NULL,"titleAr" TEXT,"titleFr" TEXT,"slug" TEXT NOT NULL,"excerpt" TEXT NOT NULL,"excerptAr" TEXT,"excerptFr" TEXT,"image" TEXT NOT NULL,"content" TEXT NOT NULL,"contentAr" TEXT,"contentFr" TEXT,"category" TEXT NOT NULL,"author" TEXT NOT NULL,"published" BOOLEAN NOT NULL DEFAULT true,"metaTitle" TEXT,"metaDesc" TEXT,"keywords" TEXT,"createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,"updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP);`)
+  await db.exec(`CREATE UNIQUE INDEX IF NOT EXISTS "Blog_slug_key" ON "Blog"("slug");`)
 
   try { await db.exec('ALTER TABLE "Blog" ADD COLUMN "titleAr" TEXT;') } catch (e) { void e }
   try { await db.exec('ALTER TABLE "Blog" ADD COLUMN "titleFr" TEXT;') } catch (e) { void e }
