@@ -7,11 +7,19 @@ export type Bindings = {
   DB: any
   JWT_SECRET: string
   LEGACY_PASSWORD_SALT?: string
-  ADMIN_EMAIL?: string
+  ADMIN_BOOTSTRAP_TOKEN?: string
 }
 
 export type Variables = {
   user: { id: string; role: string }
+}
+
+function timingSafeEqual(a: string, b: string): boolean {
+  const x = new TextEncoder().encode(a)
+  const y = new TextEncoder().encode(b)
+  let diff = x.length ^ y.length
+  for (let i = 0; i < Math.max(x.length, y.length); i++) diff |= (x[i] ?? 0) ^ (y[i] ?? 0)
+  return diff === 0
 }
 
 const authRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
@@ -51,17 +59,22 @@ export const requireAdmin = async (c: any, next: any) => {
 authRoutes.post('/register', async (c) => {
   try {
     const prisma = getPrisma(c.env.DB)
-    const { email, password, name, phone } = await c.req.json()
+    const { email, password, name, phone, adminToken } = await c.req.json()
 
     const existingUser = await prisma.user.findUnique({ where: { email } })
     if (existingUser) {
       return c.json({ success: false, error: 'Email already registered' }, 400)
     }
 
-    // Public registration always creates a CLIENT. The only way to get an ADMIN through /register is to
-    // sign up with the email set in the ADMIN_EMAIL environment variable (for the first admin).
-    const adminEmail = (c.env.ADMIN_EMAIL || '').trim().toLowerCase()
-    const role = adminEmail && String(email).trim().toLowerCase() === adminEmail ? 'ADMIN' : 'CLIENT'
+    // Public registration always creates a CLIENT. An ADMIN can only be created while no admin exists yet,
+    // and only by presenting ADMIN_BOOTSTRAP_TOKEN (a secret set on the Worker, shared out of band).
+    // An email address alone never grants admin, because anyone can type any email.
+    let role = 'CLIENT'
+    const bootstrap = c.env.ADMIN_BOOTSTRAP_TOKEN || ''
+    if (bootstrap.length >= 16 && typeof adminToken === 'string' && timingSafeEqual(adminToken, bootstrap)) {
+      const adminCount = await prisma.user.count({ where: { role: 'ADMIN' } })
+      if (adminCount === 0) role = 'ADMIN'
+    }
 
     const hashedPassword = await hashPassword(password)
 
