@@ -35,4 +35,4 @@ The password module has a test in `api/lib` (run with `npx tsx` on the test file
 Passwords are hashed with PBKDF2. No one becomes admin from an email address alone or by registering first. Do not commit `.env` or database files.
 
 ## License
-No license has been chosen yet, so all rights are reserved. Business content (text, contact details, branding) belongs to the site owner.
+The source code is licensed under the MIT License (see [LICENSE](LICENSE)). The licence covers the code only. Photos and other images (including images from Unsplash), brand names, logos and business text (for example restaurant or visa-agency details) are not covered: they keep their own terms or are reserved by their owners.
