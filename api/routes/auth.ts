@@ -71,16 +71,29 @@ authRoutes.post('/register', async (c) => {
     // An email address alone never grants admin, because anyone can type any email.
     let role = 'CLIENT'
     const bootstrap = c.env.ADMIN_BOOTSTRAP_TOKEN || ''
+    const hashedPassword = await hashPassword(password)
+    let user: any = null
+
     if (bootstrap.length >= 16 && typeof adminToken === 'string' && timingSafeEqual(adminToken, bootstrap)) {
-      const adminCount = await prisma.user.count({ where: { role: 'ADMIN' } })
-      if (adminCount === 0) role = 'ADMIN'
+      // One SQL statement: inserts the admin only if no admin exists. SQLite/D1 runs a single statement
+      // atomically, so two simultaneous first-admin requests cannot both succeed.
+      const id = crypto.randomUUID()
+      const res = await c.env.DB.prepare(
+        `INSERT INTO "User" ("id","email","password","name","role","phone","updatedAt")
+         SELECT ?1, ?2, ?3, ?4, 'ADMIN', ?5, CURRENT_TIMESTAMP
+         WHERE NOT EXISTS (SELECT 1 FROM "User" WHERE "role" = 'ADMIN')`
+      ).bind(id, email, hashedPassword, name, phone ?? null).run()
+      if (res?.meta?.changes === 1) {
+        user = await prisma.user.findUnique({ where: { id } })
+        role = 'ADMIN'
+      }
     }
 
-    const hashedPassword = await hashPassword(password)
-
-    const user = await prisma.user.create({
-      data: { email, password: hashedPassword, name, phone, role }
-    })
+    if (!user) {
+      user = await prisma.user.create({
+        data: { email, password: hashedPassword, name, phone, role: 'CLIENT' }
+      })
+    }
 
     const token = await jwt.sign({ id: user.id, role: user.role, exp: Math.floor(Date.now() / 1000) + (7 * 24 * (60 * 60)) }, requireSecret(c.env.JWT_SECRET))
 

@@ -8,9 +8,7 @@ export const getPrisma = (db: any) => {
   if (!db) {
     throw new Error('Database binding "DB" is missing')
   }
-  if (!prisma) {
-    const adapter = new PrismaD1(db)
-    prisma = new PrismaClient({ adapter })
-  }
-  return prisma
+  // A new client per request: a client cached across requests shares I/O between concurrent requests,
+  // which makes the Workers runtime cancel them ("code had hung") under concurrent load.
+  return new PrismaClient({ adapter: new PrismaD1(db) })
 }
