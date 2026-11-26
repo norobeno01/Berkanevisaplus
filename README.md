@@ -11,13 +11,13 @@ Website for a Schengen visa assistance service in Berkane, Morocco. A React sing
 - A keyword based help chatbot (rules, not AI)
 
 ## Stack
-React, Vite, TypeScript, Hono-style API routes on Cloudflare Workers, Cloudflare D1.
+React, Vite, TypeScript, Hono API on Cloudflare Workers, Cloudflare D1.
 
 ## Setup
 ```bash
-pnpm install
+npm install
 cp .env.example .env   # fill in your own values
-pnpm dev
+npm run dev
 ```
 
 Required secrets (never commit them): `JWT_SECRET` (long random string), `ADMIN_EMAIL` (the address that becomes admin on registration). Optional: `LEGACY_PASSWORD_SALT` to upgrade old password hashes on login.
@@ -26,9 +26,10 @@ Set them on the Worker with `wrangler secret put JWT_SECRET`.
 
 ## Tests
 ```bash
-pnpm test
-pnpm build
+npm run check   # type check
+npm run build
 ```
+The password module has a test in `api/lib` (run with `npx tsx` on the test file).
 
 ## Security notes
 Passwords are hashed with PBKDF2. The first registered user is not made admin automatically. Do not commit `.env` or database files.
