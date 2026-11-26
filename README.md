@@ -1,57 +1,37 @@
-# React + TypeScript + Vite
+# Berkanevisaplus
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Website for a Schengen visa assistance service in Berkane, Morocco. A React single page app with an API running on a Cloudflare Worker and a D1 database.
 
-Currently, two official plugins are available:
+![Home page](docs/screenshots/home.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
+- Pages: home, visas, blog, about, contact, login and register
+- Client portal and admin area, with role based access
+- Languages: English, French, Spanish, Arabic (RTL)
+- A keyword based help chatbot (rules, not AI)
 
-## Expanding the ESLint configuration
+## Stack
+React, Vite, TypeScript, Hono-style API routes on Cloudflare Workers, Cloudflare D1.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Setup
+```bash
+pnpm install
+cp .env.example .env   # fill in your own values
+pnpm dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Required secrets (never commit them): `JWT_SECRET` (long random string), `ADMIN_EMAIL` (the address that becomes admin on registration). Optional: `LEGACY_PASSWORD_SALT` to upgrade old password hashes on login.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Set them on the Worker with `wrangler secret put JWT_SECRET`.
 
-export default tseslint.config({
-  extends: [
-    // other configs...
-    // Enable lint rules for React
-    reactX.configs['recommended-typescript'],
-    // Enable lint rules for React DOM
-    reactDom.configs.recommended,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Tests
+```bash
+pnpm test
+pnpm build
 ```
+
+## Security notes
+Passwords are hashed with PBKDF2. The first registered user is not made admin automatically. Do not commit `.env` or database files.
+
+## License
+No license has been chosen yet, so all rights are reserved. Business content (text, contact details, branding) belongs to the site owner.
