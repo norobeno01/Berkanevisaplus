@@ -25,3 +25,11 @@ dist-ssr
 .vite
 /generated/prisma
 .pnpm-store
+
+# secrets and local databases
+.env
+.env.*
+!.env.example
+*.db
+*.sqlite
+.pnpm-store

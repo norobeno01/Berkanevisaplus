@@ -5,6 +5,7 @@ import { getPrisma } from '../db'
 export type Bindings = {
   DB: any
   JWT_SECRET: string
+  PASSWORD_SALT: string
 }
 
 export type Variables = {
@@ -13,15 +14,20 @@ export type Variables = {
 
 const authRoutes = new Hono<{ Bindings: Bindings; Variables: Variables }>()
 
-const JWT_SECRET = 'super-secret-visa-key-2026'
 
 // Custom crypto hash function for edge since bcrypt is heavy
-async function hashPassword(password: string): Promise<string> {
+async function hashPassword(password: string, salt: string): Promise<string> {
+  if (!salt) throw new Error('PASSWORD_SALT is not configured')
   const encoder = new TextEncoder()
-  const data = encoder.encode(password + JWT_SECRET) // simple salt
+  const data = encoder.encode(password + salt)
   const hashBuffer = await crypto.subtle.digest('SHA-256', data)
   const hashArray = Array.from(new Uint8Array(hashBuffer))
   return hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+}
+
+function requireSecret(v: string): string {
+  if (!v) throw new Error('JWT_SECRET is not configured')
+  return v
 }
 
 export const authenticate = async (c: any, next: any) => {
@@ -32,7 +38,7 @@ export const authenticate = async (c: any, next: any) => {
 
   const token = authHeader.split(' ')[1]
   try {
-    const isValid = await jwt.verify(token, c.env.JWT_SECRET || JWT_SECRET)
+    const isValid = await jwt.verify(token, requireSecret(c.env.JWT_SECRET))
     if (!isValid) throw new Error('Invalid token')
     const decoded = jwt.decode(token)
     c.set('user', decoded.payload)
@@ -64,13 +70,13 @@ authRoutes.post('/register', async (c) => {
     const userCount = await prisma.user.count()
     const role = userCount === 0 ? 'ADMIN' : 'CLIENT'
 
-    const hashedPassword = await hashPassword(password)
+    const hashedPassword = await hashPassword(password, c.env.PASSWORD_SALT)
 
     const user = await prisma.user.create({
       data: { email, password: hashedPassword, name, phone, role }
     })
 
-    const token = await jwt.sign({ id: user.id, role: user.role, exp: Math.floor(Date.now() / 1000) + (7 * 24 * (60 * 60)) }, c.env.JWT_SECRET || JWT_SECRET)
+    const token = await jwt.sign({ id: user.id, role: user.role, exp: Math.floor(Date.now() / 1000) + (7 * 24 * (60 * 60)) }, requireSecret(c.env.JWT_SECRET))
 
     return c.json({
       success: true,
@@ -93,13 +99,13 @@ authRoutes.post('/login', async (c) => {
       return c.json({ success: false, error: 'Invalid credentials' }, 401)
     }
 
-    const hashedPassword = await hashPassword(password)
+    const hashedPassword = await hashPassword(password, c.env.PASSWORD_SALT)
     // Accept old unhashed passwords too for smooth transition (since previously we used bcrypt but didn't actually run it if we had no DB entries yet, or if it failed)
     if (user.password !== hashedPassword && user.password !== password) {
       return c.json({ success: false, error: 'Invalid credentials' }, 401)
     }
 
-    const token = await jwt.sign({ id: user.id, role: user.role, exp: Math.floor(Date.now() / 1000) + (7 * 24 * (60 * 60)) }, c.env.JWT_SECRET || JWT_SECRET)
+    const token = await jwt.sign({ id: user.id, role: user.role, exp: Math.floor(Date.now() / 1000) + (7 * 24 * (60 * 60)) }, requireSecret(c.env.JWT_SECRET))
 
     return c.json({
       success: true,
@@ -141,7 +147,7 @@ authRoutes.post('/admin-register', authenticate, requireAdmin, async (c) => {
       return c.json({ success: false, error: 'Email already registered' }, 400)
     }
 
-    const hashedPassword = await hashPassword(password)
+    const hashedPassword = await hashPassword(password, c.env.PASSWORD_SALT)
 
     const user = await prisma.user.create({
       data: { email, password: hashedPassword, name, phone, role: role || 'ADMIN' }
