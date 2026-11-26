@@ -2,7 +2,7 @@
 
 Website for a Schengen visa assistance service in Berkane, Morocco. A React single page app with an API running on a Cloudflare Worker and a D1 database.
 
-![Home page](docs/screenshots/home.png)
+![Blog page](docs/screenshots/home.png)
 
 ## Features
 - Pages: home, visas, blog, about, contact, login and register
